@@ -5,9 +5,8 @@
 .home {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 50px;
     height: 870px;
-    justify-content: space-between;
     width: 80%;
     position: relative;
 }
@@ -43,16 +42,23 @@
     margin-bottom: 20px;
 }
 
+.items-carousel {
+    width: 449px;
+    position: relative;
+    margin: 0 auto;
+    
+}
+
 .home-lower-wrapper {
     margin: 0 auto;
-    overflow-x: scroll;
+    overflow-x: hidden;
     overflow-y: hidden;
-    width: 429px;
+    width: 430px;
+    border-radius: 20px;
 }
 
 .home-lower-content {
     display: flex;
-    gap: 80px;
     align-items: center;
 }
 
@@ -83,6 +89,8 @@
 .home-config p {
     color: white;
 }
+
+
 
 
 

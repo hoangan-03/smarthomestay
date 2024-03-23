@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+    min-height: 100vh;
+    max-height: 100%;
+    padding: 12px;
+    position: fixed;
+    z-index: 100;
+    background-color: white;
+}
+
+.sidebar:hover {
+    width: 360px;
+}
+
+.sidebar p, .sidebar h1 {
+    color: var(--text-gray);
+}
+
+.sidebar-title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 8px 8px 0px;
+    margin-right: -20px;
+}
+
+.sidebar-title-logo {
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.sidebar-logo {
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.sidebar-item {
+    display: flex;
+    gap: 10px;
+    padding: 16px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-hug {
+  display: none;
+}
+
+.sidebar:hover .sidebar-hug {
+    display: flex;
+}
+
+.sidebar:hover .sidebar-hidden {
+    display: none;
+}
+
+.currentSidebar {
+    background-color: var(--bg-lightblue);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.sidebar-item h1 {
+    font-weight: 600;
+    font-size: 16px;
+}

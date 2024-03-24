@@ -17,17 +17,20 @@ function App() {
         <Sidebar />
         <div className="content">
           <Header/>
-          <div className="main-content">
-            <LeftContent />
-            <Routes>
-              <Route path="/Home" element={<HomePage />} />
-              <Route path="/" element={<HomePage />} />
-              <Route path="/Calendar" element={<Calendar />} />
-              <Route path="/Analytics" element={<Analytics />} />
-              <Route path="/HumanDetection" element={<HumanDetection />} />
-              <Route path="/LightLevel" element={<LightLevel />} />
-              <Route path="/Temperature" element={<Temperature />} />
-            </Routes>
+          <div className="main-content-wrapper">
+            <div className="main-content">
+              <LeftContent />
+              <Routes>
+                <Route path="/Home" element={<HomePage />} />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/Calendar" element={<Calendar />} />
+                <Route path="/Analytics" element={<Analytics />} />
+                <Route path="/HumanDetection" element={<HumanDetection />} />
+                <Route path="/LightLevel" element={<LightLevel />} />
+                <Route path="/Temperature" element={<Temperature />} />
+              </Routes>
+            </div>
+            
           </div>
           
         </div>

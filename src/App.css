@@ -47,11 +47,18 @@
   background-color: var(--bg-pink);
 }
 
+.main-content-wrapper {
+  padding: 50px;
+}
+
 .main-content {
   display: flex;
   gap: 50px;
-  padding: 50px;
+  height: 870px;
+  position: relative;
 }
+
+
 
 @keyframes App-logo-spin {
   from {

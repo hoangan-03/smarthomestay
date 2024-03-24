@@ -10,6 +10,13 @@ import leftarrow from '../../assets/icons/leftarrow.png'
 import rightarrow from '../../assets/icons/rightarrow.png'
 import { Link } from 'react-router-dom'
 
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+  });
+};
+
+
 const Images = () => {
   const elementRef = useRef(null);
   const [arrowDisable, setArrowDisable] = useState(true);
@@ -31,11 +38,11 @@ const Images = () => {
   };
 
   return (
-    <div>
+    <div className='images-small-screen'>
       <div className='items-carousel'>
         <button
           onClick={() => {
-            handleHorizantalScroll(elementRef.current, 8, 430, -10);
+            handleHorizantalScroll(elementRef.current, 8, 460, -10);
           }}
           disabled={arrowDisable}
           className={"absolute top-1/2 -left-9 cursor-pointer"}
@@ -91,7 +98,7 @@ const Images = () => {
       </div>
         <button
           onClick={() => {
-            handleHorizantalScroll(elementRef.current, 8, 430, 10);
+            handleHorizantalScroll(elementRef.current, 8, 460, 10);
           }}
           className={"absolute top-1/2 -right-9 cursor-pointer"}
         >
@@ -103,7 +110,60 @@ const Images = () => {
     </div>
   );
 };
+
+const LargeImages = () => {
+
+  return (
+    <div className="home-lower-content images-large-screen" >
+      <div className='bordered-content relative' >
+        <img src={tempphoto} alt="temp" className="setting-image"/>
+        <div className='home-config'>
+          <div className='flex flex-col gap-2'>
+            <p className='image-title font-bold'>Temperature</p>
+            <p className='image-desc font-medium'>Write something here</p>
+          </div>
+          
+          <Link to="/Temperature"  onClick={scrollToTop}>
+            <img src={setting} alt="setting" className='home-setting-icon'/>
+          </Link>
+          
+        </div>
+      </div>
+
+        <div className='bordered-content relative'>
+          <img src={lightphoto} alt="light" className="setting-image"/>
+          <div className='home-config'>
+            <div className='flex flex-col gap-2'>
+              <p className='image-title font-bold'>Light Level</p>
+              <p className='image-desc font-medium'>Write something here</p>
+            </div>
+            <Link to="/LightLevel" onClick={scrollToTop}>
+              <img src={setting} alt="setting" className='home-setting-icon'/>
+            </Link>
+            
+          </div>
+        </div>
+
+        <div className='bordered-content relative'>
+          <img src={detectionphoto} alt="detect" className="setting-image"/>
+          <div className='home-config'>
+            <div className='flex flex-col gap-2'>
+              <p className='image-title font-bold'>Human Detection</p>
+              <p className='image-desc font-medium'>Write something here</p>
+            </div>
+            <Link to="/HumanDetection" onClick={scrollToTop}>
+              <img src={setting} alt="setting" className='home-setting-icon'/>
+            </Link>
+            
+          </div>
+        </div>
+    </div>
+  )
+}
+
 const Homepage = () => {
+  
+
   return (
     <div className='home'>
       <div className='bordered-content home-upper-content'>
@@ -114,53 +174,8 @@ const Homepage = () => {
         </div>
         
       </div>
-      {/* <div className='home-lower-wrapper'>
-      <div className='home-lower-content'>
-          <div className='bordered-content relative' >
-            <img src={tempphoto} alt="temp" className="setting-image"/>
-            <div className='home-config'>
-              <div className='flex flex-col gap-2'>
-                <p className='text-2xl font-bold'>Temperature</p>
-                <p className='text-lg font-medium'>Write something here</p>
-              </div>
-              
-              <Link to="/Temperature">
-                <img src={setting} alt="setting" className='home-setting-icon'/>
-              </Link>
-              
-            </div>
-          </div>
-
-          <div className='bordered-content relative'>
-            <img src={lightphoto} alt="light" className="setting-image"/>
-            <div className='home-config'>
-              <div className='flex flex-col gap-2'>
-                <p className='text-2xl font-bold'>Light Level</p>
-                <p className='text-lg font-medium'>Write something here</p>
-              </div>
-              <Link to="/LightLevel">
-                <img src={setting} alt="setting" className='home-setting-icon'/>
-              </Link>
-              
-            </div>
-          </div>
-
-          <div className='bordered-content relative'>
-            <img src={detectionphoto} alt="detect" className="setting-image"/>
-            <div className='home-config'>
-              <div className='flex flex-col gap-2'>
-                <p className='text-2xl font-bold'>Human Detection</p>
-                <p className='text-lg font-medium'>Write something here</p>
-              </div>
-              <Link to="/HumanDetection">
-                <img src={setting} alt="setting" className='home-setting-icon'/>
-              </Link>
-              
-            </div>
-          </div>
-        </div>
-      </div> */}
       <Images />
+      <LargeImages/>
       
       
     </div>

@@ -3,15 +3,7 @@
 @tailwind utilities;
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    width: 80px;
-    min-height: 100vh;
-    max-height: 100%;
-    padding: 12px;
-    position: fixed;
-    z-index: 100;
-    background-color: white;
+    @apply flex flex-col w-20 min-h-screen max-h-full p-3 fixed z-100 bg-white;
 }
 
 .sidebar:hover {
@@ -22,37 +14,34 @@
     color: var(--text-gray);
 }
 
-.sidebar-title {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 8px 8px 8px 0px;
-    margin-right: -20px;
-}
-
-.sidebar-title-logo {
-    max-width: 64px;
-    max-height: 64px;
-}
-
 .sidebar-logo {
-    max-width: 20px;
-    max-height: 20px;
+    @apply max-w-5 max-h-5;
 }
 
 .sidebar-item {
     display: flex;
     gap: 10px;
     padding: 16px;
-    transition: all 0.3s ease;
 }
 
 .sidebar-hug {
-  display: none;
+    line-height: normal; 
+    padding: 0; 
+    visibility: hidden;
 }
 
 .sidebar:hover .sidebar-hug {
-    display: flex;
+    padding: 16px; 
+    visibility: visible ;
+}
+
+.sidebar-hug-item {
+    display: none;
+    line-height: normal;
+}
+
+.sidebar:hover .sidebar-hug-item {
+    display: block ;
 }
 
 .sidebar:hover .sidebar-hidden {

@@ -5,9 +5,8 @@ import HomePage from "./pages/Homepage";
 import Calendar from "./pages/Calendar";
 import Analytics from "./pages/Analytics";
 import HumanDetection from "./pages/HumanDetection";
-import LightLevel from "./pages/LightLevel";
-import Temperature from "./pages/Temperature";
-import Sidebar from "./components/Sidebar"
+import Modifier from "./components/Modifier";
+import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import LeftContent from "./components/LeftContent";
 function App() {
@@ -16,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Sidebar />
         <div className="content">
-          <Header/>
+          <Header />
           <div className="main-content-wrapper">
             <div className="main-content">
               <LeftContent />
@@ -26,15 +25,18 @@ function App() {
                 <Route path="/Calendar" element={<Calendar />} />
                 <Route path="/Analytics" element={<Analytics />} />
                 <Route path="/HumanDetection" element={<HumanDetection />} />
-                <Route path="/LightLevel" element={<LightLevel />} />
-                <Route path="/Temperature" element={<Temperature />} />
+                <Route
+                  path="/Temperature"
+                  element={<Modifier variable="temperature" />}
+                />
+                <Route
+                  path="/LightLevel"
+                  element={<Modifier variable="lightlevel"/>}
+                />
               </Routes>
             </div>
-            
           </div>
-          
         </div>
-        
       </BrowserRouter>
     </div>
   );

@@ -5,7 +5,7 @@ import HomePage from "./pages/Homepage";
 import Calendar from "./pages/Calendar";
 import Analytics from "./pages/Analytics";
 import HumanDetection from "./pages/HumanDetection";
-import Modifier from "./components/Modifier";
+import Modifier from "./pages/Modifier";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import LeftContent from "./components/LeftContent";
@@ -33,6 +33,7 @@ function App() {
                   path="/LightLevel"
                   element={<Modifier variable="lightlevel"/>}
                 />
+
               </Routes>
             </div>
           </div>

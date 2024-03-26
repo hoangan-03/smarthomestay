@@ -2,6 +2,61 @@ import React, { useState } from "react";
 import data from "../Constant";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { styled } from "@mui/material/styles";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import analytic from "../../assets/images/analytic.png";
+const IOSSwitch = styled((props) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+  width: 72,
+  height: 30,
+  padding: 0,
+  "& .MuiSwitch-switchBase": {
+    padding: 0,
+    margin: 2,
+    transitionDuration: "300ms",
+    "&.Mui-checked": {
+      transform: "translateX(42px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        backgroundColor: "#2940b3",
+        opacity: 1,
+        border: 0,
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: 0.5,
+      },
+    },
+    "&.Mui-focusVisible .MuiSwitch-thumb": {
+      color: "#352074",
+      border: "16px solid #fff",
+    },
+    "&.Mui-disabled .MuiSwitch-thumb": {
+      color:
+        theme.palette.mode === "light"
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxSizing: "border-box",
+    width: 25,
+    height: 25,
+  },
+  "& .MuiSwitch-track": {
+    borderRadius: 30 / 2,
+    backgroundColor: "#27272b",
+    opacity: 1,
+    transition: theme.transitions.create(["background-color"], {
+      duration: 500,
+    }),
+  },
+}));
+
 const Modifier = (variable) => {
   const [acceptanceRange, setAcceptanceRange] = useState(50);
   const thisvar = {
@@ -57,13 +112,30 @@ const Modifier = (variable) => {
             <h1 className="text-black font-bold text-2xl ml-4">
               Write something here
             </h1>
-            <h1 className="text-black font-semibold text-xl ml-4">
+            <h2 className="text-black font-semibold text-xl ml-4">
               Write something here
-            </h1>
+            </h2>
+            <div className="w-full h-auto mt-[90px] flex justify-end items-center">
+              <FormControlLabel
+                control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+              />
+            </div>
           </div>
         </div>
 
-        <div className="w-[420px] h-[400px] border-4 border-gray-300 bg-white rounded-xl"></div>
+        <div className="relative w-[420px] h-[400px] border-4 border-gray-300 bg-white rounded-xl">
+          <img
+            className="w-full h-full object-cover"
+            src={analytic}
+            alt=""
+          ></img>
+          <div className="absolute bottom-0 h-[127px] w-full flex flex-col py-4 px-7 gap-3 justify-center items-start bg-black/80 backdrop-blur-lg">
+            <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
+            <h2 className="text-white font-semibold text-xl ml-4">
+              Write something here
+            </h2>
+          </div>
+        </div>
       </div>
     </div>
   );

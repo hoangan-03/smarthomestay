@@ -4,15 +4,15 @@ import graphdata from '../GraphData';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class TempGraph extends Component {
+class LightGraph extends Component {
 
   render() {
-    let temperature = graphdata.temperature;
+    let light = graphdata.lightlevel;
     const options = {
       animationEnabled: true,
       theme: "light2",
       title: {
-        text: temperature.text
+        text: light.text
       },
       axisX: {
         valueFormatString: "DD MMM",
@@ -22,8 +22,8 @@ class TempGraph extends Component {
         }
       },
       axisY: {
-        title: temperature.title,
-        valueFormatString: temperature.format,
+        title: light.title,
+        valueFormatString: light.format,
         crosshair: {
           enabled: true,
           snapToDataPoint: true,
@@ -32,8 +32,8 @@ class TempGraph extends Component {
       data: [{
         type: "area",
         xValueFormatString: "DD MMM",
-        yValueFormatString: temperature.format,
-        dataPoints: temperature.dataPoints,
+        yValueFormatString: light.format,
+        dataPoints: light.dataPoints,
       }]
     }
 
@@ -45,4 +45,4 @@ class TempGraph extends Component {
   }
 }
 
-export default TempGraph;
+export default LightGraph;

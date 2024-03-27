@@ -18,7 +18,7 @@ const Modifier = (variable) => {
 
   return (
     <div className="w-[1300px] h-auto flex flex-col gap-6">
-      <div className="w-[420px] h-[175px] rounded-xl border-4 border-gray-300 bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
+      <div className="w-[420px] h-[175px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
         <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
           <h1 className="text-black text-4xl">{thisvar.value.text}</h1>
           <h2 className="text-blue-700 text-5xl font-bold">
@@ -32,9 +32,9 @@ const Modifier = (variable) => {
         ></img>
       </div>
       <div className="w-full h-[400px] flex flex-row gap-6">
-        <div className="w-[420px] h-[400px] border-4 border-gray-300 bg-white rounded-xl px-9 py-8">
+        <div className="w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
           <div className="w-full h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-auto h-[80px] flex justify-center items-center  bg-gray-200 rounded-3xl text-black text-2xl font-bold px-6 py-3">
+            <div className="w-auto h-[80px] flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
               Acceptance range
             </div>
             <h1 className="text-black font-bold text-2xl ml-4">
@@ -55,9 +55,9 @@ const Modifier = (variable) => {
             </div>
           </div>
         </div>
-        <div className="w-[420px] h-[400px] border-4 border-gray-300 bg-white rounded-xl px-9 py-8">
+        <div className="w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
           <div className="w-full h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-auto h-[80px] flex justify-center items-center  bg-gray-200 rounded-3xl text-black text-2xl font-bold px-6 py-3">
+            <div className="w-auto h-[80px] flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
               Power
             </div>
             <h1 className="text-black font-bold text-2xl ml-4">
@@ -74,7 +74,7 @@ const Modifier = (variable) => {
           </div>
         </div>
 
-        <div className="relative w-[420px] h-[400px] border-4 border-gray-300 bg-white rounded-xl">
+        <div className="relative w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl">
           <img
             className="w-full h-full object-cover"
             src={analytic}
@@ -87,7 +87,7 @@ const Modifier = (variable) => {
               Write something here
             </h2>
             </div>
-            <div className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray-800/70">
+            <div className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
             <img className="w-[30px] h-[30px] object-cover " src={analyticiconlight} alt=''></img>
             </div>
           </div>

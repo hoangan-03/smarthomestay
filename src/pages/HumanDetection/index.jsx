@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PowerSwitch from "../../components/PowerSwitch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import "./humandetection.css"
@@ -8,7 +8,7 @@ const HumanDetection = () => {
   return (
     <div className="w-[1300px] h-auto flex flex-col gap-6">
       <div className="w-full h-auto flex flex-row  gap-6">
-        <div className="w-[760px] h-[540px] bg-white flex  flex-col px-16 py-9">
+        <div className="w-[760px] border-4 border-lightgray rounded-2xl h-[540px] bg-white flex  flex-col px-16 py-9">
           <div className="text-start border-b-2  text-black font-bold text-2xl pb-4 h-auto">
             Nofication
           </div>
@@ -48,9 +48,9 @@ const HumanDetection = () => {
           </div>
         </div>
 
-        <div className="w-[420px] h-[400px] border-4 border-gray-300 bg-white rounded-xl px-9 py-8">
+        <div className="w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
           <div className="w-full h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-auto h-[80px] flex justify-center items-center  bg-gray-200 rounded-3xl text-black text-2xl font-bold px-6 py-3">
+            <div className="w-auto h-[80px] flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
               Power
             </div>
             <h1 className="text-black font-bold text-2xl ml-4">

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --bg-pink: #F2F2F2;
   --bg-lightblue: #D1E4FF;
@@ -54,11 +58,19 @@
 .main-content {
   display: flex;
   gap: 50px;
-  height: 870px;
+  height: 880px;
   position: relative;
 }
 
-
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+    -webkit-appearance: button; /* 1 */
+    /*will affect the button style of most component libraries, so disable it*/
+    /*background-color: transparent; !* 2 *!*/
+    background-image: none; /* 2 */
+}
 
 @keyframes App-logo-spin {
   from {

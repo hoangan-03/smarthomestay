@@ -52,7 +52,7 @@ const Images = () => {
         <div className='home-lower-wrapper' ref={elementRef}>
       
         <div className="home-lower-content" >
-          <div className='bordered-content relative' >
+          <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative' >
               <img src={tempphoto} alt="temp" className="setting-image"/>
               <div className='home-config'>
                 <div className='flex flex-col gap-2'>
@@ -67,7 +67,7 @@ const Images = () => {
               </div>
             </div>
 
-            <div className='bordered-content relative'>
+            <div className='bg-whitep-5 rounded-2xl shadow-custom-shadow h-full relative'>
               <img src={lightphoto} alt="light" className="setting-image"/>
               <div className='home-config'>
                 <div className='flex flex-col gap-2'>
@@ -81,7 +81,7 @@ const Images = () => {
               </div>
             </div>
 
-            <div className='bordered-content relative'>
+            <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative'>
               <img src={detectionphoto} alt="detect" className="setting-image"/>
               <div className='home-config'>
                 <div className='flex flex-col gap-2'>
@@ -115,7 +115,7 @@ const LargeImages = () => {
 
   return (
     <div className="home-lower-content images-large-screen" >
-      <div className='bordered-content relative' >
+      <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative' >
         <img src={tempphoto} alt="temp" className="setting-image"/>
         <div className='home-config'>
           <div className='flex flex-col gap-2'>
@@ -130,7 +130,7 @@ const LargeImages = () => {
         </div>
       </div>
 
-        <div className='bordered-content relative'>
+        <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative'>
           <img src={lightphoto} alt="light" className="setting-image"/>
           <div className='home-config'>
             <div className='flex flex-col gap-2'>
@@ -144,7 +144,7 @@ const LargeImages = () => {
           </div>
         </div>
 
-        <div className='bordered-content relative'>
+        <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative'>
           <img src={detectionphoto} alt="detect" className="setting-image"/>
           <div className='home-config'>
             <div className='flex flex-col gap-2'>
@@ -166,7 +166,7 @@ const Homepage = () => {
 
   return (
     <div className='home'>
-      <div className='bordered-content home-upper-content'>
+      <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray home-upper-content'>
         <h1 className="home-title" >We are Smart Homestay!</h1>
         <div className='home-inner'>
           <img src={homestayphoto} alt="homestay"/>

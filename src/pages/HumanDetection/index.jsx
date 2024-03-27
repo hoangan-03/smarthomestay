@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PowerSwitch from "../../components/PowerSwitch";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
+import "./humandetection.css"
 import noficationdata from "../../components/NoficationData";
 const rowsToDisplay = noficationdata;
 const HumanDetection = () => {

@@ -1,5 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-pink: #F2F2F2;
+  --bg-lightblue: #D1E4FF;
+  --text-gray: #43474E;
+  --border-gray: #E8E9EB;
+  --bg-setting: #1A1C1E;
+}
+
 .App {
-  text-align: center;
+  display: flex;
+  position: relative;
 }
 
 .App-logo {
@@ -26,6 +39,37 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.content {
+  margin-left: 80px;
+  z-index: 99;
+  position: relative;
+  width: calc(100vw - 80px);
+  min-height: 100vh;
+  max-height: 100%;
+  background-color: var(--bg-pink);
+}
+
+.main-content-wrapper {
+  padding: 50px;
+}
+
+.main-content {
+  display: flex;
+  gap: 50px;
+  height: 880px;
+  position: relative;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+    -webkit-appearance: button; /* 1 */
+    /*will affect the button style of most component libraries, so disable it*/
+    /*background-color: transparent; !* 2 *!*/
+    background-image: none; /* 2 */
 }
 
 @keyframes App-logo-spin {

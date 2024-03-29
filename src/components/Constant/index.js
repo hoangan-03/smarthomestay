@@ -6,6 +6,11 @@ const data = {
         mockFigure: "31 oC",
         iconUrl: tempicon
     },
+    humidity: {
+        text: "Humidity",
+        mockFigure: "1",
+        iconUrl: tempicon,
+    },
     lightlevel: {
         text: "Light Level",
         mockFigure: "70/100",

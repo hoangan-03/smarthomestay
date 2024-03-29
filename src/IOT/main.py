@@ -41,9 +41,7 @@ count = 10
 while True:
     if (count <= 0):
         print("Publish light_switch")
-        client.publish("humility_sensor", 69)
-        client.publish("light_sensor", 96)
-        client.publish("temperature_sensor", 56)
+        client.publish("light_switch", 0)
         count = 10
     count -= 1
     time.sleep(1)

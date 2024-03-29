@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from "react";
 import data from "../../components/Constant";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import PowerSwitch from "../../components/PowerSwitch";
 import analytic from "../../assets/images/analytic.png";
 import analyticiconlight from "../../assets/icons/analyticiconlight.png";
-import client from "../../mqtt/mqttclient"
+import client from "../../mqtt/mqttclient";
+const AIO_USERNAME = "quoc_huy";
 
-const AIO_USERNAME = 'quoc_huy';
 const Modifier = (variable) => {
-
   const [switchLightState, setSwitchLightState] = useState(true);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
+  console.log("ss", switchLightState);
   const handleSwitchLightChange = () => {
+    if (switchLightState) {
+      client.publish(`${AIO_USERNAME}/feeds/light_switch`, "0");
+    } else {
+      client.publish(`${AIO_USERNAME}/feeds/light_switch`, "1");
+    }
     setSwitchLightState(!switchLightState);
   };
   const handleTempandHumChange = () => {
+    if (switchTempandHumState) {
+      client.publish(`${AIO_USERNAME}/feeds/humidity_tem`, "0");
+    } else {
+      client.publish(`${AIO_USERNAME}/feeds/humidity_tem`, "1");
+    }
     setSwitchTempandHumState(!switchTempandHumState);
   };
 
@@ -30,18 +38,18 @@ const Modifier = (variable) => {
   useEffect(() => {
     client.on("connect", () => {
       console.log("Connected to Adafruit MQTT");
-      client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
-      client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
-      client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
-      const publishInterval = setInterval(() => {
-        client.publish(`${AIO_USERNAME}/feeds/temperature_sensor`, "69");
-        client.publish(`${AIO_USERNAME}/feeds/humility_sensor`, "30");
-        client.publish(`${AIO_USERNAME}/feeds/light_sensor`, "20");
-      }, 4000);
-      return () => {
-        clearInterval(publishInterval);
-        client.end();
-      };
+      // client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
+      // client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
+      // client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
+
+      // const publishInterval = setInterval(() => {
+      //   client.publish(`${AIO_USERNAME}/feeds/temperature_sensor`, "69");
+      //   client.publish(`${AIO_USERNAME}/feeds/humility_sensor`, "30");
+      //   client.publish(`${AIO_USERNAME}/feeds/light_sensor`, "20");
+      // }, 4000);
+      // return () => {
+      //   clearInterval(publishInterval);
+      // };
     });
 
     client.on("message", (topic, message) => {
@@ -62,77 +70,75 @@ const Modifier = (variable) => {
         }));
       }
     });
-
-
   }, []);
 
   console.log("temperature", sensorData.temperature);
   console.log("humidity", sensorData.humidity);
   console.log("light", sensorData.light);
-
-  const [acceptanceRange, setAcceptanceRange] = useState(50);
+  const variables = variable.variable;
   const thisvar = {
-    value:
-      variable.variable === "temperature" ? data.temperature : data.lightlevel,
+    value: variables === "temperature" ? data.temperature : data.lightlevel,
   };
-  const handleChange = (acceptanceRange) => setAcceptanceRange(acceptanceRange);
+  const humidityvar = {
+    value: data.humidity,
+  };
 
   return (
     <div className="w-[1300px] h-auto flex flex-col gap-6">
-      <div className="w-[420px] h-[175px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
-        <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-          <h1 className="text-black text-4xl">{thisvar.value.text}</h1>
-          <h2 className="text-blue-700 text-5xl font-bold">
-            {variable.variable == "temperature"
-              ? sensorData.temperature
-              : sensorData.light}{" "}
-            {variable.variable == "temperature" ? "°C" : "%"}
-          </h2>
+      <div className="w-full h-[175px] flex flex-row gap-6">
+        <div className="w-[440px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
+          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+            <h1 className="text-black text-4xl">{thisvar.value.text}</h1>
+            <h2 className="text-blue-700 text-5xl font-bold">
+              {variables === "temperature"
+                ? sensorData.temperature
+                : sensorData.light}{" "}
+              {variables === "temperature" ? "°C" : "%"}
+            </h2>
+          </div>
+          <img
+            className="w-auto h-[100px] object-cover"
+            src={thisvar.value.iconUrl}
+            alt=""
+          ></img>
         </div>
-        <img
-          className="w-auto h-[100px] object-cover"
-          src={thisvar.value.iconUrl}
-          alt=""
-        ></img>
+        <div
+          className={`w-[440px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${
+            variables === "temperature" ? "block" : "hidden"
+          }`}
+        >
+          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+            <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
+            <h2 className="text-blue-700 text-5xl font-bold">
+              {sensorData.humidity}
+              {}
+            </h2>
+          </div>
+          <img
+            className="w-auto h-[100px] object-cover"
+            src={humidityvar.value.iconUrl}
+            alt=""
+          ></img>
+        </div>
       </div>
       <div className="w-full h-[400px] flex flex-row gap-6">
-        <div className="w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
-          <div className="w-full h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-auto h-[80px] flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-              Acceptance range
+        <div className="w-[440px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
+          <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
+            <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
+              {variables === "temperature" ? "Switch" : "Switch"}
             </div>
             <h1 className="text-black font-bold text-2xl ml-4">
-              Write something here
-            </h1>
-            <h1 className="text-black font-semibold text-xl ml-4">
-              Write something here
-            </h1>
-            <div className="w-full h-auto mt-[90px]">
-              <Box sx={{ width: 320 }}>
-                <Slider
-                  value={acceptanceRange}
-                  aria-label="Default"
-                  valueLabelDisplay="auto"
-                  onChange={(e, newValue) => handleChange(newValue)}
-                />
-              </Box>
-            </div>
-          </div>
-        </div>
-        <div className="w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
-          <div className="w-full h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-auto h-[80px] flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-              Power
-            </div>
-            <h1 className="text-black font-bold text-2xl ml-4">
-              Write something here
+              {variables === "temperature"
+                ? "Turn the humidity and tempearture sensor on or off"
+                : "Turn the led light on or off"}
             </h1>
             <h2 className="text-black font-semibold text-xl ml-4">
               Write something here
             </h2>
             <div
-              className={`w-full h-auto mt-[90px] flex justify-end items-center ${variable.variable === "temperature" ? "block" : "hidden"
-                } `}
+              className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${
+                variables === "temperature" ? "hidden" : "block"
+              } `}
             >
               <FormControlLabel
                 control={
@@ -140,14 +146,15 @@ const Modifier = (variable) => {
                     sx={{ m: 1 }}
                     defaultChecked
                     checked={switchLightState}
-                    onChange={handleSwitchLightChange}
+                    onChange={() => handleSwitchLightChange()}
                   />
                 }
               />
             </div>
             <div
-              className={`w-full h-auto mt-[90px] flex justify-end items-center ${variable.variable === "temperature" ? "hidden" : "block"
-                } `}
+              className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${
+                variables === "temperature" ? "block" : "hidden"
+              } `}
             >
               <FormControlLabel
                 control={
@@ -155,7 +162,7 @@ const Modifier = (variable) => {
                     sx={{ m: 1 }}
                     defaultChecked
                     checked={switchTempandHumState}
-                    onChange={handleTempandHumChange}
+                    onChange={() => handleTempandHumChange()}
                   />
                 }
               />
@@ -163,7 +170,7 @@ const Modifier = (variable) => {
           </div>
         </div>
 
-        <div className="relative w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl">
+        <div className="relative w-[440px] h-[400px] border-4 border-lightgray bg-white rounded-xl">
           <img
             className="w-full h-full object-cover"
             src={analytic}

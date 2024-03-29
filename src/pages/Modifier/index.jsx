@@ -10,7 +10,6 @@ const AIO_USERNAME = "quoc_huy";
 const Modifier = (variable) => {
   const [switchLightState, setSwitchLightState] = useState(true);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
-  console.log("ss", switchLightState);
   const handleSwitchLightChange = () => {
     if (switchLightState) {
       client.publish(`${AIO_USERNAME}/feeds/light_switch`, "0");
@@ -33,8 +32,7 @@ const Modifier = (variable) => {
     humidity: 3,
     light: 2,
   });
-  console.log("variable: ", variable.variable);
-
+ 
   useEffect(() => {
     client.on("connect", () => {
       console.log("Connected to Adafruit MQTT");
@@ -71,12 +69,8 @@ const Modifier = (variable) => {
       }
     });
   }, []);
-
-  console.log("temperature", sensorData.temperature);
-  console.log("humidity", sensorData.humidity);
-  console.log("light", sensorData.light);
   const variables = variable.variable;
-  const thisvar = {
+  const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
   };
   const humidityvar = {
@@ -88,7 +82,7 @@ const Modifier = (variable) => {
       <div className="w-full h-[175px] flex flex-row gap-6">
         <div className="w-[440px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
           <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-            <h1 className="text-black text-4xl">{thisvar.value.text}</h1>
+            <h1 className="text-black text-4xl">{temporlightvar.value.text}</h1>
             <h2 className="text-blue-700 text-5xl font-bold">
               {variables === "temperature"
                 ? sensorData.temperature
@@ -98,7 +92,7 @@ const Modifier = (variable) => {
           </div>
           <img
             className="w-auto h-[100px] object-cover"
-            src={thisvar.value.iconUrl}
+            src={temporlightvar.value.iconUrl}
             alt=""
           ></img>
         </div>

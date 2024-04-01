@@ -4,14 +4,23 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import PowerSwitch from "../../components/PowerSwitch";
 import analytic from "../../assets/images/analytic.png";
 import analyticiconlight from "../../assets/icons/analyticiconlight.png";
+import { Sketch } from "@uiw/react-color";
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
 const AIO_USERNAME = "quoc_huy";
 
 const Modifier = (variable) => {
+  const [hex, setHex] = useState("#d0021b");
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchFanState, setSwitchFanState] = useState(false);
   const [switchLightSenState, setLightSenState] = useState(true);
+
+  const handleSetColor = () => {
+    client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
+  }
+
   const handleSwitchLightChange = () => {
     if (switchLightState) {
       client.publish(`${AIO_USERNAME}/feeds/light_switch`, "0");
@@ -87,7 +96,6 @@ const Modifier = (variable) => {
       }
     });
   }, []);
-  console.log("sensor",sensorData);
   const variables = variable.variable;
   const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
@@ -95,6 +103,7 @@ const Modifier = (variable) => {
   const humidityvar = {
     value: data.humidity,
   };
+  console.log("tem", sensorData.temperature);
 
   return (
     <div className="w-[1300px] h-auto flex flex-col gap-6">
@@ -106,7 +115,7 @@ const Modifier = (variable) => {
               {variables === "temperature"
                 ? sensorData.temperature
                 : sensorData.light}{" "}
-             {sensorData.temperature === "OFF"  ? "" : (variables === "temperature" ? "oC" : "%")}
+              {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "%")}
             </h2>
           </div>
           <img
@@ -123,7 +132,7 @@ const Modifier = (variable) => {
             <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
             <h2 className="text-blue-700 text-5xl font-bold">
               {sensorData.humidity}
-              {" %"}
+              {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
             </h2>
           </div>
           <img
@@ -179,6 +188,7 @@ const Modifier = (variable) => {
             </div>
           </div>
         </div>
+
         <div className="w-[400px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
           <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
             <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
@@ -247,6 +257,18 @@ const Modifier = (variable) => {
             </div>
           </div>
         </div>
+
+      </div>
+      <div className={`w-[400px] h-auto border-4 border-lightgray bg-white rounded-xl px-9 py-3 flex flex-row gap-1 ${variables === "temperature" ? "hidden" : "block"} `}>
+        <Sketch
+          color={hex}
+          onChange={(color) => {
+            setHex(color.hex);
+          }}
+        />
+        <Button variant="contained" endIcon={<SendIcon />} onClick={() => handleSetColor()} >
+        Send
+      </Button>
       </div>
     </div>
   );

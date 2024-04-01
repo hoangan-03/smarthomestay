@@ -1,5 +1,6 @@
 import tempicon from "../../assets/icons/Temperature icon.png"
 import lightlevelicon from "../../assets/icons/Light icon.png"
+import humidityicon from "../../assets/icons/humidityicon.png";
 const data = {
     temperature: {
         text: "Temperature",
@@ -9,7 +10,7 @@ const data = {
     humidity: {
         text: "Humidity",
         mockFigure: "1",
-        iconUrl: tempicon,
+        iconUrl: humidityicon,
     },
     lightlevel: {
         text: "Light Level",

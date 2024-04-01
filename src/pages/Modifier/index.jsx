@@ -8,6 +8,7 @@ import { Sketch } from "@uiw/react-color";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
+import "./Modifier.css";
 const AIO_USERNAME = "quoc_huy";
 
 const Modifier = (variable) => {
@@ -232,44 +233,59 @@ const Modifier = (variable) => {
                 }
               />
             </div>
+            
+            
           </div>
+          
+          
         </div>
-
-        <div className="relative w-[400px] h-[400px] border-4 border-lightgray bg-white rounded-xl">
-          <img
-            className="w-full h-full object-cover"
-            src={analytic}
-            alt=""
-          ></img>
-          <div className="absolute bottom-0 h-[127px] w-full flex flex-row py-4 px-7  justify-between items-center bg-black/40 backdrop-blur-lg">
-            <div className="flex flex-col gap-3 ">
-              <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
-              <h2 className="text-white font-semibold text-xl ml-4">
-                Write something here
-              </h2>
-            </div>
-            <div className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
-              <img
-                className="w-[30px] h-[30px] object-cover "
-                src={analyticiconlight}
-                alt=""
-              ></img>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div className={`w-[400px] h-auto border-4 border-lightgray bg-white rounded-xl px-9 py-3 flex flex-row gap-1 ${variables === "temperature" ? "hidden" : "block"} `}>
+        <div className={`w-[400px] h-[700px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 ${variables === "temperature" ? "hidden" : "block"} `}>
         <Sketch
           color={hex}
           onChange={(color) => {
             setHex(color.hex);
           }}
+          style={{ width: '350px', height: '600px' }} // Set the width here
         />
-        <Button variant="contained" endIcon={<SendIcon />} onClick={() => handleSetColor()} >
-        Send
-      </Button>
+        <Button 
+          variant="contained" 
+          endIcon={<SendIcon />} 
+          onClick={() => handleSetColor()} 
+          style={{ width: '350px', height: '60px'  }} // Set the width here
+        >
+          Set
+        </Button>
       </div>
+
+
+
+
+      </div>
+      
+
+      <div className="relative w-[400px] h-[250px] border-4 border-lightgray bg-white rounded-xl">
+        <img
+          className="w-full h-full object-cover"
+          src={analytic}
+          alt=""
+        ></img>
+        <div className="absolute bottom-0 h-[127px] w-full flex flex-row py-4 px-7  justify-between items-center bg-black/40 backdrop-blur-lg">
+          <div className="flex flex-col gap-3 ">
+            <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
+            <h2 className="text-white font-semibold text-xl ml-4">
+              Write something here
+            </h2>
+          </div>
+          <div className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
+            <img
+              className="w-[30px] h-[30px] object-cover "
+              src={analyticiconlight}
+              alt=""
+            ></img>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };

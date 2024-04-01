@@ -7,6 +7,19 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class LightGraph extends Component {
 
   render() {
+    const { realtimedata } = this.props;
+    console.log("fdd", graphdata.lightlevel.dataPoints);
+    let lightMeasures;
+    if (realtimedata) {
+      lightMeasures = realtimedata.map(item => {
+        let date = new Date(item.Timestamp)
+
+        return {
+          x: date,
+          y: item.Light_measure
+        };
+      });
+    }
     let light = graphdata.lightlevel;
     const options = {
       animationEnabled: true,
@@ -33,7 +46,7 @@ class LightGraph extends Component {
         type: "area",
         xValueFormatString: "DD MMM",
         yValueFormatString: light.format,
-        dataPoints: light.dataPoints,
+        dataPoints: lightMeasures,
       }]
     }
 

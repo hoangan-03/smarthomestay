@@ -8,9 +8,9 @@ import client from "../../mqtt/mqttclient";
 const AIO_USERNAME = "quoc_huy";
 
 const Modifier = (variable) => {
-  const [switchLightState, setSwitchLightState] = useState(true);
+  const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
-  const [switchFanState, setSwitchFanState] = useState(true);
+  const [switchFanState, setSwitchFanState] = useState(false);
   const [switchLightSenState, setLightSenState] = useState(true);
   const handleSwitchLightChange = () => {
     if (switchLightState) {
@@ -46,17 +46,17 @@ const Modifier = (variable) => {
   };
 
   const [sensorData, setSensorData] = useState({
-    temperature: 4,
-    humidity: 3,
-    light: 2,
+    temperature: "OFF",
+    humidity: "OFF",
+    light: "OFF",
   });
 
   useEffect(() => {
     client.on("connect", () => {
       console.log("Connected to Adafruit MQTT");
-      // client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
-      // client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
-      // client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
+      client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
+      client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
+      client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
 
       // const publishInterval = setInterval(() => {
       //   client.publish(`${AIO_USERNAME}/feeds/temperature_sensor`, "69");
@@ -87,6 +87,7 @@ const Modifier = (variable) => {
       }
     });
   }, []);
+  console.log("sensor",sensorData);
   const variables = variable.variable;
   const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
@@ -105,7 +106,7 @@ const Modifier = (variable) => {
               {variables === "temperature"
                 ? sensorData.temperature
                 : sensorData.light}{" "}
-              {variables === "temperature" ? "°C" : "%"}
+             {sensorData.temperature === "OFF"  ? "" : (variables === "temperature" ? "oC" : "%")}
             </h2>
           </div>
           <img
@@ -122,7 +123,7 @@ const Modifier = (variable) => {
             <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
             <h2 className="text-blue-700 text-5xl font-bold">
               {sensorData.humidity}
-              { }
+              {" %"}
             </h2>
           </div>
           <img

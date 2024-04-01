@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import PowerSwitch from "../../components/PowerSwitch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import "./humandetection.css"
 import noficationdata from "../../components/NoficationData";
+import client from "../../mqtt/mqttclient";
 const rowsToDisplay = noficationdata;
+const AIO_USERNAME = "quoc_huy";
 const HumanDetection = () => {
+  const [switchDetectorState, setDeteectorState] = useState(true);
+  const handleDetectorChange = () => {
+    if (switchDetectorState) {
+      client.publish(`${AIO_USERNAME}/feeds/detector`, "0");
+    } else {
+      client.publish(`${AIO_USERNAME}/feeds/detector`, "1");
+    }
+    setDeteectorState(!switchDetectorState);
+  };
+
   return (
     <div className="w-[1300px] h-auto flex flex-col gap-6">
       <div className="w-full h-auto flex flex-row  gap-6">
@@ -32,9 +44,8 @@ const HumanDetection = () => {
                     <td className="w-full max-w-[200px]">
                       <div className="flex items-center justify-center">
                         <h2
-                          className={`flex w-fit items-center justify-center rounded-2xl px-3 py-1 text-base  font-normal text-white ${
-                            row.state ? "   bg-green-700" : "  bg-red-700 "
-                          }`}
+                          className={`flex w-fit items-center justify-center rounded-2xl px-3 py-1 text-base  font-normal text-white ${row.state ? "   bg-green-700" : "  bg-red-700 "
+                            }`}
                         >
                           {row.state ? "Human presence" : "Human absence"}
                         </h2>
@@ -49,19 +60,21 @@ const HumanDetection = () => {
         </div>
 
         <div className="w-[420px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
-          <div className="w-full h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-auto h-[80px] flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-              Power
+          <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
+            <div className="w-full h-[80px] flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
+              Switch
             </div>
             <h1 className="text-black font-bold text-2xl ml-4">
-              Write something here
+              Turn the human detector on or off
             </h1>
             <h2 className="text-black font-semibold text-xl ml-4">
               Write something here
             </h2>
-            <div className="w-full h-auto mt-[90px] flex justify-end items-center">
+            <div className="w-full absolute bottom-0 h-auto  flex justify-end items-center ">
               <FormControlLabel
                 control={<PowerSwitch sx={{ m: 1 }} defaultChecked />}
+                checked={switchDetectorState}
+                onChange={() => handleDetectorChange()}
               />
             </div>
           </div>

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Homepage";
-import CalendarPage from "./pages/Calendar";
+import Calendar from "./pages/Calendar";
 import Analytics from "./pages/Analytics";
 import HumanDetection from "./pages/HumanDetection";
 import Modifier from "./pages/Modifier";
@@ -22,7 +22,7 @@ function App() {
               <Routes>
                 <Route path="/Home" element={<HomePage />} />
                 <Route path="/" element={<HomePage />} />
-                <Route path="/Calendar" element={<CalendarPage />} />
+                <Route path="/Calendar" element={<Calendar />} />
                 <Route path="/Analytics" element={<Analytics />} />
                 <Route path="/HumanDetection" element={<HumanDetection />} />
                 <Route
@@ -35,6 +35,7 @@ function App() {
                 />
 
               </Routes>
+              
             </div>
           </div>
         </div>

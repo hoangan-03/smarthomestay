@@ -11,3 +11,13 @@ export const getUser = async () => {
     return [];
   }
 };
+
+export const getTempData = async () => {
+  try {
+    const { data } = await axios.get(baseUrl + "/retrieve_templaterec_table");
+    return data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};

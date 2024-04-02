@@ -251,9 +251,9 @@ const Modifier = (variable) => {
           variant="contained" 
           endIcon={<SendIcon />} 
           onClick={() => handleSetColor()} 
-          style={{ width: '350px', height: '60px'  }} // Set the width here
+          style={{ width: '350px', height: '60px', backgroundColor:"#1D4ED8"  }} // Set the width here
         >
-          Set
+          Set LED Color
         </Button>
       </div>
 

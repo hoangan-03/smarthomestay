@@ -8,11 +8,13 @@ class LightGraph extends Component {
 
   render() {
     const { realtimedata } = this.props;
-    console.log("fdd", graphdata.lightlevel.dataPoints);
+
     let lightMeasures;
     if (realtimedata) {
+      realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
+
       lightMeasures = realtimedata.map(item => {
-        let date = new Date(item.Timestamp)
+        let date = new Date(item.Timestamp);
 
         return {
           x: date,
@@ -20,6 +22,7 @@ class LightGraph extends Component {
         };
       });
     }
+
     let light = graphdata.lightlevel;
     const options = {
       animationEnabled: true,

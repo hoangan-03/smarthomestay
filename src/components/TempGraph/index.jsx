@@ -6,13 +6,32 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class TempGraph extends Component {
 
+  
+
   render() {
-    let temperature = graphdata.temperature;
+    
+    const { realtimedata } = this.props;
+
+    let tempMeasures;
+    if (realtimedata) {
+      realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
+
+      tempMeasures = realtimedata.map(item => {
+        let date = new Date(item.Timestamp);
+
+        return {
+          x: date,
+          y: item.Temp_measure
+        };
+      });
+    }
+    console.log("ddf", tempMeasures);
+    let temp = graphdata.temperature;
     const options = {
       animationEnabled: true,
       theme: "light2",
       title: {
-        text: temperature.text
+        text: temp.text
       },
       axisX: {
         valueFormatString: "DD MMM",
@@ -22,8 +41,8 @@ class TempGraph extends Component {
         }
       },
       axisY: {
-        title: temperature.title,
-        valueFormatString: temperature.format,
+        title: temp.title,
+        valueFormatString: temp.format,
         crosshair: {
           enabled: true,
           snapToDataPoint: true,
@@ -32,12 +51,13 @@ class TempGraph extends Component {
       data: [{
         type: "area",
         xValueFormatString: "DD MMM",
-        yValueFormatString: temperature.format,
-        dataPoints: temperature.dataPoints,
+        yValueFormatString: temp.format,
+        dataPoints: tempMeasures,
       }]
     }
 
     return (
+      
       <div>
         <CanvasJSChart options={options} />
       </div>

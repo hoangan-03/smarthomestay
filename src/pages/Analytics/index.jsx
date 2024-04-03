@@ -19,7 +19,7 @@ const Analytics = () => {
           const tempRes = await getTempData();
           console.log("tempData", tempRes);
           setTempData(tempRes);
-        },30); // Delay of 1 second
+        },300); // Delay of 1 second
       } catch (error) {
         console.error(error);
       }

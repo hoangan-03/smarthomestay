@@ -46,19 +46,20 @@
   z-index: 99;
   position: relative;
   width: calc(100vw - 80px);
-  min-height: 100vh;
-  max-height: 100%;
+  height: calc(100vh - 96px);
   background-color: var(--bg-pink);
+  overflow-y: scroll;
 }
 
 .main-content-wrapper {
   padding: 50px;
+  
 }
 
 .main-content {
   display: flex;
   gap: 50px;
-  height: 880px;
+  height: 830px;
   position: relative;
 }
 

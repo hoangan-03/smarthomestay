@@ -9,6 +9,7 @@ import Modifier from "./pages/Modifier";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import LeftContent from "./components/LeftContent";
+import Footer from "./components/Footer";
 function App() {
   return (
     <div className="App">
@@ -36,8 +37,12 @@ function App() {
 
               </Routes>
             </div>
+            
           </div>
+          <Footer/>
+          
         </div>
+        
       </BrowserRouter>
     </div>
   );

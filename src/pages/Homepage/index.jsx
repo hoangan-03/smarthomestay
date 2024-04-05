@@ -165,17 +165,63 @@ const Homepage = () => {
   
 
   return (
-    <div className='home'>
-      <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray home-upper-content'>
-        <h1 className="home-title" >We are Smart Homestay!</h1>
-        <div className='home-inner'>
-          <img src={homestayphoto} alt="homestay"/>
-          <p className='home-desc'>Welcome to Smart Homestay, where cutting-edge technology meets unparalleled comfort in the heart of modern living.<br/>Our website is dedicated to providing you with the latest advancements and insights to transform your living space into a haven of comfort and convenience.</p>
+    <div className='home'> 
+      <div className='flex gap-10'>
+        <div className='w-[400px] h-[445px] bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray flex flex-col'>
+          <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
+          <p className="text-[16px] font-semibold px-8 pb-12">Write something here</p>
+          <img className="flex-grow" src={homestayphoto} alt="homestay"/>
         </div>
+
+        <div className='w-[400px] h-[445px] bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray flex flex-col'>
+          <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
+          <p className="text-[16px] font-semibold px-8 pb-12">Write something here</p>
+          <img className="flex-grow" src={homestayphoto} alt="homestay"/>
+        </div>
+
+        <div className="w-full h-[160px] flex flex-row gap-6">
+        <div className="w-[400px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
+          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+            <h1 className="text-black text-4xl">{temporlightvar.value.text}</h1>
+            <h2 className="text-blue-700 text-5xl font-bold">
+              {variables === "temperature"
+                ? sensorData.temperature
+                : sensorData.light}{" "}
+              {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "%")}
+            </h2>
+          </div>
+          <img
+            className="w-auto h-[100px] object-cover"
+            src={temporlightvar.value.iconUrl}
+            alt=""
+          ></img>
+        </div>
+        <div
+          className={`w-[400px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${variables === "temperature" ? "block" : "hidden"
+            }`}
+        >
+          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+            <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
+            <h2 className="text-blue-700 text-5xl font-bold">
+              {sensorData.humidity}
+              {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
+            </h2>
+          </div>
+          <img
+            className="w-auto h-[100px] object-cover"
+            src={humidityvar.value.iconUrl}
+            alt=""
+          ></img>
+        </div>
+      </div>
+
+        {/* <div className='home-inner'>
+          
+        </div> */}
         
       </div>
-      <Images />
-      <LargeImages/>
+      {/* <Images />
+      <LargeImages/> */}
       
       
     </div>

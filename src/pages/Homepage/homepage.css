@@ -13,10 +13,7 @@
 
 .home-title {
     font-size: 25px;
-    font-weight: 600;
-    padding-bottom: 5px;
-    border-bottom: 4px solid var(--border-gray);
-    margin-bottom: 30px;
+    font-weight: 700;
 }
 
 .home-desc {

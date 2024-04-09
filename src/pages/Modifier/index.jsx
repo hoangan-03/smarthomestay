@@ -11,7 +11,7 @@ import client from "../../mqtt/mqttclient";
 import "./Modifier.css";
 const AIO_USERNAME = "quoc_huy";
 
-const Modifier = ({variable, hex, setHex}) => {
+const Modifier = ({variable, hex, setHex, fan, setFan}) => {
   // console.log("VAR", variable)
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
@@ -108,9 +108,9 @@ const Modifier = ({variable, hex, setHex}) => {
   console.log("tem", sensorData.temperature);
 
   return (
-    <div className="w-[1300px] h-auto flex flex-col gap-6">
-      <div className="w-full h-[175px] flex flex-row gap-6">
-        <div className="w-[400px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
+    <div className="w-[1300px] h-[auto] flex flex-col gap-6 relative">
+      <div className="w-full h-[full] flex flex-row gap-6">
+        <div className="w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
           <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
             <h1 className="text-black text-4xl">{temporlightvar.value.text}</h1>
             <h2 className="text-blue-700 text-5xl font-bold">
@@ -127,7 +127,7 @@ const Modifier = ({variable, hex, setHex}) => {
           ></img>
         </div>
         <div
-          className={`w-[400px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${variables === "temperature" ? "block" : "hidden"
+          className={`w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${variables === "temperature" ? "block" : "hidden"
             }`}
         >
           <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
@@ -144,8 +144,8 @@ const Modifier = ({variable, hex, setHex}) => {
           ></img>
         </div>
       </div>
-      <div className="w-full h-[400px] flex flex-row gap-6">
-        <div className="w-[400px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
+      <div className="w-full h-[full] flex flex-row gap-6">
+        <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
           <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
             <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
               {"Switch"}
@@ -191,7 +191,7 @@ const Modifier = ({variable, hex, setHex}) => {
           </div>
         </div>
 
-        <div className="w-[400px] h-[400px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
+        <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
           <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
             <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
               {"Sensor"}
@@ -240,7 +240,8 @@ const Modifier = ({variable, hex, setHex}) => {
           
           
         </div>
-        <div className={`w-[400px] h-[700px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 ${variables === "temperature" ? "hidden" : "block"} `}>
+        
+        <div className={`w-[400px] h-[700px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 ${variables === "temperature" ? "hidden" : "block"} `}>
         <Sketch
           color={hex}
           onChange={(color) => {
@@ -265,13 +266,13 @@ const Modifier = ({variable, hex, setHex}) => {
       </div>
       
 
-      <div className="relative w-[400px] h-[250px] border-4 border-lightgray bg-white rounded-xl">
+      <div className="home-large-image" style={{height: "250px"}}>
         <img
           className="w-full h-full object-cover"
           src={analytic}
           alt=""
         ></img>
-        <div className="absolute bottom-0 h-[127px] w-full flex flex-row py-4 px-7  justify-between items-center bg-black/40 backdrop-blur-lg">
+        <div className="home-config">
           <div className="flex flex-col gap-3 ">
             <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
             <h2 className="text-white font-semibold text-xl ml-4">

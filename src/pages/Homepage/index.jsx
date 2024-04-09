@@ -211,7 +211,7 @@ const Homepage = (props) => {
     value: data.humidity
   };
   return (
-    <div className='flex flex-col justify-between w-[80%] relative'> 
+    <div className='flex flex-col justify-between w-[1300px] h-[full] relative'> 
       <div className='flex gap-10'>
         <div className='w-[400px] h-[445px] bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray flex flex-col'>
           <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
@@ -280,7 +280,7 @@ const Homepage = (props) => {
 
         
       </div>
-      <Images />
+      {/* <Images /> */}
       <LargeImages/>
       
       

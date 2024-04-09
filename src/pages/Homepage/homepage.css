@@ -60,9 +60,9 @@
         display: flex;
     }
 
-    .images-large-screen {
+    /* .images-large-screen {
         display: none;
-    }
+    } */
 
     .setting-image {
         min-width: 380px;

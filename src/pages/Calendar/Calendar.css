@@ -1,6 +1,5 @@
-.scheduler-container {
-  height: 880px;
-  width: 100%;
-  position: relative;
+.calendar {
+  z-index: 10;
+  height: 100%;
+  width: calc(100vw - 600px);
 }
-

@@ -32,7 +32,7 @@ function App() {
                 <Route path="/HumanDetection" element={<HumanDetection />} />
                 <Route
                   path="/Temperature"
-                  element={<Modifier variable="temperature" hex={hex} setHex={setHex}/>}
+                  element={<Modifier variable="temperature" hex={hex} setHex={setHex} fan={fan} setFan={setFan}/>}
                 />
                 <Route
                   path="/LightLevel"

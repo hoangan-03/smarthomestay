@@ -1,40 +1,6 @@
-.react-calendar {
+.scheduler-container {
+  height: 880px;
   width: 100%;
-  border: none;
-  margin-top: 40px
+  position: relative;
 }
 
-.react-calendar__tile {
-    position: relative; 
-    width: 50px !important; 
-    height: 100px !important; 
-  }
-
-  .react-calendar__month-view__weekdays abbr{
-    text-decoration: none;
-    font-size: 1.3em;
-  }
-  
-  .react-calendar button {
-    border: 1px solid #E8E9EB; 
-  }
-
-  .react-calendar button:enabled:hover {
-    background-color: #E8E9EB; 
-  }
-
-  .react-calendar button abbr {
-    position: absolute; 
-    top: 15px; 
-    left: 15px; 
-    font-size: 1.2em;
-  }
-  button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
-    -webkit-appearance: button; /* 1 */
-    /*will affect the button style of most component libraries, so disable it*/
-    /*background-color: transparent; !* 2 *!*/
-    background-image: none; /* 2 */
-}

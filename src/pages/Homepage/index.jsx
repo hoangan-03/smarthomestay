@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useRef } from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import './homepage.css'
 import homestayphoto from '../../assets/icons/homestayphoto.png'
 import lightphoto from '../../assets/icons/lightphoto.png'
@@ -9,6 +8,9 @@ import setting from '../../assets/icons/setting.png'
 import leftarrow from '../../assets/icons/leftarrow.png'
 import rightarrow from '../../assets/icons/rightarrow.png'
 import { Link } from 'react-router-dom'
+import data from "../../components/Constant";
+import client from "../../mqtt/mqttclient";
+const AIO_USERNAME = "quoc_huy";
 
 const scrollToTop = () => {
   window.scrollTo({
@@ -42,63 +44,63 @@ const Images = () => {
       <div className='items-carousel'>
         <button
           onClick={() => {
-            handleHorizantalScroll(elementRef.current, 8, 460, -10);
+            handleHorizantalScroll(elementRef.current, 8, 440, -10);
           }}
           disabled={arrowDisable}
           className={"absolute top-1/2 -left-9 cursor-pointer"}
         >
           <img src={leftarrow} alt="leftarrow" width={40} height={40}/>
         </button>
+
         <div className='home-lower-wrapper' ref={elementRef}>
-      
-        <div className="home-lower-content" >
-          <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative' >
-              <img src={tempphoto} alt="temp" className="setting-image"/>
-              <div className='home-config'>
-                <div className='flex flex-col gap-2'>
-                  <p className='text-2xl font-bold'>Temperature</p>
-                  <p className='text-lg font-medium'>Write something here</p>
+          <div className="flex items-center w-full gap-10" >
+            <div className='home-large-image' >
+                <img src={tempphoto} alt="temp" className="setting-image"/>
+                <div className='home-config'>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-2xl font-bold'>Temperature</p>
+                    <p className='text-lg font-medium'>Write something here</p>
+                  </div>
+                  
+                  <Link to="/Temperature">
+                    <img src={setting} alt="setting" className='home-setting-icon'/>
+                  </Link>
+                  
                 </div>
-                
-                <Link to="/Temperature">
-                  <img src={setting} alt="setting" className='home-setting-icon'/>
-                </Link>
-                
               </div>
-            </div>
 
-            <div className='bg-whitep-5 rounded-2xl shadow-custom-shadow h-full relative'>
-              <img src={lightphoto} alt="light" className="setting-image"/>
-              <div className='home-config'>
-                <div className='flex flex-col gap-2'>
-                  <p className='text-2xl font-bold'>Light Level</p>
-                  <p className='text-lg font-medium'>Write something here</p>
+              <div className='home-large-image'>
+                <img src={lightphoto} alt="light" className="setting-image"/>
+                <div className='home-config'>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-2xl font-bold'>Light Level</p>
+                    <p className='text-lg font-medium'>Write something here</p>
+                  </div>
+                  <Link to="/LightLevel">
+                    <img src={setting} alt="setting" className='home-setting-icon'/>
+                  </Link>
+                  
                 </div>
-                <Link to="/LightLevel">
-                  <img src={setting} alt="setting" className='home-setting-icon'/>
-                </Link>
-                
               </div>
-            </div>
 
-            <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative'>
-              <img src={detectionphoto} alt="detect" className="setting-image"/>
-              <div className='home-config'>
-                <div className='flex flex-col gap-2'>
-                  <p className='text-2xl font-bold'>Human Detection</p>
-                  <p className='text-lg font-medium'>Write something here</p>
+              <div className='home-large-image'>
+                <img src={detectionphoto} alt="detect" className="setting-image"/>
+                <div className='home-config'>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-2xl font-bold'>Human Detection</p>
+                    <p className='text-lg font-medium'>Write something here</p>
+                  </div>
+                  <Link to="/HumanDetection">
+                    <img src={setting} alt="setting" className='home-setting-icon'/>
+                  </Link>
+                  
                 </div>
-                <Link to="/HumanDetection">
-                  <img src={setting} alt="setting" className='home-setting-icon'/>
-                </Link>
-                
               </div>
-            </div>
+          </div>
         </div>
-      </div>
         <button
           onClick={() => {
-            handleHorizantalScroll(elementRef.current, 8, 460, 10);
+            handleHorizantalScroll(elementRef.current, 8, 440, 10);
           }}
           className={"absolute top-1/2 -right-9 cursor-pointer"}
         >
@@ -114,9 +116,9 @@ const Images = () => {
 const LargeImages = () => {
 
   return (
-    <div className="home-lower-content images-large-screen" >
-      <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative' >
-        <img src={tempphoto} alt="temp" className="setting-image"/>
+    <div className="flex items-center w-full gap-10 images-large-screen" >
+      <div className='home-large-image' >
+        <img src={tempphoto} alt="temp" className='max-w-[380px] max-h-[276px]'/>
         <div className='home-config'>
           <div className='flex flex-col gap-2'>
             <p className='image-title font-bold'>Temperature</p>
@@ -130,8 +132,8 @@ const LargeImages = () => {
         </div>
       </div>
 
-        <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative'>
-          <img src={lightphoto} alt="light" className="setting-image"/>
+        <div className='home-large-image'>
+          <img src={lightphoto} alt="light" className='max-w-[380px] max-h-[276px]'/>
           <div className='home-config'>
             <div className='flex flex-col gap-2'>
               <p className='image-title font-bold'>Light Level</p>
@@ -144,8 +146,8 @@ const LargeImages = () => {
           </div>
         </div>
 
-        <div className='bg-white p-5 rounded-2xl shadow-custom-shadow h-full border-5 border-lightgray relative'>
-          <img src={detectionphoto} alt="detect" className="setting-image"/>
+        <div className='home-large-image'>
+          <img src={detectionphoto} alt="detect" className='max-w-[380px] max-h-[276px] rounded-xl'/>
           <div className='home-config'>
             <div className='flex flex-col gap-2'>
               <p className='image-title font-bold'>Human Detection</p>
@@ -161,67 +163,125 @@ const LargeImages = () => {
   )
 }
 
-const Homepage = () => {
-  
+const Homepage = (props) => {
+  const {hex, fan} = props;
+  console.log("FAN", fan)
+  const [sensorData, setSensorData] = useState({
+    temperature: "OFF",
+    humidity: "OFF",
+    light: "OFF",
+  });
 
+  useEffect(() => {
+    client.on("connect", () => {
+      console.log("Connected to Adafruit MQTT");
+      client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
+      client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
+      client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
+    });
+
+    client.on("message", (topic, message) => {
+      if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
+        setSensorData((prevState) => ({
+          ...prevState,
+          temperature: parseFloat(message.toString()),
+        }));
+      } else if (topic === `${AIO_USERNAME}/feeds/humility_sensor`) {
+        setSensorData((prevState) => ({
+          ...prevState,
+          humidity: parseFloat(message.toString()),
+        }));
+      } else if (topic === `${AIO_USERNAME}/feeds/light_sensor`) {
+        setSensorData((prevState) => ({
+          ...prevState,
+          light: parseFloat(message.toString()),
+        }));
+      }
+    });
+  }, []);
+  const tempervar = {
+    value: data.temperature
+  };
+
+  const lightvar = {
+    value: data.lightlevel
+  }
+
+  const humidityvar = {
+    value: data.humidity
+  };
   return (
-    <div className='home'> 
+    <div className='flex flex-col justify-between w-[80%] relative'> 
       <div className='flex gap-10'>
         <div className='w-[400px] h-[445px] bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray flex flex-col'>
           <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
-          <p className="text-[16px] font-semibold px-8 pb-12">Write something here</p>
-          <img className="flex-grow" src={homestayphoto} alt="homestay"/>
+          <p className="text-[16px] font-semibold px-8 pb-20">Write something here</p>
+          <img className="flex-grow rounded-none" src={homestayphoto} alt="homestay"/>
         </div>
 
-        <div className='w-[400px] h-[445px] bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray flex flex-col'>
-          <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
-          <p className="text-[16px] font-semibold px-8 pb-12">Write something here</p>
-          <img className="flex-grow" src={homestayphoto} alt="homestay"/>
-        </div>
-
-        <div className="w-full h-[160px] flex flex-row gap-6">
-        <div className="w-[400px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
-          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-            <h1 className="text-black text-4xl">{temporlightvar.value.text}</h1>
-            <h2 className="text-blue-700 text-5xl font-bold">
-              {variables === "temperature"
-                ? sensorData.temperature
-                : sensorData.light}{" "}
-              {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "%")}
-            </h2>
+        <div className="w-[400px] h-[445px] flex flex-col gap-6 bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray justify-between items-center py-5 pl-10 pr-5 ">
+          <div className="w-full flex justify-between">
+            <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+              <h1 className="text-black text-4xl">{tempervar.value.text}</h1>
+              <h2 className="text-blue-700 text-5xl font-bold">
+                {sensorData.temperature}
+                {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : ("oC")}
+              </h2>
+            </div>
+            <img
+              className="w-[100px] h-[100px] object-cover"
+              src={tempervar.value.iconUrl}
+              alt=""
+            ></img>
           </div>
-          <img
-            className="w-auto h-[100px] object-cover"
-            src={temporlightvar.value.iconUrl}
-            alt=""
-          ></img>
-        </div>
-        <div
-          className={`w-[400px] h-full rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${variables === "temperature" ? "block" : "hidden"
-            }`}
-        >
-          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-            <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
-            <h2 className="text-blue-700 text-5xl font-bold">
-              {sensorData.humidity}
-              {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
-            </h2>
-          </div>
-          <img
-            className="w-auto h-[100px] object-cover"
-            src={humidityvar.value.iconUrl}
-            alt=""
-          ></img>
-        </div>
-      </div>
 
-        {/* <div className='home-inner'>
-          
-        </div> */}
+          <div className="w-full flex justify-between ">
+            <div className="w-auto h-full flex flex-col justify-center items-start gap-3 ">
+              <h1 className="text-black text-4xl">{lightvar.value.text}</h1>
+              <h2 className="text-blue-700 text-5xl font-bold">
+                {sensorData.light}
+                {(sensorData.light === "OFF" || sensorData.light === "NaN") ? "" : ("Lux")}
+              </h2>
+            </div>
+            <img
+              className="w-auto h-[100px] object-cover pr-2"
+              src={lightvar.value.iconUrl}
+              alt=""
+            ></img>
+          </div>
+
+          <div className={`w-full flex justify-between`}
+          >
+            <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+              <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
+              <h2 className="text-blue-700 text-5xl font-bold">
+                {sensorData.humidity}
+                {sensorData.humidity === "OFF" || sensorData.humidity === "NaN" ? "" : "%"}
+              </h2>
+            </div>
+            <img
+              className="w-auto h-[100px] object-cover"
+              src={humidityvar.value.iconUrl}
+              alt=""
+            ></img>
+          </div>
+        </div>
+
+        <div className="w-[400px] h-[445px] flex flex-col justify-between">
+          <div className='bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray w-[400px] h-[200px] flex flex-col items-center'>
+            <p className='mt-5 bg-[#d5d6d8] w-[320px] h-[80px] flex justify-center items-center rounded-[30px] text-2xl font-semibold'>Fan speed</p>
+            <p className='text-blue-700 text-5xl font-bold mt-5'>{fan}</p>
+          </div> 
+          <div className='bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray w-[400px] h-[200px] flex flex-col items-center relative'>
+            <p className='mt-5 bg-[#d5d6d8] w-[320px] h-[80px] flex justify-center items-center rounded-[30px] text-2xl font-semibold'>Light color</p>
+            <div className='w-full h-[70px] absolute bottom-0 left-0 rounded-b-xl' style={{backgroundColor: hex}}></div>
+          </div>
+        </div>
+
         
       </div>
-      {/* <Images />
-      <LargeImages/> */}
+      <Images />
+      <LargeImages/>
       
       
     </div>

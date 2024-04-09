@@ -11,8 +11,8 @@ import client from "../../mqtt/mqttclient";
 import "./Modifier.css";
 const AIO_USERNAME = "quoc_huy";
 
-const Modifier = (variable) => {
-  const [hex, setHex] = useState("#d0021b");
+const Modifier = ({variable, hex, setHex}) => {
+  // console.log("VAR", variable)
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchFanState, setSwitchFanState] = useState(false);
@@ -97,7 +97,8 @@ const Modifier = (variable) => {
       }
     });
   }, []);
-  const variables = variable.variable;
+  const variables = variable;
+  console.log("VAR", variables)
   const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
   };
@@ -244,6 +245,7 @@ const Modifier = (variable) => {
           color={hex}
           onChange={(color) => {
             setHex(color.hex);
+            console.log("NEWHEX", hex)
           }}
           style={{ width: '350px', height: '600px' }} // Set the width here
         />

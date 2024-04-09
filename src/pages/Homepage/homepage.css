@@ -1,60 +1,13 @@
-.home {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 80%;
-    position: relative;
-}
-
-.home-upper-content {
-    padding: 40px!important;
-    height: 500px!important;
-}
-
-.home-title {
-    font-size: 25px;
-    font-weight: 700;
-}
-
-.home-desc {
-    font-size: 25px;
-    overflow-y: auto;
-    max-height: 350px;
-}
-
-.home-inner {
-    display: flex;
-    gap: 30px;
-    position: relative;
-}
-
-.home-inner img {
-    width: 50%;
-    height: 360px;
-    margin-bottom: 20px;
-}
-
-.items-carousel {
-    width: 449px;
-    position: relative;
-    margin: 0 auto;
-    
+.home-large-image {
+   @apply w-[400px] h-[300px] bg-white p-2 rounded-2xl shadow-custom-shadow border-5 border-lightgray relative flex justify-center items-center
 }
 
 .home-lower-wrapper {
     margin: 0 auto;
     overflow-x: hidden;
     overflow-y: hidden;
-    width: 430px;
+    width: 400px;
     border-radius: 20px;
-}
-
-.home-lower-content {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    gap: 20px;
 }
 
 .setting-image {
@@ -67,11 +20,11 @@
     align-items: center;
     justify-content: space-between;
     position: absolute;
-    left: 20px;
-    bottom: 20px;
+    left: 5px;
+    bottom: 8px;
     background-color: rgba(0, 0, 0, 0.7); /* Add transparency to the background color */
     backdrop-filter: blur(2px); /* Add blur effect */
-    width: calc(100% - 40px);
+    width: 380px;
     border-radius: 0 0 10px 10px;
     padding: 15px;
 }

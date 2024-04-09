@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Homepage";
@@ -11,6 +12,8 @@ import Header from "./components/Header";
 import LeftContent from "./components/LeftContent";
 import Footer from "./components/Footer";
 function App() {
+  const [hex, setHex] = useState("#d0021b");
+  const [fan, setFan] = useState(0);
   return (
     <div className="App">
       <BrowserRouter>
@@ -21,18 +24,18 @@ function App() {
             <div className="main-content">
               <LeftContent />
               <Routes>
-                <Route path="/Home" element={<HomePage />} />
-                <Route path="/" element={<HomePage />} />
+                <Route exact path="/" element={<HomePage hex={hex} fan={fan}/>} />
+                {/* <Route path="/" element={<HomePage />} /> */}
                 <Route path="/Calendar" element={<CalendarPage />} />
                 <Route path="/Analytics" element={<Analytics />} />
                 <Route path="/HumanDetection" element={<HumanDetection />} />
                 <Route
                   path="/Temperature"
-                  element={<Modifier variable="temperature" />}
+                  element={<Modifier variable="temperature" hex={hex} setHex={setHex}/>}
                 />
                 <Route
                   path="/LightLevel"
-                  element={<Modifier variable="lightlevel"/>}
+                  element={<Modifier variable="lightlevel" hex={hex} setHex={setHex}/>}
                 />
 
               </Routes>

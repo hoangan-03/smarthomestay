@@ -11,11 +11,6 @@ import 'dhtmlx-scheduler/codebase/dhtmlxscheduler.css';
 
 const scheduler = window.scheduler;
 
-const haha = [
-  { start_date:'2023-11-25 6:00', end_date:'2023-11-25 9:00', text:'Event 1', id: 1},
-  { start_date:'2023-11-22 10:00', end_date:'2023-11-22 18:00', text:'Event 2', id: 2 },
-  //{start_date: 'Tue Nov 21 2023 02:10:00 ', end_date: 'Tue Nov 21 2023 07:15:00 ', text: 'fs', id: 1704085403824,},
-];
 
 
 
@@ -67,7 +62,7 @@ class Calendar extends Component {
           method: 'post',
           headers:{
             "Content-Type": "application/json",
-          },
+          },  
           body: JSON.stringify(addedEvent),
         })
       }

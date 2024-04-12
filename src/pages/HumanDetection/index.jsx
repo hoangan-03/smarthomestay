@@ -9,9 +9,9 @@ const HumanDetection = () => {
 
 
   return (
-    <div className="w-[1300px] h-auto flex flex-col gap-6">
+    <div className="w-full h-auto flex flex-col gap-6">
       <div className="w-full h-auto flex flex-row  gap-6">
-        <div className="w-[760px] border-4 border-lightgray rounded-2xl h-[540px] bg-white flex  flex-col px-16 py-9">
+        <div className="w-full border-4 border-lightgray rounded-2xl h-[540px] bg-white flex  flex-col px-16 py-9">
           <div className="text-start border-b-2  text-black font-bold text-2xl pb-4 h-auto">
             Nofication
           </div>
@@ -19,8 +19,8 @@ const HumanDetection = () => {
             <table className="w-full table-fixed whitespace-nowrap">
               <thead className="sticky top-0 bg-blue-200 ">
                 <tr className="roboto border-b text-left font-bold text-black">
-                  <th className="w-[25%] px-4 py-3">Date</th>
-                  <th className="w-[20%] px-4 py-3">Time</th>
+                  <th className="w-[30%] px-4 py-3">Date</th>
+                  <th className="w-[30%] px-4 py-3">Time</th>
                   <th className="w-[30%] px-4 py-3 text-center">State</th>
                   <th className="flex  justify-center px-4 py-3"></th>
                   <th className=" px-4 py-3"></th>

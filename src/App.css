@@ -46,7 +46,7 @@
   z-index: 0;
   position: relative;
   width: calc(100vw - 80px);
-  height: calc(100vh - 96px);
+  height: calc(100vh - 56px);
   background-color: var(--bg-pink);
   overflow-y: scroll;
 }
@@ -58,10 +58,14 @@
 
 .main-content {
   display: flex;
-  gap: 50px;
-  height: 780px;
+  height: fit-content;
   position: relative;
-  
+  gap: 50px
+}
+
+
+.right-content {
+  flex: 1
 }
 
 button,
@@ -81,4 +85,14 @@ button,
   to {
     transform: rotate(360deg);
   }
+}
+
+@media screen and (max-width: 1460px) {
+  .right-content {
+    margin-left: -50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
 }

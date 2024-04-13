@@ -12,7 +12,6 @@ import "./Modifier.css";
 const AIO_USERNAME = "quoc_huy";
 
 const Modifier = ({variable, hex, setHex, fan, setFan}) => {
-  // console.log("VAR", variable)
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchFanState, setSwitchFanState] = useState(false);

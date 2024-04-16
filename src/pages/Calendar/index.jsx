@@ -1,6 +1,4 @@
-import React, {useEffect, useState} from "react";
-
-import { Card, CardBody, CardFooter, Container, Row, Col } from "reactstrap";
+import React  from "react";
 import { Component } from 'react';
 
 // import NotesHeader from "components/Headers/NotesHeader.js";
@@ -55,7 +53,7 @@ class Calendar extends Component {
       addedEvent.text = ev.text
       addedEvent.id = ev.id
       
-      if(action == 'create')
+      if(action === 'create')
       {
         fetch('https://savig-project.vercel.app/api/create',
         {
@@ -66,7 +64,7 @@ class Calendar extends Component {
           body: JSON.stringify(addedEvent),
         })
       }
-      else if(action == 'delete')
+      else if(action === 'delete')
       {
         fetch('https://savig-project.vercel.app/api/delete',
         {
@@ -77,7 +75,7 @@ class Calendar extends Component {
           body: JSON.stringify({id: ev.id}),
         })
       }
-      else if(action == 'update')
+      else if(action === 'update')
       {
         fetch('https://savig-project.vercel.app/api/update',
         {
@@ -102,7 +100,6 @@ class Calendar extends Component {
   const that = this;
 
   fetch('https://savig-project.vercel.app/api').then((response) => {return response.json()}).then((dataa) => {
-    //const tmp = dataa;
     that.setState({data : dataa, test: "yeah",});
     console.log(that.state.data);
     console.log(that.state.test);
@@ -115,7 +112,7 @@ class Calendar extends Component {
 
     
 
-     var { currentTimeFormatState, messages, data } = this.state;
+     var { currentTimeFormatState } = this.state;
     
     
     return (

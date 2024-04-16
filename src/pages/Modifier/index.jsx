@@ -109,8 +109,8 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
   console.log("tem", sensorData.temperature);
 
   return (
-    <div>
-      <div className=" w-full h-[auto] flex flex-col gap-6 relative items-center">
+    <div className="w-full relative">
+      <div className=" w-full h-[auto] flex flex-col gap-6 relative items-center justify-center">
         <div className="w-full h-[full] flex flex-row gap-6 flex-wrap justify-center">
           <div className="w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
             <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
@@ -257,15 +257,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
             
           </div>
           
-          
-
-
-
-
-        </div>
-      
-
-        <div className="home-large-image" style={{height: "250px"}}>
+          <div className="home-large-image" style={{height: "320px"}}>
           <img
             className="w-full h-full object-cover"
             src={analytic}
@@ -288,6 +280,14 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
           </div>
         </div>
 
+
+
+
+
+        </div>
+      
+
+        
       </div>
       {openSetColor && (<div className={`w-[400px] h-[700px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 ${variables === "temperature" ? "hidden" : "block"} `}>
         <Sketch

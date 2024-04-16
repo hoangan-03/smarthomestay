@@ -23,28 +23,24 @@ function App() {
           <Header />
           <div className="main-content-wrapper">
             <div className="main-content">
-              <div className="left-content">
-                <LeftContent />
-              </div>
-              <div className="right-content">
-                <Routes>
-                  <Route exact path="/" element={<HomePage hex={hex} fan={fan}/>} />
-                  {/* <Route path="/" element={<HomePage />} /> */}
-                  <Route path="/Home" element={<HomePage hex={hex} fan={fan}/>} />
-                  <Route path="/Calendar" element={<Calendar />} />
-                  <Route path="/Analytics" element={<Analytics />} />
-                  <Route path="/HumanDetection" element={<HumanDetection />} />
-                  <Route
-                    path="/Temperature"
-                    element={<Modifier variable="temperature" hex={hex} setHex={setHex} fan={fan} setFan={setFan}/>}
-                  />
-                  <Route
-                    path="/LightLevel"
-                    element={<Modifier variable="lightlevel" hex={hex} setHex={setHex}/>}
-                  />
+              {/* <LeftContent /> */}
+              <Routes>
+                <Route exact path="/" element={<HomePage hex={hex} fan={fan}/>} />
+                {/* <Route path="/" element={<HomePage />} /> */}
+                <Route path="/Home" element={<HomePage hex={hex} fan={fan}/>} />
+                <Route path="/Calendar" element={<Calendar />} />
+                <Route path="/Analytics" element={<Analytics />} />
+                <Route path="/HumanDetection" element={<HumanDetection />} />
+                <Route
+                  path="/Temperature"
+                  element={<Modifier variable="temperature" hex={hex} setHex={setHex} fan={fan} setFan={setFan}/>}
+                />
+                <Route
+                  path="/LightLevel"
+                  element={<Modifier variable="lightlevel" hex={hex} setHex={setHex}/>}
+                />
 
-                </Routes>
-              </div>
+              </Routes>
               
               
             </div>

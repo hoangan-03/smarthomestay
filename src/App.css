@@ -52,7 +52,7 @@
 }
 
 .main-content-wrapper {
-  padding: 50px;
+  padding: 50px 50px 0px 50px;
   
 }
 
@@ -60,7 +60,7 @@
   display: flex;
   height: fit-content;
   position: relative;
-  gap: 50px
+  gap: 50px;
 }
 
 
@@ -85,14 +85,4 @@ button,
   to {
     transform: rotate(360deg);
   }
-}
-
-@media screen and (max-width: 1460px) {
-  .right-content {
-    margin-left: -50px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
 }

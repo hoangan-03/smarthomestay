@@ -16,6 +16,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchFanState, setSwitchFanState] = useState(false);
   const [switchLightSenState, setLightSenState] = useState(true);
+  const [openSetColor, setOpenSetColor] = useState(false);  
 
   const handleSetColor = () => {
     client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
@@ -107,140 +108,187 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
   console.log("tem", sensorData.temperature);
 
   return (
-    <div className="w-[1300px] h-[auto] flex flex-col gap-6 relative">
-      <div className="w-full h-[full] flex flex-row gap-6">
-        <div className="w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
-          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-            <h1 className="text-black text-4xl">{temporlightvar.value.text}</h1>
-            <h2 className="text-blue-700 text-5xl font-bold">
-              {variables === "temperature"
-                ? sensorData.temperature
-                : sensorData.light}{" "}
-              {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "%")}
-            </h2>
+    <div>
+      <div className=" w-full h-[auto] flex flex-col gap-6 relative items-center">
+        <div className="w-full h-[full] flex flex-row gap-6 flex-wrap justify-center">
+          <div className="w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
+            <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+              <h1 className="text-black text-4xl">{temporlightvar.value.text}</h1>
+              <h2 className="text-blue-700 text-5xl font-bold">
+                {variables === "temperature"
+                  ? sensorData.temperature
+                  : sensorData.light}{" "}
+                {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "%")}
+              </h2>
+            </div>
+            <img
+              className="w-auto h-[100px] object-cover"
+              src={temporlightvar.value.iconUrl}
+              alt=""
+            ></img>
           </div>
+          <div
+            className={`w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${variables === "temperature" ? "block" : "hidden"
+              }`}
+          >
+            <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
+              <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
+              <h2 className="text-blue-700 text-5xl font-bold">
+                {sensorData.humidity}
+                {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
+              </h2>
+            </div>
+            <img
+              className="w-auto h-[100px] object-cover"
+              src={humidityvar.value.iconUrl}
+              alt=""
+            ></img>
+          </div>
+          <Button
+            sx={{
+                height: "50px",
+                position: "absolute",
+                top: 0,
+                right: 0,
+                display: variables === "temperature" ? "none" : "block" // Use ternary operator for conditional display
+            }}
+            onClick={() => setOpenSetColor(prev => !prev)}
+            variant="contained"
+            color="primary"
+          >
+            Set LED Color
+          </Button>
+        </div>
+        <div className="w-full h-[full] flex flex-row gap-6 flex-wrap justify-center">
+          <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
+            <div className="w-full relative h-full flex flex-col justify-start items-start gap-4 ">
+              <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
+                {"Switch"}
+              </div>
+              <h1 className="text-black font-bold text-2xl ml-4">
+                {variables === "temperature"
+                  ? "Turn the fan on or off"
+                  : "Turn the led light on or off"}
+              </h1>
+              <h2 className="text-black font-semibold text-xl ml-4">
+                Write something here
+              </h2>
+              <div
+                className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
+                  } `}
+              >
+                <FormControlLabel
+                  control={
+                    <PowerSwitch
+                      sx={{ m: 1 }}
+                      defaultChecked
+                      checked={switchLightState}
+                      onChange={() => handleSwitchLightChange()}
+                    />
+                  }
+                />
+              </div>
+              <div
+                className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "block" : "hidden"
+                  } `}
+              >
+                <FormControlLabel
+                  control={
+                    <PowerSwitch
+                      sx={{ m: 1 }}
+                      defaultChecked
+                      checked={switchFanState}
+                      onChange={() => handleSwitchFanChange()}
+                    />
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
+            <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
+              <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
+                {"Sensor"}
+              </div>
+              <h1 className="text-black font-bold text-2xl ml-4">
+                {variables === "temperature"
+                  ? "Turn the humidity and tempearture sensor on or off"
+                  : "Turn the led light sensor on or off"}
+              </h1>
+              <h2 className="text-black font-semibold text-xl ml-4">
+                Write something here
+              </h2>
+              <div
+                className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
+                  } `}
+              >
+                <FormControlLabel
+                  control={
+                    <PowerSwitch
+                      sx={{ m: 1 }}
+                      defaultChecked
+                      checked={switchLightSenState}
+                      onChange={() => handleLightSenChange()}
+                    />
+                  }
+                />
+              </div>
+              <div
+                className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "block" : "hidden"
+                  } `}
+              >
+                <FormControlLabel
+                  control={
+                    <PowerSwitch
+                      sx={{ m: 1 }}
+                      defaultChecked
+                      checked={switchTempandHumState}
+                      onChange={() => handleTempandHumChange()}
+                    />
+                  }
+                />
+              </div>
+              
+              
+            </div>
+            
+            
+          </div>
+          
+          
+
+
+
+
+        </div>
+      
+
+        <div className="home-large-image" style={{height: "250px"}}>
           <img
-            className="w-auto h-[100px] object-cover"
-            src={temporlightvar.value.iconUrl}
+            className="w-full h-full object-cover"
+            src={analytic}
             alt=""
           ></img>
-        </div>
-        <div
-          className={`w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${variables === "temperature" ? "block" : "hidden"
-            }`}
-        >
-          <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-            <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
-            <h2 className="text-blue-700 text-5xl font-bold">
-              {sensorData.humidity}
-              {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
-            </h2>
-          </div>
-          <img
-            className="w-auto h-[100px] object-cover"
-            src={humidityvar.value.iconUrl}
-            alt=""
-          ></img>
-        </div>
-      </div>
-      <div className="w-full h-[full] flex flex-row gap-6">
-        <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
-          <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-              {"Switch"}
+          <div className="home-config">
+            <div className="flex flex-col gap-3 ">
+              <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
+              <h2 className="text-white font-semibold text-xl ml-4">
+                Write something here
+              </h2>
             </div>
-            <h1 className="text-black font-bold text-2xl ml-4">
-              {variables === "temperature"
-                ? "Turn the fan on or off"
-                : "Turn the led light on or off"}
-            </h1>
-            <h2 className="text-black font-semibold text-xl ml-4">
-              Write something here
-            </h2>
-            <div
-              className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
-                } `}
-            >
-              <FormControlLabel
-                control={
-                  <PowerSwitch
-                    sx={{ m: 1 }}
-                    defaultChecked
-                    checked={switchLightState}
-                    onChange={() => handleSwitchLightChange()}
-                  />
-                }
-              />
-            </div>
-            <div
-              className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "block" : "hidden"
-                } `}
-            >
-              <FormControlLabel
-                control={
-                  <PowerSwitch
-                    sx={{ m: 1 }}
-                    defaultChecked
-                    checked={switchFanState}
-                    onChange={() => handleSwitchFanChange()}
-                  />
-                }
-              />
+            <div className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
+              <img
+                className="w-[30px] h-[30px] object-cover "
+                src={analyticiconlight}
+                alt=""
+              ></img>
             </div>
           </div>
         </div>
 
-        <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
-          <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
-            <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-              {"Sensor"}
-            </div>
-            <h1 className="text-black font-bold text-2xl ml-4">
-              {variables === "temperature"
-                ? "Turn the humidity and tempearture sensor on or off"
-                : "Turn the led light sensor on or off"}
-            </h1>
-            <h2 className="text-black font-semibold text-xl ml-4">
-              Write something here
-            </h2>
-            <div
-              className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
-                } `}
-            >
-              <FormControlLabel
-                control={
-                  <PowerSwitch
-                    sx={{ m: 1 }}
-                    defaultChecked
-                    checked={switchLightSenState}
-                    onChange={() => handleLightSenChange()}
-                  />
-                }
-              />
-            </div>
-            <div
-              className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "block" : "hidden"
-                } `}
-            >
-              <FormControlLabel
-                control={
-                  <PowerSwitch
-                    sx={{ m: 1 }}
-                    defaultChecked
-                    checked={switchTempandHumState}
-                    onChange={() => handleTempandHumChange()}
-                  />
-                }
-              />
-            </div>
-            
-            
-          </div>
-          
-          
-        </div>
-        
-        <div className={`w-[400px] h-[700px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 ${variables === "temperature" ? "hidden" : "block"} `}>
+      </div>
+      {openSetColor && (<div className={`w-[400px] h-[700px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 ${variables === "temperature" ? "hidden" : "block"} `}>
         <Sketch
           color={hex}
           onChange={(color) => {
@@ -249,46 +297,24 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
           }}
           style={{ width: '350px', height: '600px' }} // Set the width here
         />
-        <Button 
-          variant="contained" 
-          endIcon={<SendIcon />} 
-          onClick={() => handleSetColor()} 
-          style={{ width: '350px', height: '60px', backgroundColor:"#1D4ED8"  }} // Set the width here
-        >
-          Set LED Color
-        </Button>
-      </div>
-
-
-
-
-      </div>
-      
-
-      <div className="home-large-image" style={{height: "250px"}}>
-        <img
-          className="w-full h-full object-cover"
-          src={analytic}
-          alt=""
-        ></img>
-        <div className="home-config">
-          <div className="flex flex-col gap-3 ">
-            <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
-            <h2 className="text-white font-semibold text-xl ml-4">
-              Write something here
-            </h2>
-          </div>
-          <div className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
-            <img
-              className="w-[30px] h-[30px] object-cover "
-              src={analyticiconlight}
-              alt=""
-            ></img>
-          </div>
+        <div className="flex gap-5">
+          <Button 
+            variant="contained" 
+            endIcon={<SendIcon />} 
+            onClick={() => handleSetColor()} 
+            style={{ width: '270px', height: '60px', backgroundColor:"#1D4ED8" }} // Set the width here
+          >
+            Set LED Color
+          </Button>
+          <Button sx={{width: '50px', height:"60px", backgroundColor:"#1D4ED8" }} onClick={() => setOpenSetColor(prev => !prev)}  variant="contained" color="primary">
+              {openSetColor ? "Close" : "Set LED Color"}
+            </Button>
         </div>
-      </div>
-
+        
+      </div>)}
     </div>
+    
+    
   );
 };
 

@@ -116,17 +116,17 @@ const Images = () => {
 const LargeImages = () => {
 
   return (
-    <div className="flex items-center w-full gap-10 images-large-screen" >
+    <div className="flex items-center justify-center w-full gap-10 images-large-screen flex-wrap" >
       <div className='home-large-image' >
         <img src={tempphoto} alt="temp" className='max-w-[380px] max-h-[276px]'/>
         <div className='home-config'>
           <div className='flex flex-col gap-2'>
-            <p className='image-title font-bold'>Temperature</p>
-            <p className='image-desc font-medium'>Write something here</p>
+            <p className='text-xl font-bold'>Temperature</p>
+            <p className='text-md font-medium'>Write something here</p>
           </div>
           
           <Link to="/Temperature"  onClick={scrollToTop}>
-            <img src={setting} alt="setting" className='home-setting-icon'/>
+            <img src={setting} alt="setting" width={60} height={60}/>
           </Link>
           
         </div>
@@ -136,11 +136,11 @@ const LargeImages = () => {
           <img src={lightphoto} alt="light" className='max-w-[380px] max-h-[276px]'/>
           <div className='home-config'>
             <div className='flex flex-col gap-2'>
-              <p className='image-title font-bold'>Light Level</p>
-              <p className='image-desc font-medium'>Write something here</p>
+              <p className='text-xl font-bold'>Light Level</p>
+              <p className='text-md font-medium'>Write something here</p>
             </div>
             <Link to="/LightLevel" onClick={scrollToTop}>
-              <img src={setting} alt="setting" className='home-setting-icon'/>
+              <img src={setting} alt="setting" width={60} height={60}/>
             </Link>
             
           </div>
@@ -150,11 +150,11 @@ const LargeImages = () => {
           <img src={detectionphoto} alt="detect" className='max-w-[380px] max-h-[276px] rounded-xl'/>
           <div className='home-config'>
             <div className='flex flex-col gap-2'>
-              <p className='image-title font-bold'>Human Detection</p>
-              <p className='image-desc font-medium'>Write something here</p>
+              <p className='text-xl font-bold'>Human Detection</p>
+              <p className='text-md font-medium'>Write something here</p>
             </div>
             <Link to="/HumanDetection" onClick={scrollToTop}>
-              <img src={setting} alt="setting" className='home-setting-icon'/>
+              <img src={setting} alt="setting" width={60} height={60}/>
             </Link>
             
           </div>
@@ -210,9 +210,12 @@ const Homepage = (props) => {
   const humidityvar = {
     value: data.humidity
   };
+
+
+
   return (
-    <div className='flex flex-col justify-between w-[1300px] h-[full] relative'> 
-      <div className='flex gap-10'>
+    <div className='flex flex-col gap-10 w-full h-full relative items-center '> 
+      <div className='container flex gap-10 flex-wrap justify-center items-center'>
         <div className='w-[400px] h-[445px] bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray flex flex-col'>
           <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
           <p className="text-[16px] font-semibold px-8 pb-20">Write something here</p>
@@ -267,7 +270,8 @@ const Homepage = (props) => {
           </div>
         </div>
 
-        <div className="w-[400px] h-[445px] flex flex-col justify-between">
+        {/* Lower code */}
+        <div className={`home-lower-container w-fit h-fit flex gap-10 flex-col`}>
           <div className='bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray w-[400px] h-[200px] flex flex-col items-center'>
             <p className='mt-5 bg-[#d5d6d8] w-[320px] h-[80px] flex justify-center items-center rounded-[30px] text-2xl font-semibold'>Fan speed</p>
             <p className='text-blue-700 text-5xl font-bold mt-5'>{fan}</p>

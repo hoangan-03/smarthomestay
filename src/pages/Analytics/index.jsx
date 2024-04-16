@@ -30,7 +30,7 @@ const Analytics = () => {
  
 
   return (
-    <div className='w-screen h-screen'>
+    <div className='w-full h-full'>
       <TempGraph realtimedata={tempData.result} />
       <LightGraph realtimedata={lightData.result} />
     </div>

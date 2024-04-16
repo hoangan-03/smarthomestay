@@ -55,7 +55,12 @@
     display: flex;
 }
 
-@media (max-width: 1440px) {
+.home-lower-container {
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (min-width: 1024px) and (max-width: 1460px) {
     .images-small-screen {
         display: flex;
     }
@@ -67,6 +72,12 @@
     .setting-image {
         min-width: 380px;
         min-height: 276px;
+    }
+
+    .home-lower-container {
+        flex-direction: row;
+        justify-content: center;
+        gap: 40px;
     }
 
 }

@@ -67,15 +67,6 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
       client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
       client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
       client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
-
-      // const publishInterval = setInterval(() => {
-      //   client.publish(`${AIO_USERNAME}/feeds/temperature_sensor`, "69");
-      //   client.publish(`${AIO_USERNAME}/feeds/humility_sensor`, "30");
-      //   client.publish(`${AIO_USERNAME}/feeds/light_sensor`, "20");
-      // }, 4000);
-      // return () => {
-      //   clearInterval(publishInterval);
-      // };
     });
 
     client.on("message", (topic, message) => {
@@ -97,16 +88,12 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
       }
     });
   }, []);
-  const variables = variable;
-  console.log("VAR", variables)
   const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
   };
   const humidityvar = {
     value: data.humidity,
   };
-  console.log("tem", sensorData.temperature);
-
   return (
     <div className="w-full relative">
       <div className=" w-full h-[auto] flex flex-col gap-6 relative items-center justify-center">
@@ -150,7 +137,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                 position: "absolute",
                 top: 0,
                 right: 0,
-                display: variables === "temperature" ? "none" : "block" // Use ternary operator for conditional display
+                display: variables === "temperature" ? "none" : "block" 
             }}
             onClick={() => setOpenSetColor(prev => !prev)}
             variant="contained"

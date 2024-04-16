@@ -9,7 +9,6 @@ import HumanDetection from "./pages/HumanDetection";
 import Modifier from "./pages/Modifier";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-import LeftContent from "./components/LeftContent";
 import Footer from "./components/Footer";
 
 function App() {

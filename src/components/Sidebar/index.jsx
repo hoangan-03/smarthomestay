@@ -22,9 +22,9 @@ const Sidebar = () => {
   return (
     <div className='sidebar'>
     
-      <div className='flex items-center gap-2 py-2 pr-2 -mr-5'>
+      <div className='flex items-center gap-1 py-2 pr-2 -mr-5'>
         <img src={homestayIcon} alt='logo' className='max-w-16 max-h-16'/>
-        <h1 className='text-3xl font-medium sidebar-hug'>Smart HomeStay</h1>
+        <h1 className='text-xl font-medium sidebar-hug'>Smart HomeStay</h1>
       </div>
 
       <div className='sidebar-item sidebar-hug flex-col'>

@@ -1,12 +1,5 @@
 .scheduler-container {
-  height: 780px;
-  width: calc(100vw - 600px);
+  height: 520px;
+  width: calc(100%);
   position: relative;
-}
-
-@media screen and (max-width: 1460px) {
-  .scheduler-container {
-    width: 100%;
-  }
-  
 }

@@ -116,7 +116,7 @@ const Images = () => {
 const LargeImages = () => {
 
   return (
-    <div className="flex items-center justify-center w-full gap-10 images-large-screen flex-wrap" >
+    <div className="flex items-center justify-center w-full gap-10 images-large-screen flex-wrap " >
       <div className='home-large-image' >
         <img src={tempphoto} alt="temp" className='max-w-[380px] max-h-[276px]'/>
         <div className='home-config'>
@@ -214,7 +214,7 @@ const Homepage = (props) => {
 
 
   return (
-    <div className='flex flex-col gap-10 w-full h-full relative items-center '> 
+    <div className='flex flex-col gap-10 w-full relative items-center '> 
       <div className='container flex gap-10 flex-wrap justify-center items-center'>
         <div className='w-[400px] h-[445px] bg-white rounded-2xl shadow-custom-shadow border-5 border-lightgray flex flex-col'>
           <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
@@ -285,7 +285,7 @@ const Homepage = (props) => {
         
       </div>
       {/* <Images /> */}
-      <LargeImages/>
+      {/* <LargeImages/> */}
       
       
     </div>

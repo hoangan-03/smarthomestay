@@ -5,9 +5,6 @@ import noficationdata from "../../components/NoficationData";
 const rowsToDisplay = noficationdata;
 
 const HumanDetection = () => {
-
-
-
   return (
     <div className="w-full h-auto flex flex-col gap-6">
       <div className="w-full h-auto flex flex-row  gap-6">

@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import a1 from "../../assets/images/shs-back.jpg";
-import { FacebookRounded, GitHub, Google } from "@mui/icons-material";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const switchMode = () => {
@@ -18,11 +16,11 @@ const Auth = () => {
     const user = {
       username,
       password,
-
+      acc_id: Math.floor(Math.random() * (40000 - 400 + 1)) + 400,
     };
 
     axios
-      .post("https://src-fm-backend.onrender.com/addUser", user)
+      .post("http://localhost:8000/register", user)
       .then((res) => {
         console.log("User created successfully");
       })
@@ -31,7 +29,7 @@ const Auth = () => {
           if (err.response.status === 400) {
             console.log("User already exists");
           } else if (err.response.status === 500) {
-            console.error("Internal Server Error");
+            console.error("Internal Server Response");
           }
         } else {
           console.error(err);
@@ -41,29 +39,33 @@ const Auth = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     const user = {
-      name: username,
-      email,
+      username,
       password,
-      role: "User",
     };
 
     axios
-      .post("https://src-fm-backend.onrender.com/login", user)
+      .post("http://localhost:8000/signin", user)
       .then((res) => {
-        if (res.data.success) {
-          localStorage.setItem("user", JSON.stringify(res.data.user));
+        if (res.data.message) {
+          localStorage.setItem("user", JSON.stringify(res.data));
           console.log(res.data.message);
           navigate("/");
-        } else {
-          console.log(res.data.message);
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        if (err.response && err.response.data.error) {
+          console.log(err.response.data.error);
+        } else {
+          console.error(err);
+        }
+      });
   };
+  console.log("user",username);
+  console.log("password",password);
 
   return (
-    <section className="w-screen h-screen flex flex-row gap-10 airbnb justify-center items-center">
-      <div className="flex flex-col h-[400px] items-center justify-center  pl-0 lg:pl-[200px] w-1/2 ">
+    <section className="w-screen h-auto flex flex-row gap-10 airbnb justify-center items-start">
+      <div className="flex flex-col h-[400px] items-start justify-center  pl-0 lg:pl-[200px] w-1/2 ">
         {isLogin ? (
           <div className="w-[300px] lg:w-[420px] flex flex-col gap-2 justify-center items-center">
             <h2 className="text-xl lg:text-3xl font-bold mb-4">Welcome back</h2>
@@ -71,7 +73,7 @@ const Auth = () => {
               <input
                 className=" px-7 py-2 border rounded-2xl "
                 type="username"
-                placeholder="Usernmae"
+                placeholder="Username"
                 required
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -132,7 +134,7 @@ const Auth = () => {
           </button>
         </h2>
       </div>
-      <div className="w-1/2 h-full pt-[100px] pb-[50px] pr-[50px] rounded-3xl lg:block hidden">
+      <div className="w-1/2 h-[500px] pt-[20px] pb-[50px] pr-[50px] rounded-3xl lg:block hidden">
         <img
           src={a1}
           className="w-full h-full object-cover rounded-3xl"

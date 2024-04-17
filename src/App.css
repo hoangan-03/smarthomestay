@@ -54,6 +54,7 @@
 .main-content-wrapper {
   padding: 50px 50px 0px 50px;
   
+  
 }
 
 .main-content {
@@ -61,6 +62,7 @@
   height: fit-content;
   position: relative;
   gap: 50px;
+  justify-content: start;
 }
 
 

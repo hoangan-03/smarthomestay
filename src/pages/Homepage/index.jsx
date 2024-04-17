@@ -10,6 +10,7 @@ import rightarrow from '../../assets/icons/rightarrow.png'
 import { Link } from 'react-router-dom'
 import data from "../../components/Constant";
 import client from "../../mqtt/mqttclient";
+import { Button , ButtonGroup} from '@mui/material'
 const AIO_USERNAME = "quoc_huy";
 
 const scrollToTop = () => {
@@ -286,7 +287,10 @@ const Homepage = (props) => {
       </div>
       {/* <Images /> */}
       {/* <LargeImages/> */}
-      
+      <ButtonGroup size='large' variant="outlined" aria-label="Basic button group" sx={{mb: "30px"}}>
+        <Button >AUTOMODE ON</Button>
+        <Button >AUTOMODE OFF</Button>
+      </ButtonGroup>
       
     </div>
   )

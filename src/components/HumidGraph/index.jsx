@@ -4,31 +4,33 @@ import graphdata from '../GraphData';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class LightGraph extends Component {
+class HumidGraph extends Component {
 
+  
   render() {
+    
     const { realtimedata } = this.props;
 
-    let lightMeasures;
+    let humidMeasures;
     if (realtimedata) {
       realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
 
-      lightMeasures = realtimedata.map(item => {
+      humidMeasures = realtimedata.map(item => {
         let date = new Date(item.Timestamp);
 
         return {
           x: date,
-          y: item.Light_measure
+          y: item.humid_measure
         };
       });
     }
-
-    let light = graphdata.lightlevel;
+    console.log("ddf", humidMeasures);
+    let humid = graphdata.humidity;
     const options = {
       animationEnabled: true,
       theme: "light2",
       title: {
-        text: light.text
+        text: humid.text
       },
       axisX: {
         valueFormatString: "DD MMM",
@@ -38,8 +40,8 @@ class LightGraph extends Component {
         }
       },
       axisY: {
-        title: light.title,
-        valueFormatString: light.format,
+        title: humid.title,
+        valueFormatString: humid.format,
         crosshair: {
           enabled: true,
           snapToDataPoint: true,
@@ -48,13 +50,14 @@ class LightGraph extends Component {
       data: [{
         type: "area",
         xValueFormatString: "DD MMM",
-        yValueFormatString: light.format,
-        // dataPoints: lightMeasures,
-        dataPoints: light.dataPoints
+        yValueFormatString: humid.format,
+        // dataPoints: humidMeasures,
+        dataPoints: humid.dataPoints
       }]
     }
 
     return (
+      
       <div>
         <CanvasJSChart options={options} />
       </div>
@@ -62,4 +65,4 @@ class LightGraph extends Component {
   }
 }
 
-export default LightGraph;
+export default HumidGraph;

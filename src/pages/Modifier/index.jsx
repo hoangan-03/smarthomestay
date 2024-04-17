@@ -5,6 +5,7 @@ import PowerSwitch from "../../components/PowerSwitch";
 import analytic from "../../assets/images/analytic.png";
 import analyticiconlight from "../../assets/icons/analyticiconlight.png";
 import { Sketch } from "@uiw/react-color";
+import { Slider } from "@mui/material";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
@@ -18,8 +19,11 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
   const [switchFanState, setSwitchFanState] = useState(false);
   const [switchLightSenState, setLightSenState] = useState(true);
   const [openSetColor, setOpenSetColor] = useState(false);  
+  let holdColor = hex
+  const [holdFan, setHoldFan] = useState(fan);
 
   const handleSetColor = () => {
+    setHex(holdColor)
     client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
   }
 
@@ -47,6 +51,10 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
     }
     setSwitchFanState(!switchFanState);
   };
+  const handleSetFanChange = () => {
+    setFan(holdFan);
+    client.publish(`${AIO_USERNAME}/feeds/FAN`, fan);
+  };
   const handleLightSenChange = () => {
     if (switchLightSenState) {
       client.publish(`${AIO_USERNAME}/feeds/control_lux`, "0");
@@ -54,6 +62,9 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
       client.publish(`${AIO_USERNAME}/feeds/control_lux`, "1");
     }
     setLightSenState(!switchLightSenState);
+  };
+  const handleSliderChange = (event, newValue) => {
+    setHoldFan(newValue);
   };
 
   const [sensorData, setSensorData] = useState({
@@ -164,11 +175,12 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
           <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
             <div className="w-full relative h-full flex flex-col justify-start items-start gap-4 ">
               <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-                {"Switch"}
+                {variables == "temperature" ? "Fan Speed" : "Light Switch"}
               </div>
+              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" />}
               <h1 className="text-black font-bold text-2xl ml-4">
                 {variables === "temperature"
-                  ? "Turn the fan on or off"
+                  ? "Set fan speed"
                   : "Turn the led light on or off"}
               </h1>
               <h2 className="text-black font-semibold text-xl ml-4">
@@ -193,16 +205,10 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                 className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "block" : "hidden"
                   } `}
               >
-                <FormControlLabel
-                  control={
-                    <PowerSwitch
-                      sx={{ m: 1 }}
-                      defaultChecked
-                      checked={switchFanState}
-                      onChange={() => handleSwitchFanChange()}
-                    />
-                  }
-                />
+                <Button sx={{ m: 1 }}
+                      size="large"
+                      variant="contained"
+                      onClick={() => handleSetFanChange()}>SET</Button>
               </div>
             </div>
           </div>
@@ -289,14 +295,14 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
 
         
       </div>
-      {openSetColor && (<div className={`w-[400px] h-[700px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 ${variables === "temperature" ? "hidden" : "block"} `}>
+      {openSetColor && (<div className={`w-[400px] h-[600px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 variables === "temperature" ? "hidden" : "block"} `} style={{top: "-80px"}}>
         <Sketch
-          color={hex}
+          color={holdColor}
           onChange={(color) => {
-            setHex(color.hex);
-            console.log("NEWHEX", hex)
+            holdColor = color.hex
+            // console.log("NEWHEX", hex)
           }}
-          style={{ width: '350px', height: '600px' }} // Set the width here
+          style={{ width: '350px', height: '500px' }} // Set the width here
         />
         <div className="flex gap-5">
           <Button 

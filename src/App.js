@@ -10,7 +10,7 @@ import Modifier from "./pages/Modifier";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
+import Auth from "./pages/Auth";
 function App() {
   const [hex, setHex] = useState("#FFFFFF");
   const [fan, setFan] = useState(0);
@@ -23,6 +23,8 @@ function App() {
           <div className="main-content-wrapper">
             <div className="main-content">
               <Routes>
+                <Route path="/Auth" element={<Auth />} />
+
                 <Route exact path="/" element={<HomePage hex={hex} fan={fan} />} />
                 <Route path="/Home" element={<HomePage hex={hex} fan={fan} />} />
                 <Route path="/Calendar" element={<Calendar />} />

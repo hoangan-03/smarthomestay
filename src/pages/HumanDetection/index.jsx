@@ -5,30 +5,35 @@ import noficationdata from "../../components/NoficationData";
 import DeleteIcon from '@mui/icons-material/Delete';
 import PowerSwitch from "../../components/PowerSwitch";
 import AlertDialog from "../../components/AlertDialog";
+import { useData } from "../../components/DataProvider";
 import { FormControlLabel } from "@mui/material";
+import bin_light from "../../assets/icons/bin_light.png";
+import bin_dark from "../../assets/icons/bin_dark.png";
 // import handle from "mqtt/lib/handlers/index";
-const HumanDetection = (props) => {
+// import handle from "mqtt/lib/handlers/index";
+const HumanDetection = () => {
   const [rowsToDisplay, setRowsToDisplay] = useState(noficationdata);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [openDetection, setOpenDetection] = useState(false);
   const [stateDetection, setStateDetection] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null)
-  const { setOpenAlert, setAlertSeverity, setAlertMessage } = props;
+  const {handleClick, toggleDarkMode, autoMode} = useData();
 
   const handleDetectionChange = () => {
     if (stateDetection) {
       setOpenDetection(true)
     }
-    else setStateDetection((prev) => !prev)
+    else {
+      setStateDetection((prev) => !prev)
+      handleClick("Detection has been turned on successfully", "success")()
+    }
   }
 
   const handleConfirmDetection = () => {
     // Check if the detection is turned off successfully
     setStateDetection((prev) => !prev)
     setOpenDetection(false)
-    setOpenAlert(true)
-    setAlertSeverity("success")
-    setAlertMessage("Detection has been turned off successfully")
+    handleClick("Detection has been turned off successfully", "success")()
   }
 
   const handleCloseDetection = () => {
@@ -49,9 +54,7 @@ const HumanDetection = (props) => {
     }
     setOpenAlertDialog(false); // Close the AlertDialog
     setDeleteIndex(null); // Reset the deleteIndex state
-    setOpenAlert(true)
-    setAlertSeverity("success")
-    setAlertMessage("Notification has been removed successfully")
+    handleClick("Notification has been removed successfully", "success")()
   }
   const handleCancelDelete = () => {
     setOpenAlertDialog(false); // Close the AlertDialog
@@ -62,9 +65,9 @@ const HumanDetection = (props) => {
   return (
     <div className="w-full h-auto flex flex-col gap-6">
       <div className="w-full h-auto flex flex-row  gap-6">
-        <div className="w-full border-4 border-lightgray rounded-2xl min-h-[550px] h-[calc(100vh-200px)] bg-white flex  flex-col px-16 py-5 ">
+        <div className="w-full itemContainer min-h-[550px] h-[calc(100vh-200px)]  flex  flex-col px-16 py-5 ">
           <div className="text-start border-b-2  text-black font-bold text-2xl pb-4 h-auto flex justify-between">
-            Nofication
+            <p>Nofication</p>
             <div className="flex items-center gap-5">
               <p>Set Detection</p>
               <FormControlLabel
@@ -73,6 +76,7 @@ const HumanDetection = (props) => {
                       defaultChecked
                       checked={stateDetection}
                       onClick={handleDetectionChange}
+                      disabled={!autoMode}
                       // onChange={handleDetectionChange}
                     />
                   }
@@ -96,8 +100,8 @@ const HumanDetection = (props) => {
               <tbody className="roboto h-auto divide-y w-full font-bold text-black">
                 {rowsToDisplay.map((row, index) => (
                   <tr key={index}>
-                    <td className="w-[25%] px-4 py-3">{row.date}</td>
-                    <td className="w-[25%] px-4 py-3">{row.time}</td>
+                    <td className="w-[25%] px-4 py-3"><p>{row.date}</p></td>
+                    <td className="w-[25%] px-4 py-3"><p>{row.time}</p></td>
 
                     <td className="w-full max-w-[200px]">
                       <div className="flex items-center justify-center">
@@ -105,12 +109,12 @@ const HumanDetection = (props) => {
                           className={`flex w-fit items-center justify-center rounded-2xl px-3 py-1 text-base  font-normal text-white ${row.state ? "   bg-green-700" : "  bg-red-700 "
                             }`}
                         >
-                          {row.state ? "Human presence" : "Human absence"}
+                          <p style={{color: "white"}}>{row.state ? "Human presence" : "Human absence"}</p>
                         </h2>
                       </div>
                     </td>
                     <td className="w-[full] h-[50px] flex justify-center items-center">
-                      <DeleteIcon onClick={() => handleDelete(index)} className="text-red-700 cursor-pointer" />
+                      <img src={!toggleDarkMode ? bin_light : bin_dark} alt="bin" className="w-[20px] h-[20px] cursor-pointer" onClick={() => handleDelete(index)} />
                     </td>
 
                     

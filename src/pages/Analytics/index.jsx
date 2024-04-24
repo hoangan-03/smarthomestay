@@ -4,12 +4,14 @@ import LightGraph from '../../components/LightGraph';
 import { getUser, getTempData } from '../../services/TableApi.service';
 import { ButtonGroup, Button } from '@mui/material';
 import HumidGraph from '../../components/HumidGraph';
+import { useData } from '../../components/DataProvider';
 const Analytics = () => {
   const [lightData, setLightData] = useState([]);
   const [tempData, setTempData] = useState([]);
   const [isTemp, setIsTemp] = useState(true);
   const [isLight, setIsLight] = useState(false);
   const [isHumid, setIsHumid] = useState(false);
+  const {toggleDarkMode} = useData();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,9 +57,9 @@ const Analytics = () => {
         <Button variant={isLight ? "contained" : "outlined"} onClick={() => handleButtonClick("light")}>Light</Button>
         <Button variant={isHumid ? "contained" : "outlined"} onClick={() => handleButtonClick("humid")}>Humid</Button>
       </ButtonGroup>
-      {isTemp && <TempGraph realtimedata={tempData.result} />}
-      {isLight && <LightGraph realtimedata={lightData.result} />}
-      {isHumid && <HumidGraph realtimedata={tempData.result} />}
+      {isTemp && <TempGraph realtimedata={tempData.result} toggleDarkMode={toggleDarkMode}/>}
+      {isLight && <LightGraph realtimedata={lightData.result} toggleDarkMode={toggleDarkMode}/>}
+      {isHumid && <HumidGraph realtimedata={tempData.result} toggleDarkMode={toggleDarkMode}/>}
       
     </div>
   );

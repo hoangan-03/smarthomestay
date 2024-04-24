@@ -14,6 +14,7 @@ export default class Scheduler extends Component {
           events: props.events,
           timeFormatState: props.timeFormatState,
           onDataUpdated : props.onDataUpdated,
+          toggleDarkMode: props.toggleDarkMode,
       };
     }
 
@@ -44,8 +45,7 @@ export default class Scheduler extends Component {
     }
 
     componentDidMount() {
-        console.log("Width change")
-        scheduler.skin = 'material';
+        scheduler.skin = !this.state.toggleDarkMode ? 'material' : 'dark';
         scheduler.config.header = [
             'day',
             'week',
@@ -66,6 +66,7 @@ export default class Scheduler extends Component {
             events: this.props.events,
             timeFormatState: this.props.timeFormatState,
           onDataUpdated : this.props.onDataUpdated,
+            toggleDarkMode: this.props.toggleDarkMode
         })
         scheduler.init(this.schedulerContainer, new Date());
         scheduler.clearAll();
@@ -78,11 +79,6 @@ export default class Scheduler extends Component {
     }
 
     handleResize = () => {
-        // Calculate the width of the container
-        // const containerWidth = this.schedulerContainer.offsetWidth;
-        // console.log("CW", containerWidth);
-        // // Set the scale width of the scheduler to a percentage of the container's width
-        // scheduler.xy.scale_width = containerWidth * 0.02; // Adjust the multiplier as needed
         
         // Update the view
         scheduler.updateView();
@@ -90,24 +86,31 @@ export default class Scheduler extends Component {
     
 
     componentWillReceiveProps(nextProps) {
-        if(this.state.events === nextProps.events) return;
+        if(this.state.events === nextProps.events) {
+            if (this.state.toggleDarkMode === nextProps.toggleDarkMode) {
+                return;
+            }
+        }
+
+        
 
         this.setState({
             events: nextProps.events,
             timeFormatState: nextProps.timeFormatState,
-           onDataUpdated : nextProps.onDataUpdated,
+            onDataUpdated : nextProps.onDataUpdated,
+            toggleDarkMode: nextProps.toggleDarkMode
         })
+        scheduler.setSkin(!nextProps.toggleDarkMode ? 'material' : 'dark')
 
         scheduler.parse(nextProps.events);
-        console.log('asas');
     }
     shouldComponentUpdate(nextProps) {
         //return this.props.timeFormatState !== nextProps.timeFormatState || this.props.events !== nextProps.events;
+        
         return true;
     }
-    componentWillUpdate()
+    componentWillUpdate(nextProps)
     {
-        
     }
 
 

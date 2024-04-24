@@ -62,6 +62,7 @@ class Calendar extends Component {
       
       if(action == 'create')
       {
+        console.log("Create")
         fetch('https://savig-project.vercel.app/api/create',
         {
           method: 'post',
@@ -73,6 +74,7 @@ class Calendar extends Component {
       }
       else if(action == 'delete')
       {
+        console.log("Delete")
         fetch('https://savig-project.vercel.app/api/delete',
         {
           method: 'post',
@@ -84,6 +86,7 @@ class Calendar extends Component {
       }
       else if(action == 'update')
       {
+        console.log("Update")
         fetch('https://savig-project.vercel.app/api/update',
         {
           method: 'post',
@@ -121,8 +124,8 @@ class Calendar extends Component {
     
 
      var { currentTimeFormatState, messages, data } = this.state;
-    
-    
+     const { toggleDarkMode } = this.props; 
+
     return (
       <>
         <div className="scheduler-container">
@@ -130,6 +133,7 @@ class Calendar extends Component {
             events={this.state.data}
             timeFormatState={currentTimeFormatState}
             onDataUpdated={this.logDataUpdate}
+            toggleDarkMode={toggleDarkMode}
           />
         </div>
         

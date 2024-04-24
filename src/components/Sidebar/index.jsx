@@ -9,7 +9,12 @@ import temperatureicon from "../../assets/icons/temperatureicon.png"
 import detectionicon from "../../assets/icons/detectionicon.png"
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
+import homeicon_white from "../../assets/icons/homeicon_white.png"
+import calendar_white from "../../assets/icons/calendar_white.png"
+import analyticiconlight from "../../assets/icons/analyticiconlight.png"
+import light_bulb_white from "../../assets/icons/light_bulb_white.png"
+import temperatureicon_white from "../../assets/icons/temperatureicon_white.png"
+import detectionicon_white from "../../assets/icons/detectionicon_white.png"
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,
@@ -17,7 +22,7 @@ const scrollToTop = () => {
 };
 
 
-const Sidebar = () => {
+const Sidebar = ({toggleDarkMode}) => {
   const location = useLocation();
   return (
     <div className='sidebar'>
@@ -29,19 +34,19 @@ const Sidebar = () => {
 
       <div className='sidebar-item sidebar-hug flex-col'>
         <p>Administrator</p>
-        <p className="text-xl font-medium">Name - ID</p>
+        <p className="text-xl font-bold">Name - ID</p>
       </div>
 
       <Link to="/" onClick={scrollToTop} className={`${
           location.pathname === "/" && "currentSidebar"
         }`}>
-        <div className='sidebar-item'>
-          <img src={homeicon} alt="home" className='sidebar-logo'/>
-          <h1 className='sidebar-hug-item'>Homepage</h1>
+        <div className='sidebar-item items-center'>
+          {toggleDarkMode && location.pathname !== "/" ? <img src={homeicon_white} alt="home" className='sidebar-logo'/> : <img src={homeicon} alt="home" className='sidebar-logo'/>}
+          <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/" ? "#43474E" : "" }}>Homepage</h1>
         </div>
       </Link>
 
-      <div className='sidebar-item'>
+      <div className='sidebar-item '>
         <div className='sidebar-hidden py-3 items-center w-full'>
           <div className='bg-black' style={{height: "1px"}}></div>
         </div>
@@ -52,18 +57,20 @@ const Sidebar = () => {
       <Link to="/Calendar" onClick={scrollToTop} className={`${
           location.pathname === "/Calendar" && "currentSidebar"
         }`}>
-        <div className='sidebar-item'>
-          <img src={calendaricon} alt="calendar" className='sidebar-logo'/>
-          <h1 className='sidebar-hug-item'>Calendar</h1>
+        <div className='sidebar-item items-center'>
+          {/* <img src={calendaricon} alt="calendar" className='sidebar-logo'/> */}
+          {toggleDarkMode && location.pathname !== "/Calendar" ? <img src={calendar_white} alt="calendar" className='sidebar-logo'/> : <img src={calendaricon}
+          alt="calendar" className='sidebar-logo'/>}
+          <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/Calendar" ? "#43474E" : "" }}>Calendar</h1>
         </div>
       </Link>
       
       <Link to="/Analytics" onClick={scrollToTop} className={`${
           location.pathname === "/Analytics" && "currentSidebar"
         }`}>
-        <div className='sidebar-item'>
-          <img src={analyticicon} alt="analyz" className='sidebar-logo'/>
-          <h1 className='sidebar-hug-item'>Analytics</h1>
+        <div className='sidebar-item items-center'>
+          {toggleDarkMode && location.pathname !== "/Analytics" ? <img src={analyticiconlight} alt="analyz" className='sidebar-logo'/> : <img src={analyticicon} alt="analyz" className='sidebar-logo'/>}
+          <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/Analytics" ? "#43474E" : "" }}>Analytics</h1>
         </div>
       </Link>
       
@@ -79,8 +86,8 @@ const Sidebar = () => {
           location.pathname === "/LightLevel" && "currentSidebar"
         }`}>
           <div className='sidebar-item'>
-            <img src={lighticon} alt="light" className='sidebar-logo'/>
-            <h1 className='sidebar-hug-item'>LightLevel</h1>
+            {(toggleDarkMode && location.pathname !== "/LightLevel") ? <img src={light_bulb_white} alt="light" className='sidebar-logo'/> : <img src={lighticon} alt="light" className='sidebar-logo'/>}
+            <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/LightLevel" ? "#43474E" : "" }}>Light Level</h1>
           </div>
       </Link>
 
@@ -88,8 +95,8 @@ const Sidebar = () => {
           location.pathname === "/Temperature" && "currentSidebar"
         }`}>
           <div className='sidebar-item'>
-            <img src={temperatureicon} alt="temp" className='sidebar-logo'/>
-            <h1 className='sidebar-hug-item'>Temperature</h1>
+            {toggleDarkMode && location.pathname !== "/Temperature" ? <img src={temperatureicon_white} alt="temp" className='sidebar-logo'/> : <img src={temperatureicon} alt="temp" className='sidebar-logo'/>}
+            <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/Temperature" ? "#43474E" : "" }}>Temperature</h1>
           </div>
       </Link>
       
@@ -97,8 +104,8 @@ const Sidebar = () => {
           location.pathname === "/HumanDetection" && "currentSidebar"
         }`}>
           <div className='sidebar-item'>
-            <img src={detectionicon} alt="detect" className='sidebar-logo'/>
-            <h1 className='sidebar-hug-item'>Human Detection</h1>
+            {toggleDarkMode && location.pathname !== "/HumanDetection" ? <img src={detectionicon_white} alt="detect" className='sidebar-logo'/> : <img src={detectionicon} alt="detect" className='sidebar-logo'/>}
+            <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/HumanDetection" ? "#43474E" : "" }}>Human Detection</h1>
           </div>
       </Link>
     </div>

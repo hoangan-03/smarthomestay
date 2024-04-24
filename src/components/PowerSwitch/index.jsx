@@ -16,7 +16,7 @@ const PowerSwitch = styled((props) => (
         transform: "translateX(42px)",
         color: "#fff",
         "& + .MuiSwitch-track": {
-          backgroundColor: "#2940b3",
+          backgroundColor: "#4A00FF",
           opacity: 1,
           border: 0,
         },

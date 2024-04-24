@@ -9,10 +9,19 @@ import { Slider } from "@mui/material";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
+import { useData } from "../../components/DataProvider";
+import tempicon from "../../assets/icons/Temperature icon.png";
+import lightbulp from "../../assets/icons/lightbulp.png";
+import humidityicon from "../../assets/icons/humidityicon.png";
+import lightbulb_dark from "../../assets/icons/lightbulb_dark.png";
+import humid_dark from "../../assets/icons/humid_dark.png";
+import temperature_dark from "../../assets/icons/temperature_dark.png";
 import "./Modifier.css";
+import { Link } from "react-router-dom";
 const AIO_USERNAME = "quoc_huy";
 
-const Modifier = ({variable, hex, setHex, fan, setFan}) => {
+const Modifier = ({variable}) => {
+  const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode} = useData()
   // console.log("VAR", variable)
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
@@ -20,12 +29,16 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
   const [switchLightSenState, setLightSenState] = useState(true);
   const [openSetColor, setOpenSetColor] = useState(false);  
   let holdColor = hex
-  const [holdFan, setHoldFan] = useState(fan);
+  const [holdFan, setHoldFan] = useState(parseInt(fan));
 
   const handleSetColor = () => {
     setHex(holdColor)
-    client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
+    handleClick("Set LED color successfully", "success")()
   }
+
+  useEffect(() => {
+    client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
+  },[hex])
 
   const handleSwitchLightChange = () => {
     if (switchLightState) {
@@ -33,6 +46,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
     } else {
       client.publish(`${AIO_USERNAME}/feeds/light_switch`, "1");
     }
+    handleClick("Light switch is turned " + (switchLightState ? "off" : "on") + " successfully", "success")()
     setSwitchLightState(!switchLightState);
   };
   const handleTempandHumChange = () => {
@@ -41,28 +55,36 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
     } else {
       client.publish(`${AIO_USERNAME}/feeds/humidity_tem`, "1");
     }
+    handleClick("Temperature and Humidity sensor is turned " + (switchTempandHumState ? "off" : "on") + " successfully", "success")()
     setSwitchTempandHumState(!switchTempandHumState);
   };
-  const handleSwitchFanChange = () => {
-    if (switchFanState) {
-      client.publish(`${AIO_USERNAME}/feeds/FAN`, "0");
-    } else {
-      client.publish(`${AIO_USERNAME}/feeds/FAN`, "30");
-    }
-    setSwitchFanState(!switchFanState);
-  };
-  const handleSetFanChange = () => {
-    setFan(holdFan);
-    client.publish(`${AIO_USERNAME}/feeds/FAN`, fan);
-  };
+  // const handleSwitchFanChange = () => {
+  //   if (switchFanState) {
+  //     client.publish(`${AIO_USERNAME}/feeds/FAN`, "0");
+  //   } else {
+  //     client.publish(`${AIO_USERNAME}/feeds/FAN`, "30");
+  //   }
+  //   setSwitchFanState(!switchFanState);
+  // };
   const handleLightSenChange = () => {
     if (switchLightSenState) {
       client.publish(`${AIO_USERNAME}/feeds/control_lux`, "0");
     } else {
       client.publish(`${AIO_USERNAME}/feeds/control_lux`, "1");
     }
+    handleClick("Light sensor is turned " + (switchLightSenState ? "off" : "on") + " successfully", "success")()
     setLightSenState(!switchLightSenState);
   };
+  const handleSetFanChange = () => {
+    console.log("FAN", fan, "HoldFan", holdFan.toString())
+    setFan(holdFan.toString());
+    handleClick("Fan speed is set to " + holdFan.toString() + " successfully", "success")()
+  };
+  useEffect(() => {
+    client.publish(`${AIO_USERNAME}/feeds/FAN`, fan);
+    console.log("FAN",fan)
+  },[fan])
+  
   const handleSliderChange = (event, newValue) => {
     setHoldFan(newValue);
   };
@@ -114,6 +136,9 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
   const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
   };
+  const temporlightvarDark = {
+    value: variables === "temperature" ? temperature_dark : lightbulb_dark,
+  }
   const humidityvar = {
     value: data.humidity,
   };
@@ -123,10 +148,10 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
     <div className="w-full relative">
       <div className=" w-full h-[auto] flex flex-col gap-6 relative items-center justify-center">
         <div className="w-full h-[full] flex flex-row gap-6 flex-wrap justify-center">
-          <div className="w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center">
+          <div className="w-[420px] h-[160px] itemContainer flex flex-row  justify-between items-center py-[30px] px-[25px]">
             <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-              <h1 className="text-black text-4xl">{temporlightvar.value.text}</h1>
-              <h2 className="text-blue-700 text-5xl font-bold">
+              <h1 className="text-4xl">{temporlightvar.value.text}</h1>
+              <h2 className="text-5xl font-bold" style={{color: 'var(--text-data)'}}>
                 {variables === "temperature"
                   ? sensorData.temperature
                   : sensorData.light}{" "}
@@ -135,24 +160,24 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
             </div>
             <img
               className="w-auto h-[100px] object-cover"
-              src={temporlightvar.value.iconUrl}
+              src={!toggleDarkMode ? temporlightvar.value.iconUrl : temporlightvarDark.value}
               alt=""
             ></img>
           </div>
           <div
-            className={`w-[420px] h-[160px] rounded-xl border-4 border-lightgray bg-white py-[30px] px-[25px] flex flex-row  justify-between items-center ${variables === "temperature" ? "block" : "hidden"
+            className={`w-[420px] h-[160px] py-[30px] px-[25px] itemContainer flex-row  justify-between items-center ${variables === "temperature" ? "flex" : "hidden"
               }`}
           >
             <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
-              <h1 className="text-black text-4xl">{humidityvar.value.text}</h1>
-              <h2 className="text-blue-700 text-5xl font-bold">
+              <h1 className="text-[var(--text-title)] text-4xl">{humidityvar.value.text}</h1>
+              <h2 className="text-5xl font-bold" style={{color: 'var(--text-data)'}}>
                 {sensorData.humidity}
                 {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
               </h2>
             </div>
             <img
               className="w-auto h-[100px] object-cover"
-              src={humidityvar.value.iconUrl}
+              src={!toggleDarkMode ? humidityvar.value.iconUrl : humid_dark}
               alt=""
             ></img>
           </div>
@@ -164,20 +189,21 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                 right: 0,
                 display: variables === "temperature" ? "none" : "block" // Use ternary operator for conditional display
             }}
-            onClick={() => setOpenSetColor(prev => !prev)}
+            onClick={() => {setOpenSetColor(prev => !prev)}}
             variant="contained"
             color="primary"
+            disabled={!autoMode}
           >
             Set LED Color
           </Button>
         </div>
         <div className="w-full h-[full] flex flex-row gap-6 flex-wrap justify-center">
-          <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
+          <div className="w-[420px] h-[320px] itemContainer px-9 py-8">
             <div className="w-full relative h-full flex flex-col justify-start items-start gap-4 ">
               <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-                {variables == "temperature" ? "Fan Speed" : "Light Switch"}
+                <p>{variables == "temperature" ? "Fan Speed" : "Light Switch"}</p>
               </div>
-              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" />}
+              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={!autoMode}/>}
               <h1 className="text-black font-bold text-2xl ml-4">
                 {variables === "temperature"
                   ? "Set fan speed"
@@ -197,6 +223,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                       defaultChecked
                       checked={switchLightState}
                       onChange={() => handleSwitchLightChange()}
+                      disabled={!autoMode}
                     />
                   }
                 />
@@ -208,15 +235,18 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                 <Button sx={{ m: 1 }}
                       size="large"
                       variant="contained"
-                      onClick={() => handleSetFanChange()}>SET</Button>
+                      onClick={handleSetFanChange}
+                      disabled={!autoMode}>
+                        SET
+                </Button>
               </div>
             </div>
           </div>
 
-          <div className="w-[420px] h-[320px] border-4 border-lightgray bg-white rounded-xl px-9 py-8">
+          <div className="w-[420px] h-[320px] itemContainer px-9 py-8">
             <div className="w-full relative h-full flex flex-col justify-start items-start gap-4">
               <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-                {"Sensor"}
+                <p>{"Sensor"}</p>
               </div>
               <h1 className="text-black font-bold text-2xl ml-4">
                 {variables === "temperature"
@@ -237,6 +267,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                       defaultChecked
                       checked={switchLightSenState}
                       onChange={() => handleLightSenChange()}
+                      disabled={!autoMode}
                     />
                   }
                 />
@@ -252,6 +283,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                       defaultChecked
                       checked={switchTempandHumState}
                       onChange={() => handleTempandHumChange()}
+                      disabled={!autoMode}
                     />
                   }
                 />
@@ -263,9 +295,9 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
             
           </div>
           
-          <div className="home-large-image" style={{height: "320px"}}>
+          <div className="home-large-image" style={{height: "320px", backgroundColor: "var(--bg-head-foot-item)"}}>
           <img
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-xl"
             src={analytic}
             alt=""
           ></img>
@@ -276,13 +308,13 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
                 Write something here
               </h2>
             </div>
-            <div className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
-              <img
+            <Link to="/Analytics" className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
+            <img
                 className="w-[30px] h-[30px] object-cover "
                 src={analyticiconlight}
                 alt=""
               ></img>
-            </div>
+              </Link>
           </div>
         </div>
 
@@ -295,7 +327,7 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
 
         
       </div>
-      {openSetColor && (<div className={`w-[400px] h-[600px]  items-center border-4 border-lightgray bg-white rounded-xl px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 variables === "temperature" ? "hidden" : "block"} `} style={{top: "-80px"}}>
+      {openSetColor && (<div className={`w-[400px] h-[600px]  items-center itemContainer px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 variables === "temperature" ? "hidden" : "block"} `} style={{top: "-80px"}}>
         <Sketch
           color={holdColor}
           onChange={(color) => {
@@ -309,12 +341,13 @@ const Modifier = ({variable, hex, setHex, fan, setFan}) => {
             variant="contained" 
             endIcon={<SendIcon />} 
             onClick={() => handleSetColor()} 
+            
             style={{ width: '270px', height: '60px', backgroundColor:"#1D4ED8" }} // Set the width here
           >
             Set LED Color
           </Button>
-          <Button sx={{width: '50px', height:"60px", backgroundColor:"#1D4ED8" }} onClick={() => setOpenSetColor(prev => !prev)}  variant="contained" color="primary">
-              {openSetColor ? "Close" : "Set LED Color"}
+          <Button  sx={{width: '50px', height:"60px", backgroundColor:"#1D4ED8" }} onClick={() => setOpenSetColor(prev => !prev)}  variant="contained" color="primary">
+              {openSetColor ? "Close" : "Set LED Color"} 
             </Button>
         </div>
         

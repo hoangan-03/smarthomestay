@@ -9,7 +9,7 @@ class HumidGraph extends Component {
   
   render() {
     
-    const { realtimedata } = this.props;
+    const { realtimedata, toggleDarkMode } = this.props;
 
     let humidMeasures;
     if (realtimedata) {
@@ -28,7 +28,7 @@ class HumidGraph extends Component {
     let humid = graphdata.humidity;
     const options = {
       animationEnabled: true,
-      theme: "light2",
+      theme: !toggleDarkMode ? "light2" : "dark2",
       title: {
         text: humid.text
       },

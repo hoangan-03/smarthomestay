@@ -10,7 +10,7 @@ class TempGraph extends Component {
 
   render() {
     
-    const { realtimedata } = this.props;
+    const { realtimedata, toggleDarkMode } = this.props;
 
     let tempMeasures;
     if (realtimedata) {
@@ -29,7 +29,7 @@ class TempGraph extends Component {
     let temp = graphdata.temperature;
     const options = {
       animationEnabled: true,
-      theme: "light2",
+      theme: !toggleDarkMode ? "light2" : "dark2",
       title: {
         text: temp.text
       },

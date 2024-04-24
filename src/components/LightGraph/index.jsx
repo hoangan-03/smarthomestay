@@ -7,7 +7,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class LightGraph extends Component {
 
   render() {
-    const { realtimedata } = this.props;
+    const { realtimedata, toggleDarkMode } = this.props;
 
     let lightMeasures;
     if (realtimedata) {
@@ -26,7 +26,7 @@ class LightGraph extends Component {
     let light = graphdata.lightlevel;
     const options = {
       animationEnabled: true,
-      theme: "light2",
+      theme: !toggleDarkMode ? "light2" : "dark2",
       title: {
         text: light.text
       },

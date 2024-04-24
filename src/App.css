@@ -2,12 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-pink: #F2F2F2;
+body {
+  --bg-side: white;
   --bg-lightblue: #D1E4FF;
-  --text-gray: #43474E;
-  --border-gray: #E8E9EB;
+  --bg-main: #F2F2F2;
+  --bg-head-foot-item: white;
   --bg-setting: #1A1C1E;
+  --bg-gray: #d5d6d8;
+
+  --text-normal: black;
+  --text-data: #4A00FF;
+  --text-side: #43474E;
+  --text-title: #000000;
+
+  --border-gray: #d0d1d3;
+}
+
+body.dark {
+  --bg-side: black;
+  --bg-lightblue: #D1E4FF;
+  --bg-main: #191E24;
+  --bg-head-foot-item: #1D232A;
+  --bg-setting: #1A1C1E;
+  --bg-gray: #45474c;
+
+  --text-normal: #d0d1d3;
+  --text-data: #CBD5FF;
+  --text-side: white;
+  --text-title: #A6ADBB;
+
+  --border-gray: #d0d1d3;
+}
+
+
+.itemContainer {
+  @apply bg-[var(--bg-head-foot-item)] rounded-2xl shadow-custom-shadow border-5 border-lightgray 
+}
+
+.itemContainer p, .itemContainer h1, .itemContainer h2{
+  color: var(--text-normal)
 }
 
 .App {
@@ -47,7 +80,7 @@
   position: relative;
   width: calc(100vw - 80px);
   height: calc(100vh - 56px);
-  background-color: var(--bg-pink);
+  background-color: var(--bg-main);
   overflow-y: scroll;
 }
 

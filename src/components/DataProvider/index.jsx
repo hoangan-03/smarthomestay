@@ -6,10 +6,10 @@ export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
     // Hex: color of the light
-    const [hex, setHex] = useState("#d0021b");
+    const [hex, setHex] = useState("#FFFFFF");
     // Fan: speed of the fan
     const [fan, setFan] = useState('0');
-    const [autoMode, setAutoMode] = useState(true);
+    const [autoMode, setAutoMode] = useState(false);
     const [snackPack, setSnackPack] = React.useState([]);
     const [messageInfo, setMessageInfo] = React.useState(undefined);
 

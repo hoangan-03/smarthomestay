@@ -39,6 +39,7 @@ class Calendar extends Component {
           newMessage,
           ...this.state.messages
       ];
+      console.log("MEssage", messages)
 
       if (messages.length > maxLogLength) {
           messages.length = maxLogLength;
@@ -54,15 +55,18 @@ class Calendar extends Component {
       var formatFunc = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
       var start_datee = formatFunc(ev.start_date);
       var end_datee = formatFunc(ev.end_date);
+      
       let addedEvent = {};
       addedEvent.start_date = start_datee
       addedEvent.end_date = end_datee
       addedEvent.text = ev.text
       addedEvent.id = ev.id
+      addedEvent.room = ev.room
       
       if(action == 'create')
       {
         console.log("Create")
+        console.log("Body", JSON.stringify(addedEvent))
         fetch('https://savig-project.vercel.app/api/create',
         {
           method: 'post',
@@ -70,6 +74,7 @@ class Calendar extends Component {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(addedEvent),
+          
         })
       }
       else if(action == 'delete')

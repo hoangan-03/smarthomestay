@@ -14,7 +14,7 @@ const HumanDetection = () => {
   const [rowsToDisplay, setRowsToDisplay] = useState(noficationdata);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [openDetection, setOpenDetection] = useState(false);
-  const [stateDetection, setStateDetection] = useState(false);
+  const [stateDetection, setStateDetection] = useState(true);
   const [deleteIndex, setDeleteIndex] = useState(null)
   const {handleClick, toggleDarkMode, autoMode} = useData();
 
@@ -75,7 +75,7 @@ const HumanDetection = () => {
                       defaultChecked
                       checked={stateDetection}
                       onClick={handleDetectionChange}
-                      disabled={!autoMode}
+                      disabled={autoMode}
                       // onChange={handleDetectionChange}
                     />
                   }

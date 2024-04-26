@@ -7,6 +7,7 @@ import analyticiconlight from "../../assets/icons/analyticiconlight.png";
 import { Sketch } from "@uiw/react-color";
 import { Slider } from "@mui/material";
 import Button from '@mui/material/Button';
+import AlertDialog from "../../components/AlertDialog";
 import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
 import { useData } from "../../components/DataProvider";
@@ -26,6 +27,14 @@ const Modifier = ({variable}) => {
   const [openSetColor, setOpenSetColor] = useState(false);  
   let holdColor = hex
   const [holdFan, setHoldFan] = useState(parseInt(fan));
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
+  const handleCloseDialog = () => {
+    setOpenAlertDialog(false)
+  }
+  const handleConfirmDialog = (handleChange) => {
+    handleChange()
+    handleClick("Sensor has been turned off successfully", "success")()
+  }
 
   const handleSetColor = () => {
     setHex(holdColor)
@@ -54,14 +63,6 @@ const Modifier = ({variable}) => {
     handleClick("Temperature and Humidity sensor is turned " + (switchTempandHumState ? "off" : "on") + " successfully", "success")()
     setSwitchTempandHumState(!switchTempandHumState);
   };
-  // const handleSwitchFanChange = () => {
-  //   if (switchFanState) {
-  //     client.publish(`${AIO_USERNAME}/feeds/FAN`, "0");
-  //   } else {
-  //     client.publish(`${AIO_USERNAME}/feeds/FAN`, "30");
-  //   }
-  //   setSwitchFanState(!switchFanState);
-  // };
   const handleLightSenChange = () => {
     if (switchLightSenState) {
       client.publish(`${AIO_USERNAME}/feeds/control_lux`, "0");
@@ -188,7 +189,7 @@ const Modifier = ({variable}) => {
             onClick={() => {setOpenSetColor(prev => !prev)}}
             variant="contained"
             color="primary"
-            disabled={!autoMode}
+            disabled={autoMode}
           >
             Set LED Color
           </Button>
@@ -199,15 +200,12 @@ const Modifier = ({variable}) => {
               <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
                 <p>{variables == "temperature" ? "Fan Speed" : "Light Switch"}</p>
               </div>
-              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={!autoMode}/>}
-              <h1 className="text-black font-bold text-2xl ml-4">
+              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={autoMode}/>}
+              <h1 className="text-black font-bold text-2xl mx-auto">
                 {variables === "temperature"
                   ? "Set fan speed"
                   : "Turn the led light on or off"}
               </h1>
-              <h2 className="text-black font-semibold text-xl ml-4">
-                Write something here
-              </h2>
               <div
                 className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
                   } `}
@@ -219,7 +217,7 @@ const Modifier = ({variable}) => {
                       defaultChecked
                       checked={switchLightState}
                       onChange={() => handleSwitchLightChange()}
-                      disabled={!autoMode}
+                      disabled={autoMode}
                     />
                   }
                 />
@@ -232,7 +230,7 @@ const Modifier = ({variable}) => {
                       size="large"
                       variant="contained"
                       onClick={handleSetFanChange}
-                      disabled={!autoMode}>
+                      disabled={autoMode}>
                         SET
                 </Button>
               </div>
@@ -249,9 +247,6 @@ const Modifier = ({variable}) => {
                   ? "Turn the humidity and tempearture sensor on or off"
                   : "Turn the led light sensor on or off"}
               </h1>
-              <h2 className="text-black font-semibold text-xl ml-4">
-                Write something here
-              </h2>
               <div
                 className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
                   } `}
@@ -263,7 +258,7 @@ const Modifier = ({variable}) => {
                       defaultChecked
                       checked={switchLightSenState}
                       onChange={() => handleLightSenChange()}
-                      disabled={!autoMode}
+                      disabled={autoMode}
                     />
                   }
                 />
@@ -279,7 +274,7 @@ const Modifier = ({variable}) => {
                       defaultChecked
                       checked={switchTempandHumState}
                       onChange={() => handleTempandHumChange()}
-                      disabled={!autoMode}
+                      disabled={autoMode}
                     />
                   }
                 />
@@ -300,9 +295,6 @@ const Modifier = ({variable}) => {
           <div className="home-config">
             <div className="flex flex-col gap-3 ">
               <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
-              <h2 className="text-white font-semibold text-xl ml-4">
-                Write something here
-              </h2>
             </div>
             <Link to="/Analytics" className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
             <img
@@ -348,6 +340,7 @@ const Modifier = ({variable}) => {
         </div>
         
       </div>)}
+      {/* <AlertDialog title={"Turn Off Sensor Confirm"} description={"Disabling this feature may bring discomfort. Are you sure you want to proceed with disabling it?"} open={openAlertDialog} handleClose={handleCloseDialog} handleConfirm={handleConfirmDialog}/> */}
     </div>
     
     

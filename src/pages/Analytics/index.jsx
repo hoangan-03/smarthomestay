@@ -5,6 +5,7 @@ import { getLightData, getTempData, getHumidityData } from '../../services/Table
 import { ButtonGroup, Button } from '@mui/material';
 import HumidGraph from '../../components/HumidGraph';
 import { useData } from '../../components/DataProvider';
+import { useNavigate } from 'react-router-dom';
 const Analytics = () => {
   const [lightData, setLightData] = useState([]);
   const [tempData, setTempData] = useState([]);
@@ -12,28 +13,37 @@ const Analytics = () => {
   const [isTemp, setIsTemp] = useState(true);
   const [isLight, setIsLight] = useState(false);
   const [isHumid, setIsHumid] = useState(false);
-  const {toggleDarkMode} = useData();
-  useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const lightRes = await getLightData();
-      console.log("lightData", lightRes);
-      setLightData(lightRes);
-      setTimeout(async () => {
-        const tempRes = await getTempData();
-        console.log("tempData", tempRes);
-        setTempData(tempRes);
-        const humidityRes = await getHumidityData(); 
-        console.log("humidityData", humidityRes);
-        setHumidityData(humidityRes); 
-      },300); 
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { toggleDarkMode } = useData();
+  const navigate = useNavigate();
 
-  fetchData();
-}, []);
+
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+      navigate('/auth');
+    }
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const lightRes = await getLightData();
+        console.log("lightData", lightRes);
+        setLightData(lightRes);
+        setTimeout(async () => {
+          const tempRes = await getTempData();
+          console.log("tempData", tempRes);
+          setTempData(tempRes);
+          const humidityRes = await getHumidityData();
+          console.log("humidityData", humidityRes);
+          setHumidityData(humidityRes);
+        }, 300);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const handleButtonClick = (type) => {
     if (type === "temp") {
       setIsTemp(true);
@@ -50,17 +60,24 @@ const Analytics = () => {
     }
   }
 
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+      navigate('/auth');
+    }
+  }, []);
+
   return (
     <div className='w-full h-[full]'>
-      <ButtonGroup variant="outlined" aria-label="Basic button group" sx={{mb: "30px"}}>
+      <ButtonGroup variant="outlined" aria-label="Basic button group" sx={{ mb: "30px" }}>
         <Button variant={isTemp ? "contained" : "outlined"} onClick={() => handleButtonClick("temp")}>Temp</Button>
         <Button variant={isLight ? "contained" : "outlined"} onClick={() => handleButtonClick("light")}>Light</Button>
         <Button variant={isHumid ? "contained" : "outlined"} onClick={() => handleButtonClick("humid")}>Humid</Button>
       </ButtonGroup>
-      {isTemp && <TempGraph realtimedata={tempData.result} toggleDarkMode={toggleDarkMode}/>}
-      {isLight && <LightGraph realtimedata={lightData.result} toggleDarkMode={toggleDarkMode}/>}
-      {isHumid && <HumidGraph realtimedata={humidityData.result} toggleDarkMode={toggleDarkMode}/>}
-      
+      {isTemp && <TempGraph realtimedata={tempData} toggleDarkMode={toggleDarkMode} />}
+      {isLight && <LightGraph realtimedata={lightData} toggleDarkMode={toggleDarkMode} />}
+      {isHumid && <HumidGraph realtimedata={humidityData} toggleDarkMode={toggleDarkMode} />}
+
     </div>
   );
 };

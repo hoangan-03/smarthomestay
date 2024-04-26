@@ -13,6 +13,7 @@ import LeftContent from "./components/LeftContent";
 import Footer from "./components/Footer";
 import { Snackbar, Alert, CssBaseline, ThemeProvider, createTheme} from "@mui/material";
 import { useData } from "./components/DataProvider";
+import Auth from "./pages/Auth";
 function App() {
   // DataProvider is a custom context provider that wraps the entire app (provide all data to all components)
   // useData is the custom hook that allows us to access the data provided by the DataProvider  
@@ -36,6 +37,7 @@ function App() {
               <div className="main-content">
                   <Routes>
                     <Route exact path="/" element={<HomePage />} />
+                    <Route exact path="Auth" element={<Auth />} />
                     <Route path="/Home" element={<HomePage/>} />
                     <Route path="/Calendar" element={<Calendar toggleDarkMode={toggleDarkMode} />} />
                     <Route path="/Analytics" element={<Analytics />} />

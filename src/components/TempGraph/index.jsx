@@ -6,32 +6,31 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class TempGraph extends Component {
 
-  
 
   render() {
-    
+
     const { realtimedata, toggleDarkMode } = this.props;
 
-    let tempMeasures;
+    let humidMeasures;
     if (realtimedata) {
       realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
 
-      tempMeasures = realtimedata.map(item => {
-        let date = new Date(item.Timestamp);
+      humidMeasures = realtimedata.map(item => {
+        let date = new Date(item.timestamp);
+        console.log("date", date);
 
         return {
           x: date,
-          y: item.Temp_measure
+          y: parseFloat(item.value.toString().slice(0, -1))
         };
       });
     }
-    console.log("ddf", tempMeasures);
-    let temp = graphdata.temperature;
+    let temperature = graphdata.temperature;
     const options = {
       animationEnabled: true,
       theme: !toggleDarkMode ? "light2" : "dark2",
       title: {
-        text: temp.text
+        text: temperature.text
       },
       axisX: {
         valueFormatString: "DD MMM",
@@ -41,8 +40,8 @@ class TempGraph extends Component {
         }
       },
       axisY: {
-        title: temp.title,
-        valueFormatString: temp.format,
+        title: temperature.title,
+        valueFormatString: temperature.format,
         crosshair: {
           enabled: true,
           snapToDataPoint: true,
@@ -51,13 +50,13 @@ class TempGraph extends Component {
       data: [{
         type: "area",
         xValueFormatString: "DD MMM",
-        yValueFormatString: temp.format,
-        dataPoints: tempMeasures,
+        yValueFormatString: temperature.format,
+        dataPoints: humidMeasures,
       }]
     }
 
     return (
-      
+
       <div>
         <CanvasJSChart options={options} />
       </div>

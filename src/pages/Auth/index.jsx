@@ -22,21 +22,21 @@ const Auth = () => {
     };
 
     axios
-      .post("http://localhost:8000/register", user)
-      .then((res) => {
-        console.log("User created successfully");
-      })
-      .catch((err) => {
-        if (err.response) {
-          if (err.response.status === 400) {
-            console.log("User already exists");
-          } else if (err.response.status === 500) {
-            console.error("Internal Server Response");
-          }
-        } else {
-          console.error(err);
+    .post("http://localhost:8000/register", user)
+    .then((res) => {
+      console.log("User created successfully");
+    })
+    .catch((err) => {
+      if (err.response) {
+        if (err.response.status === 400) {
+          console.log(err.response.data.error);
+        } else if (err.response.status === 500) {
+          console.error("Internal Server Response");
         }
-      });
+      } else {
+        console.error(err);
+      }
+    });
   };
   const handleLogin = (event) => {
     event.preventDefault();
@@ -110,21 +110,20 @@ const Auth = () => {
                 className=" px-7 py-2 border rounded-2xl "
                 type="text"
                 placeholder="Username"
-                required
                 onChange={(e) => setUsername(e.target.value)}
               />
               <input
                 className="px-7 py-2 border rounded-2xl"
                 type="password"
                 placeholder="Password"
-                required
+
                 onChange={(e) => setPassword(e.target.value)}
               />
               <input
                 className="px-7 py-2 border rounded-2xl"
                 type="key"
                 placeholder="Key"
-                required
+
                 onChange={(e) => setKey(e.target.value)}
               />
               <button

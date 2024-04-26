@@ -27,7 +27,6 @@ const scrollToTop = () => {
 
 const Sidebar = ({toggleDarkMode}) => {
   const location = useLocation();
-  
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate('/auth');
@@ -119,7 +118,7 @@ const Sidebar = ({toggleDarkMode}) => {
             <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/HumanDetection" ? "#43474E" : "" }}>Human Detection</h1>
           </div>
       </Link>
-      <button onClick={handleLogout}>
+      <button onClick={handleLogout} className={`${user ? "block" : "hidden"}`}>
           <div className='sidebar-item hover:bg-lightblue rounded-[10px] '>
           {toggleDarkMode && location.pathname !== "/HumanDetection" ? <img src={logoutwhite} alt="detect" className='sidebar-logo'/> : <img src={logout} alt="detect" className='sidebar-logo'/>}
             <h1 className='sidebar-hug-item'>Log out</h1>

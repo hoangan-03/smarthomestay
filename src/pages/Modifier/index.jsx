@@ -19,7 +19,6 @@ const AIO_USERNAME = "quoc_huy";
 
 const Modifier = ({variable}) => {
   const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode} = useData()
-  // console.log("VAR", variable)
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchLightSenState, setLightSenState] = useState(true);

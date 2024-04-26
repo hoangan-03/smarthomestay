@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
 import graphdata from '../GraphData';
-
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-
 class LightGraph extends Component {
-
-
   render() {
-
     const { realtimedata, toggleDarkMode } = this.props;
     console.log("hhh", realtimedata);
-
     let humidMeasures;
     if (realtimedata) {
       realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
-
       humidMeasures = realtimedata.map(item => {
         let date = new Date(item.timestamp);
         console.log("date", date);
@@ -55,14 +48,11 @@ class LightGraph extends Component {
         dataPoints: humidMeasures,
       }]
     }
-
     return (
-
       <div>
         <CanvasJSChart options={options} />
       </div>
     );
   }
 }
-
 export default LightGraph;

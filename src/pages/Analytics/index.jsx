@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TempGraph from '../../components/TempGraph';
 import LightGraph from '../../components/LightGraph';
-import { getUser, getTempData } from '../../services/TableApi.service';
+import { getUser as getLightData, getTempData } from '../../services/TableApi.service';
 import { ButtonGroup, Button } from '@mui/material';
 import HumidGraph from '../../components/HumidGraph';
 import { useData } from '../../components/DataProvider';
@@ -15,16 +15,14 @@ const Analytics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const lightRes = await getUser();
+        const lightRes = await getLightData();
         console.log("lightData", lightRes);
         setLightData(lightRes);
-  
-        // Add a delay before fetching the second data
         setTimeout(async () => {
           const tempRes = await getTempData();
           console.log("tempData", tempRes);
           setTempData(tempRes);
-        },300); // Delay of 1 second
+        },300); 
       } catch (error) {
         console.error(error);
       }
@@ -48,7 +46,6 @@ const Analytics = () => {
       setIsHumid(true);
     }
   }
- 
 
   return (
     <div className='w-full h-[full]'>

@@ -4,3 +4,12 @@
   width: calc(100%);
   position: relative;
 }
+.dhx_cal_ltext {
+  height: 42px !important; /* Override default height for description section */
+  border-radius: 20px !important;
+}
+
+
+.dhx_cal_ltext textarea {
+  border-radius: 10px !important;
+}

@@ -7,6 +7,7 @@ import analyticiconlight from "../../assets/icons/analyticiconlight.png";
 import { Sketch } from "@uiw/react-color";
 import { Slider } from "@mui/material";
 import Button from '@mui/material/Button';
+import AlertDialog from "../../components/AlertDialog";
 import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
 import { useData } from "../../components/DataProvider";
@@ -26,6 +27,14 @@ const Modifier = ({ variable }) => {
   const [openSetColor, setOpenSetColor] = useState(false);
   let holdColor = hex
   const [holdFan, setHoldFan] = useState(parseInt(fan));
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
+  const handleCloseDialog = () => {
+    setOpenAlertDialog(false)
+  }
+  const handleConfirmDialog = (handleChange) => {
+    handleChange()
+    handleClick("Sensor has been turned off successfully", "success")()
+  }
 
 
   useEffect(() => {
@@ -62,14 +71,6 @@ const Modifier = ({ variable }) => {
     handleClick("Temperature and Humidity sensor is turned " + (switchTempandHumState ? "off" : "on") + " successfully", "success")()
     setSwitchTempandHumState(!switchTempandHumState);
   };
-  // const handleSwitchFanChange = () => {
-  //   if (switchFanState) {
-  //     client.publish(`${AIO_USERNAME}/feeds/FAN`, "0");
-  //   } else {
-  //     client.publish(`${AIO_USERNAME}/feeds/FAN`, "30");
-  //   }
-  //   setSwitchFanState(!switchFanState);
-  // };
   const handleLightSenChange = () => {
     if (switchLightSenState) {
       client.publish(`${AIO_USERNAME}/feeds/control_lux`, "0");
@@ -206,8 +207,10 @@ const Modifier = ({ variable }) => {
               <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
                 <p>{variables == "temperature" ? "Fan Speed" : "Light Switch"}</p>
               </div>
+
               {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={autoMode} />}
               <h1 className="text-black font-bold text-2xl ml-4">
+
                 {variables === "temperature"
                   ? "Set fan speed"
                   : "Turn the led light on or off"}
@@ -292,7 +295,9 @@ const Modifier = ({ variable }) => {
 
           </div>
 
+
           <div className="home-large-image" style={{ height: "320px", backgroundColor: "var(--bg-head-foot-item)" }}>
+
             <img
               className="w-full h-full object-cover rounded-xl"
               src={analytic}
@@ -346,6 +351,7 @@ const Modifier = ({ variable }) => {
         </div>
 
       </div>)}
+      {/* <AlertDialog title={"Turn Off Sensor Confirm"} description={"Disabling this feature may bring discomfort. Are you sure you want to proceed with disabling it?"} open={openAlertDialog} handleClose={handleCloseDialog} handleConfirm={handleConfirmDialog}/> */}
     </div>
 
 

@@ -15,9 +15,11 @@ const HumanDetection = () => {
   const [rowsToDisplay, setRowsToDisplay] = useState(noficationdata);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [openDetection, setOpenDetection] = useState(false);
+
   const [stateDetection, setStateDetection] = useState(false);
 
   const [detectionData, setDetectionData] = useState(null);
+
   const [deleteIndex, setDeleteIndex] = useState(null)
   const { handleClick, toggleDarkMode, autoMode } = useData();
 
@@ -103,15 +105,18 @@ const HumanDetection = () => {
             <div className="flex items-center gap-5">
               <p>Set Detection</p>
               <FormControlLabel
-                control={
-                  <PowerSwitch
-                    defaultChecked
-                    checked={stateDetection}
-                    onClick={handleDetectionChange}
-                    disabled={!autoMode}
-                  />
-                }
-              />
+
+                  control={
+                    <PowerSwitch
+                      defaultChecked
+                      checked={stateDetection}
+                      onClick={handleDetectionChange}
+                      disabled={autoMode}
+                      // onChange={handleDetectionChange}
+                    />
+                  }
+                />
+
             </div>
           </div>
 

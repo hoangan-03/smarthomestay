@@ -3,9 +3,14 @@ import ConsecutiveSnackbars from '../ConsecutiveSnackbars';
 const DataContext = createContext();
 export const useData = () => useContext(DataContext);
 export const DataProvider = ({ children }) => {
+
+    // Hex: color of the light
+    // Fan: speed of the fan
+
     const [hex, setHex] = useState("#ffffff");
+
     const [fan, setFan] = useState('0');
-    const [autoMode, setAutoMode] = useState(true);
+    const [autoMode, setAutoMode] = useState(false);
     const [snackPack, setSnackPack] = React.useState([]);
     const [messageInfo, setMessageInfo] = React.useState(undefined);
     const [toggleDarkMode, setToggleDarkMode] = useState(false);

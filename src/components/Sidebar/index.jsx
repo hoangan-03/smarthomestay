@@ -27,12 +27,14 @@ const scrollToTop = () => {
 
 const Sidebar = ({toggleDarkMode}) => {
   const location = useLocation();
+  
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate('/auth');
     sessionStorage.removeItem('user');
     
   };
+  const user = JSON.parse(sessionStorage.getItem('user'));
   return (
     <div className='sidebar'>
     
@@ -43,7 +45,7 @@ const Sidebar = ({toggleDarkMode}) => {
 
       <div className='sidebar-item sidebar-hug flex-col'>
         <p>Administrator</p>
-        <p className="text-xl font-bold">Name - ID</p>
+      <p className="text-xl font-bold"> {user ? `Hello ${user.username}` : "Haven't logged in"}</p>
       </div>
 
       <Link to="/" onClick={scrollToTop} className={`${

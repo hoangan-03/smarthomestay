@@ -1,0 +1,6 @@
+.scheduler-container {
+  min-height: 522px;
+  height: calc(100vh - 222px);
+  width: calc(100%);
+  position: relative;
+}

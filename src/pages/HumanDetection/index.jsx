@@ -1,4 +1,4 @@
-import {React, useState,useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import "./humandetection.css"
 import noficationdata from "../../components/NoficationData";
 import PowerSwitch from "../../components/PowerSwitch";
@@ -19,7 +19,7 @@ const HumanDetection = () => {
 
   const [detectionData, setDetectionData] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null)
-  const {handleClick, toggleDarkMode, autoMode} = useData();
+  const { handleClick, toggleDarkMode, autoMode } = useData();
 
   const handleDetectionChange = () => {
     if (stateDetection) {
@@ -50,13 +50,13 @@ const HumanDetection = () => {
       const updatedRows = rowsToDisplay.filter((_, i) => i !== deleteIndex);
       setRowsToDisplay(updatedRows);
     }
-    setOpenAlertDialog(false); 
+    setOpenAlertDialog(false);
     setDeleteIndex(null);
     handleClick("Notification has been removed successfully", "success")()
   }
   const handleCancelDelete = () => {
-    setOpenAlertDialog(false); 
-    setDeleteIndex(null); 
+    setOpenAlertDialog(false);
+    setDeleteIndex(null);
   }
   const navigate = useNavigate();
 
@@ -85,11 +85,9 @@ const HumanDetection = () => {
     detectionData.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
 
     detectMeasures = detectionData.map(item => {
-      let date = new Date(item.timestamp);
-      console.log("date", date);
-
       return {
-        timestamp: date,
+        date: item.timestamp.substring(0, 10),
+        time: item.timestamp.substring(0, 10),
         y: parseFloat(item.value.toString().slice(0, -1))
       };
     });
@@ -100,58 +98,51 @@ const HumanDetection = () => {
     <div className="w-full h-auto flex flex-col gap-6">
       <div className="w-full h-auto flex flex-row  gap-6">
         <div className="w-full itemContainer min-h-[550px] h-[calc(100vh-200px)]  flex  flex-col px-16 py-5 ">
-          <div className="text-start border-b-2  text-black font-bold text-2xl pb-4 h-auto flex justify-between">
-            <p>Nofication</p>
+          <div className="relative text-start border-b-2 text-black font-bold text-2xl pb-4 h-auto flex justify-between ">
+            <p className="absolute left-1/2 transform -translate-x-1/2">DETECTION NOFICATION</p>
             <div className="flex items-center gap-5">
               <p>Set Detection</p>
               <FormControlLabel
-                  control={
-                    <PowerSwitch
-                      defaultChecked
-                      checked={stateDetection}
-                      onClick={handleDetectionChange}
-                      disabled={!autoMode}
-                      // onChange={handleDetectionChange}
-                    />
-                  }
-                />
+                control={
+                  <PowerSwitch
+                    defaultChecked
+                    checked={stateDetection}
+                    onClick={handleDetectionChange}
+                    disabled={!autoMode}
+                  />
+                }
+              />
             </div>
-            
           </div>
-          
+
           <div className="scroll h-[625px] w-auto overflow-y-scroll text-base tracking-wide">
             <table className="w-full table-fixed whitespace-nowrap">
               <thead className="sticky top-0 bg-blue-200 ">
                 <tr className="roboto border-b text-left font-bold text-black">
-                  <th className="w-[25%] px-4 py-3">Date</th>
-                  <th className="w-[25%] px-4 py-3">Time</th>
-                  <th className="w-[25%] px-4 py-3 text-center">State</th>
-                  <th className="w-[25%] px-4 py-3 text-center">Remove</th>
-                  <th className="flex  justify-center px-4 py-3"></th>
-                  <th className=" px-4 py-3"></th>
+                  <th className="w-[35%] px-4 py-3 text-center">Date</th>
+                  <th className="w-[35%] px-4 py-3 text-center">Time</th>
+                  <th className="w-[30%] px-4 py-3 text-center">State</th>
                 </tr>
               </thead>
               <tbody className="roboto h-auto divide-y w-full font-bold text-black">
-                {rowsToDisplay.map((row, index) => (
+                {detectionData && detectionData.map((row, index) => (
                   <tr key={index}>
-                    <td className="w-[25%] px-4 py-3"><p>{row.date}</p></td>
-                    <td className="w-[25%] px-4 py-3"><p>{row.time}</p></td>
+                    <td className="w-[35%] px-4 py-3 text-center"><p>{row.timestamp.substring(0, 10)}</p></td>
+                    <td className="w-[35%] px-4 py-3 text-center"><p>{row.timestamp.substring(11, 19)}</p></td>
 
                     <td className="w-full max-w-[200px]">
                       <div className="flex items-center justify-center">
                         <h2
-                          className={`flex w-fit items-center justify-center rounded-2xl px-3 py-1 text-base  font-normal text-white ${row.state ? "   bg-green-700" : "  bg-red-700 "
+                          className={`flex w-fit items-center justify-center rounded-2xl px-3 py-1 text-base  font-normal text-white ${row.value === "human detected" ? "bg-green-700" : "bg-red-700 "
                             }`}
                         >
-                          <p style={{color: "white"}}>{row.state ? "Human presence" : "Human absence"}</p>
+                          <p style={{ color: "white" }}>{row.value === "human detected" ? "Human presence" : "Human absence"}</p>
                         </h2>
                       </div>
                     </td>
-                    <td className="w-[full] h-[50px] flex justify-center items-center">
-                      <img src={!toggleDarkMode ? bin_light : bin_dark} alt="bin" className="w-[20px] h-[20px] cursor-pointer" onClick={() => handleDelete(index)} />
-                    </td>
 
-                    
+
+
                     <td className="px-4 py-3"></td>
                   </tr>
                 ))}
@@ -160,9 +151,9 @@ const HumanDetection = () => {
           </div>
         </div>
 
-        <AlertDialog title={"Remove Confirm"} description={"Do you want to remove this notification?"} open={openAlertDialog} handleClose={handleCancelDelete} handleConfirm={handleConfirmDelete}/>
 
-        <AlertDialog title={"Turn Off Detection Confirm"} description={"Disabling this feature may compromise the security of your system. Are you sure you want to proceed with disabling it?"} open={openDetection} handleClose={handleCloseDetection} handleConfirm={handleConfirmDetection}/>
+
+        <AlertDialog title={"Turn Off Detection Confirm"} description={"Disabling this feature may compromise the security of your system. Are you sure you want to proceed with disabling it?"} open={openDetection} handleClose={handleCloseDetection} handleConfirm={handleConfirmDetection} />
       </div>
     </div>
   );

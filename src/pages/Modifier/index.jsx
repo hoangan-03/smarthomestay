@@ -17,17 +17,17 @@ import "./Modifier.css";
 import { Link, useNavigate } from "react-router-dom";
 const AIO_USERNAME = "quoc_huy";
 
-const Modifier = ({variable}) => {
+const Modifier = ({ variable }) => {
   const navigate = useNavigate();
-  const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode} = useData()
+  const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode } = useData()
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchLightSenState, setLightSenState] = useState(true);
-  const [openSetColor, setOpenSetColor] = useState(false);  
+  const [openSetColor, setOpenSetColor] = useState(false);
   let holdColor = hex
   const [holdFan, setHoldFan] = useState(parseInt(fan));
 
-  
+
   useEffect(() => {
     const user = sessionStorage.getItem('user');
     if (!user) {
@@ -42,7 +42,7 @@ const Modifier = ({variable}) => {
 
   useEffect(() => {
     client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
-  },[hex])
+  }, [hex])
 
   const handleSwitchLightChange = () => {
     if (switchLightState) {
@@ -86,9 +86,9 @@ const Modifier = ({variable}) => {
   };
   useEffect(() => {
     client.publish(`${AIO_USERNAME}/feeds/FAN`, fan);
-    console.log("FAN",fan)
-  },[fan])
-  
+    console.log("FAN", fan)
+  }, [fan])
+
   const handleSliderChange = (event, newValue) => {
     setHoldFan(newValue);
   };
@@ -136,7 +136,6 @@ const Modifier = ({variable}) => {
     });
   }, []);
   const variables = variable;
-  console.log("VAR", variables)
   const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
   };
@@ -146,7 +145,7 @@ const Modifier = ({variable}) => {
   const humidityvar = {
     value: data.humidity,
   };
-  console.log("tem", sensorData.temperature);
+
 
   return (
     <div className="w-full relative">
@@ -155,7 +154,7 @@ const Modifier = ({variable}) => {
           <div className="w-[420px] h-[160px] itemContainer flex flex-row  justify-between items-center py-[30px] px-[25px]">
             <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
               <h1 className="text-4xl">{temporlightvar.value.text}</h1>
-              <h2 className="text-5xl font-bold" style={{color: 'var(--text-data)'}}>
+              <h2 className="text-5xl font-bold" style={{ color: 'var(--text-data)' }}>
                 {variables === "temperature"
                   ? sensorData.temperature
                   : sensorData.light}{" "}
@@ -174,7 +173,7 @@ const Modifier = ({variable}) => {
           >
             <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
               <h1 className="text-[var(--text-title)] text-4xl">{humidityvar.value.text}</h1>
-              <h2 className="text-5xl font-bold" style={{color: 'var(--text-data)'}}>
+              <h2 className="text-5xl font-bold" style={{ color: 'var(--text-data)' }}>
                 {sensorData.humidity}
                 {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
               </h2>
@@ -187,13 +186,13 @@ const Modifier = ({variable}) => {
           </div>
           <Button
             sx={{
-                height: "50px",
-                position: "absolute",
-                top: 0,
-                right: 0,
-                display: variables === "temperature" ? "none" : "block"
+              height: "50px",
+              position: "absolute",
+              top: 0,
+              right: 0,
+              display: variables === "temperature" ? "none" : "block"
             }}
-            onClick={() => {setOpenSetColor(prev => !prev)}}
+            onClick={() => { setOpenSetColor(prev => !prev) }}
             variant="contained"
             color="primary"
             disabled={autoMode}
@@ -207,7 +206,7 @@ const Modifier = ({variable}) => {
               <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
                 <p>{variables == "temperature" ? "Fan Speed" : "Light Switch"}</p>
               </div>
-              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={!autoMode}/>}
+              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={autoMode} />}
               <h1 className="text-black font-bold text-2xl ml-4">
                 {variables === "temperature"
                   ? "Set fan speed"
@@ -234,11 +233,11 @@ const Modifier = ({variable}) => {
                   } `}
               >
                 <Button sx={{ m: 1 }}
-                      size="large"
-                      variant="contained"
-                      onClick={handleSetFanChange}
-                      disabled={autoMode}>
-                        SET
+                  size="large"
+                  variant="contained"
+                  onClick={handleSetFanChange}
+                  disabled={autoMode}>
+                  SET
                 </Button>
               </div>
             </div>
@@ -286,43 +285,43 @@ const Modifier = ({variable}) => {
                   }
                 />
               </div>
-              
-              
+
+
             </div>
-            
-            
+
+
           </div>
-          
-          <div className="home-large-image" style={{height: "320px", backgroundColor: "var(--bg-head-foot-item)"}}>
-          <img
-            className="w-full h-full object-cover rounded-xl"
-            src={analytic}
-            alt=""
-          ></img>
-          <div className="home-config">
-            <div className="flex flex-col gap-3 ">
-              <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
-            </div>
-            <Link to="/Analytics" className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
+
+          <div className="home-large-image" style={{ height: "320px", backgroundColor: "var(--bg-head-foot-item)" }}>
             <img
-                className="w-[30px] h-[30px] object-cover "
-                src={analyticiconlight}
-                alt=""
-              ></img>
+              className="w-full h-full object-cover rounded-xl"
+              src={analytic}
+              alt=""
+            ></img>
+            <div className="home-config">
+              <div className="flex flex-col gap-3 ">
+                <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
+              </div>
+              <Link to="/Analytics" className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
+                <img
+                  className="w-[30px] h-[30px] object-cover "
+                  src={analyticiconlight}
+                  alt=""
+                ></img>
               </Link>
+            </div>
           </div>
-        </div>
 
 
 
 
 
         </div>
-      
 
-        
+
+
       </div>
-      {openSetColor && (<div className={`w-[400px] h-[600px]  items-center itemContainer px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 variables === "temperature" ? "hidden" : "block"} `} style={{top: "-80px"}}>
+      {openSetColor && (<div className={`w-[400px] h-[600px]  items-center itemContainer px-2 py-3 flex flex-col gap-1 absolute top-0 right-0 variables === "temperature" ? "hidden" : "block"} `} style={{ top: "-80px" }}>
         <Sketch
           color={holdColor}
           onChange={(color) => {
@@ -332,24 +331,24 @@ const Modifier = ({variable}) => {
           style={{ width: '350px', height: '500px' }} // Set the width here
         />
         <div className="flex gap-5">
-          <Button 
-            variant="contained" 
-            endIcon={<SendIcon />} 
-            onClick={() => handleSetColor()} 
-            
-            style={{ width: '270px', height: '60px', backgroundColor:"#1D4ED8" }} // Set the width here
+          <Button
+            variant="contained"
+            endIcon={<SendIcon />}
+            onClick={() => handleSetColor()}
+
+            style={{ width: '270px', height: '60px', backgroundColor: "#1D4ED8" }} // Set the width here
           >
             Set LED Color
           </Button>
-          <Button  sx={{width: '50px', height:"60px", backgroundColor:"#1D4ED8" }} onClick={() => setOpenSetColor(prev => !prev)}  variant="contained" color="primary">
-              {openSetColor ? "Close" : "Set LED Color"} 
-            </Button>
+          <Button sx={{ width: '50px', height: "60px", backgroundColor: "#1D4ED8" }} onClick={() => setOpenSetColor(prev => !prev)} variant="contained" color="primary">
+            {openSetColor ? "Close" : "Set LED Color"}
+          </Button>
         </div>
-        
+
       </div>)}
     </div>
-    
-    
+
+
   );
 };
 

@@ -9,14 +9,13 @@ import bin_light from "../../assets/icons/bin_light.png";
 import bin_dark from "../../assets/icons/bin_dark.png";
 import { useNavigate } from "react-router-dom";
 import { getDetectionData } from "../../services/TableApi.service";
-// import handle from "mqtt/lib/handlers/index";
-// import handle from "mqtt/lib/handlers/index";
+
 const HumanDetection = () => {
   const [rowsToDisplay, setRowsToDisplay] = useState(noficationdata);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [openDetection, setOpenDetection] = useState(false);
 
-  const [stateDetection, setStateDetection] = useState(false);
+  const [stateDetection, setStateDetection] = useState(true);
 
   const [detectionData, setDetectionData] = useState(null);
 
@@ -82,19 +81,7 @@ const HumanDetection = () => {
 
     fetchData();
   }, []);
-  let detectMeasures;
-  if (detectionData) {
-    detectionData.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
-
-    detectMeasures = detectionData.map(item => {
-      return {
-        date: item.timestamp.substring(0, 10),
-        time: item.timestamp.substring(0, 10),
-        y: parseFloat(item.value.toString().slice(0, -1))
-      };
-    });
-  }
-  console.log("detect", detectionData);
+  
 
   return (
     <div className="w-full h-auto flex flex-col gap-6">

@@ -16,7 +16,7 @@ import humid_dark from "../../assets/icons/humid_dark.png";
 import temperature_dark from "../../assets/icons/temperature_dark.png";
 import "./Modifier.css";
 import { Link, useNavigate } from "react-router-dom";
-const AIO_USERNAME = "quoc_huy";
+const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
 const Modifier = ({ variable }) => {
   const navigate = useNavigate();

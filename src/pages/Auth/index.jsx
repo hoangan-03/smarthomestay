@@ -67,6 +67,9 @@ const Auth = () => {
         if (res.data.message) {
           handleActive(true);
           setOpen(true);
+
+
+          
           sessionStorage.setItem("user", JSON.stringify(res.data.user));
           console.log("user", res.data.user);
           navigate("/");

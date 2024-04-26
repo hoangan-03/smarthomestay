@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import ConsecutiveSnackbars from '../ConsecutiveSnackbars';
 const DataContext = createContext();
-
-
 export const useData = () => useContext(DataContext);
 export const DataProvider = ({ children }) => {
     const [hex, setHex] = useState("#ffffff");
@@ -10,8 +8,6 @@ export const DataProvider = ({ children }) => {
     const [autoMode, setAutoMode] = useState(true);
     const [snackPack, setSnackPack] = React.useState([]);
     const [messageInfo, setMessageInfo] = React.useState(undefined);
-
-
     const [toggleDarkMode, setToggleDarkMode] = useState(false);
     useEffect(() => {
         if (toggleDarkMode) {

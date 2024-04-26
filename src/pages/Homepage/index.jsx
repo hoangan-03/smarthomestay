@@ -91,8 +91,8 @@ const Homepage = () => {
     <div className='flex flex-col gap-10 w-full relative items-center '>
       <div className='container flex gap-10 flex-wrap justify-center items-center'>
         <div className='w-[400px] h-[445px] itemContainer flex flex-col'>
-          <h1 className="text-[22px] font-bold px-8 pt-12">Welcome to Smart Homestay!</h1>
-          <p className="text-[16px]  font-semibold px-8 pb-20">Write something here</p>
+          <h1 className="text-[22px] font-bold px-6 pt-5">Welcome to <span className='text-sky-700'>Smart Homestay!</span> </h1>
+          <p className="text-[16px]  font-semibold px-6 pb-20">Our system, revolutionizing hospitality with seamless automation, remote monitoring, and personalized guest experience</p>
           <img className="flex-grow rounded-none" src={homestayphoto} alt="homestay" />
         </div>
 

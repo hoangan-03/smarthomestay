@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TempGraph from '../../components/TempGraph';
 import LightGraph from '../../components/LightGraph';
-import { getUser as getLightData, getTempData } from '../../services/TableApi.service';
+import { getLightData, getTempData } from '../../services/TableApi.service';
 import { ButtonGroup, Button } from '@mui/material';
 import HumidGraph from '../../components/HumidGraph';
 import { useData } from '../../components/DataProvider';

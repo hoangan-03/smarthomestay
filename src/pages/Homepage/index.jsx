@@ -161,8 +161,8 @@ const Homepage = () => {
       {/* <Images /> */}
       {/* <LargeImages/> */}
       <ButtonGroup size='large' variant="outlined" aria-label="Basic button group" sx={{ mb: "30px" }}>
-        <Button variant={autoMode ? "contained" : "outlined"} onClick={handleTurnOn} >AUTOMODE OFF</Button>
-        <Button variant={autoMode ? "outlined" : "contained"} onClick={handleTurnOff}>AUTOMODE ON</Button>
+        <Button variant={autoMode ? "outlined" : "contained"} onClick={handleTurnOff} >AUTOMODE OFF</Button>
+        <Button variant={autoMode ? "contained" : "outlined"} onClick={handleTurnOn}>AUTOMODE ON</Button>
       </ButtonGroup>
 
     </div>

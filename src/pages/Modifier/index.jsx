@@ -191,12 +191,12 @@ const Modifier = ({variable}) => {
                 position: "absolute",
                 top: 0,
                 right: 0,
-                display: variables === "temperature" ? "none" : "block" // Use ternary operator for conditional display
+                display: variables === "temperature" ? "none" : "block"
             }}
             onClick={() => {setOpenSetColor(prev => !prev)}}
             variant="contained"
             color="primary"
-            disabled={!autoMode}
+            disabled={autoMode}
           >
             Set LED Color
           </Button>
@@ -213,9 +213,6 @@ const Modifier = ({variable}) => {
                   ? "Set fan speed"
                   : "Turn the led light on or off"}
               </h1>
-              <h2 className="text-black font-semibold text-xl ml-4">
-                Write something here
-              </h2>
               <div
                 className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
                   } `}
@@ -227,7 +224,7 @@ const Modifier = ({variable}) => {
                       defaultChecked
                       checked={switchLightState}
                       onChange={() => handleSwitchLightChange()}
-                      disabled={!autoMode}
+                      disabled={autoMode}
                     />
                   }
                 />
@@ -240,7 +237,7 @@ const Modifier = ({variable}) => {
                       size="large"
                       variant="contained"
                       onClick={handleSetFanChange}
-                      disabled={!autoMode}>
+                      disabled={autoMode}>
                         SET
                 </Button>
               </div>
@@ -257,9 +254,6 @@ const Modifier = ({variable}) => {
                   ? "Turn the humidity and tempearture sensor on or off"
                   : "Turn the led light sensor on or off"}
               </h1>
-              <h2 className="text-black font-semibold text-xl ml-4">
-                Write something here
-              </h2>
               <div
                 className={`w-full absolute bottom-0 h-auto  flex justify-end items-center ${variables === "temperature" ? "hidden" : "block"
                   } `}
@@ -271,7 +265,7 @@ const Modifier = ({variable}) => {
                       defaultChecked
                       checked={switchLightSenState}
                       onChange={() => handleLightSenChange()}
-                      disabled={!autoMode}
+                      disabled={autoMode}
                     />
                   }
                 />
@@ -287,7 +281,7 @@ const Modifier = ({variable}) => {
                       defaultChecked
                       checked={switchTempandHumState}
                       onChange={() => handleTempandHumChange()}
-                      disabled={!autoMode}
+                      disabled={autoMode}
                     />
                   }
                 />
@@ -308,9 +302,6 @@ const Modifier = ({variable}) => {
           <div className="home-config">
             <div className="flex flex-col gap-3 ">
               <h1 className="text-white font-bold text-2xl ml-4">Analytics</h1>
-              <h2 className="text-white font-semibold text-xl ml-4">
-                Write something here
-              </h2>
             </div>
             <Link to="/Analytics" className="w-[60px] h-[60px] flex justify-center items-center p-2 rounded-full bg-gray/60">
             <img

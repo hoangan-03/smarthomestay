@@ -8,6 +8,7 @@ import { FormControlLabel } from "@mui/material";
 import bin_light from "../../assets/icons/bin_light.png";
 import bin_dark from "../../assets/icons/bin_dark.png";
 import { useNavigate } from "react-router-dom";
+import { getDetectionData } from "../../services/TableApi.service";
 // import handle from "mqtt/lib/handlers/index";
 // import handle from "mqtt/lib/handlers/index";
 const HumanDetection = () => {
@@ -15,6 +16,8 @@ const HumanDetection = () => {
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [openDetection, setOpenDetection] = useState(false);
   const [stateDetection, setStateDetection] = useState(false);
+
+  const [detectionData, setDetectionData] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null)
   const {handleClick, toggleDarkMode, autoMode} = useData();
 
@@ -29,7 +32,6 @@ const HumanDetection = () => {
   }
 
   const handleConfirmDetection = () => {
-    // Check if the detection is turned off successfully
     setStateDetection((prev) => !prev)
     setOpenDetection(false)
     handleClick("Detection has been turned off successfully", "success")()
@@ -44,20 +46,17 @@ const HumanDetection = () => {
     setOpenAlertDialog(true)
   };
   const handleConfirmDelete = () => {
-    // Needs to be implemented later
     if (deleteIndex !== null) {
-      // Create a new array by filtering out the element at the specified index
       const updatedRows = rowsToDisplay.filter((_, i) => i !== deleteIndex);
-      // Update the state with the new array
       setRowsToDisplay(updatedRows);
     }
-    setOpenAlertDialog(false); // Close the AlertDialog
-    setDeleteIndex(null); // Reset the deleteIndex state
+    setOpenAlertDialog(false); 
+    setDeleteIndex(null);
     handleClick("Notification has been removed successfully", "success")()
   }
   const handleCancelDelete = () => {
-    setOpenAlertDialog(false); // Close the AlertDialog
-    setDeleteIndex(null); // Reset the deleteIndex state
+    setOpenAlertDialog(false); 
+    setDeleteIndex(null); 
   }
   const navigate = useNavigate();
 
@@ -68,6 +67,34 @@ const HumanDetection = () => {
       navigate('/auth');
     }
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const DetecData = await getDetectionData();
+        setDetectionData(DetecData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  let detectMeasures;
+  if (detectionData) {
+    detectionData.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
+
+    detectMeasures = detectionData.map(item => {
+      let date = new Date(item.timestamp);
+      console.log("date", date);
+
+      return {
+        timestamp: date,
+        y: parseFloat(item.value.toString().slice(0, -1))
+      };
+    });
+  }
+  console.log("detect", detectionData);
 
   return (
     <div className="w-full h-auto flex flex-col gap-6">

@@ -81,6 +81,11 @@ class Calendar extends Component {
         console.log("Create")
         console.log("Body", JSON.stringify(addedEvent))
         fetch('https://savig-project.vercel.app/api/create',
+<<<<<<< HEAD
+=======
+
+    
+>>>>>>> 27aeb645cd568884be62062d0ca2fa60007e76b0
         {
           method: 'post',
           headers:{

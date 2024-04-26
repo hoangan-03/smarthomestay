@@ -52,8 +52,7 @@ class TempGraph extends Component {
         type: "area",
         xValueFormatString: "DD MMM",
         yValueFormatString: temp.format,
-        // dataPoints: tempMeasures,
-        dataPoints: temp.dataPoints
+        dataPoints: tempMeasures,
       }]
     }
 

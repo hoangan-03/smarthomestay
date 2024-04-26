@@ -10,9 +10,6 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
 import { useData } from "../../components/DataProvider";
-import tempicon from "../../assets/icons/Temperature icon.png";
-import lightbulp from "../../assets/icons/lightbulp.png";
-import humidityicon from "../../assets/icons/humidityicon.png";
 import lightbulb_dark from "../../assets/icons/lightbulb_dark.png";
 import humid_dark from "../../assets/icons/humid_dark.png";
 import temperature_dark from "../../assets/icons/temperature_dark.png";
@@ -25,7 +22,6 @@ const Modifier = ({variable}) => {
   // console.log("VAR", variable)
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
-  const [switchFanState, setSwitchFanState] = useState(false);
   const [switchLightSenState, setLightSenState] = useState(true);
   const [openSetColor, setOpenSetColor] = useState(false);  
   let holdColor = hex

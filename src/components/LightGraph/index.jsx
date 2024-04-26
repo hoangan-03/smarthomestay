@@ -49,8 +49,7 @@ class LightGraph extends Component {
         type: "area",
         xValueFormatString: "DD MMM",
         yValueFormatString: light.format,
-        // dataPoints: lightMeasures,
-        dataPoints: light.dataPoints
+        dataPoints: lightMeasures,
       }]
     }
 

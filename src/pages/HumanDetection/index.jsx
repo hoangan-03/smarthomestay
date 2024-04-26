@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import "./humandetection.css"
 import noficationdata from "../../components/NoficationData";
-import DeleteIcon from '@mui/icons-material/Delete';
 import PowerSwitch from "../../components/PowerSwitch";
 import AlertDialog from "../../components/AlertDialog";
 import { useData } from "../../components/DataProvider";

@@ -1,36 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import TempGraph from '../../components/TempGraph';
 import LightGraph from '../../components/LightGraph';
-import { getLightData, getTempData } from '../../services/TableApi.service';
+import { getLightData, getTempData, getHumidityData } from '../../services/TableApi.service';
 import { ButtonGroup, Button } from '@mui/material';
 import HumidGraph from '../../components/HumidGraph';
 import { useData } from '../../components/DataProvider';
 const Analytics = () => {
   const [lightData, setLightData] = useState([]);
   const [tempData, setTempData] = useState([]);
+  const [humidityData, setHumidityData] = useState([]);
   const [isTemp, setIsTemp] = useState(true);
   const [isLight, setIsLight] = useState(false);
   const [isHumid, setIsHumid] = useState(false);
   const {toggleDarkMode} = useData();
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const lightRes = await getLightData();
-        console.log("lightData", lightRes);
-        setLightData(lightRes);
-        setTimeout(async () => {
-          const tempRes = await getTempData();
-          console.log("tempData", tempRes);
-          setTempData(tempRes);
-        },300); 
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+    try {
+      const lightRes = await getLightData();
+      console.log("lightData", lightRes);
+      setLightData(lightRes);
+      setTimeout(async () => {
+        const tempRes = await getTempData();
+        console.log("tempData", tempRes);
+        setTempData(tempRes);
+        const humidityRes = await getHumidityData(); 
+        console.log("humidityData", humidityRes);
+        setHumidityData(humidityRes); 
+      },300); 
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  fetchData();
+}, []);
   const handleButtonClick = (type) => {
     if (type === "temp") {
       setIsTemp(true);
@@ -56,7 +59,7 @@ const Analytics = () => {
       </ButtonGroup>
       {isTemp && <TempGraph realtimedata={tempData.result} toggleDarkMode={toggleDarkMode}/>}
       {isLight && <LightGraph realtimedata={lightData.result} toggleDarkMode={toggleDarkMode}/>}
-      {isHumid && <HumidGraph realtimedata={tempData.result} toggleDarkMode={toggleDarkMode}/>}
+      {isHumid && <HumidGraph realtimedata={humidityData.result} toggleDarkMode={toggleDarkMode}/>}
       
     </div>
   );

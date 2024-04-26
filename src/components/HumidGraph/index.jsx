@@ -51,8 +51,7 @@ class HumidGraph extends Component {
         type: "area",
         xValueFormatString: "DD MMM",
         yValueFormatString: humid.format,
-        // dataPoints: humidMeasures,
-        dataPoints: humid.dataPoints
+        dataPoints: humidMeasures,
       }]
     }
 

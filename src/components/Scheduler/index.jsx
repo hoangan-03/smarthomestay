@@ -11,11 +11,11 @@ export default class Scheduler extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          events: props.events,
-          timeFormatState: props.timeFormatState,
+            events: props.events,
+            timeFormatState: props.timeFormatState,
           onDataUpdated : props.onDataUpdated,
-          toggleDarkMode: props.toggleDarkMode,
-      };
+            toggleDarkMode: props.toggleDarkMode,
+        };
     }
 
 
@@ -56,6 +56,12 @@ export default class Scheduler extends Component {
             'next'
         ];
         scheduler.config.hour_date = '%H:%i';
+        console.log("Lightbox", scheduler.config.lightbox.sections)
+        scheduler.config.lightbox.sections=[
+            {name:"Note", map_to:"text", type:"textarea" , focus:true},
+            {name:"time", height:72, type:"time", map_to:"auto"},
+            {name:"Room ID", height:21, type:"textarea", map_to:"room"}
+        ];
         scheduler.xy.scale_width = 70;
         
 

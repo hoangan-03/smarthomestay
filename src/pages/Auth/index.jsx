@@ -8,7 +8,7 @@ import info from "../../assets/icons/info.png";
 import close from "../../assets/icons/close.png";
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState("");
   const handleActive = (boole) => {
     setActive(boole);
   };
@@ -28,7 +28,7 @@ const Auth = () => {
       acc_id: Math.floor(Math.random() * (40000 - 400 + 1)) + 400,
       key
     };
-
+    //Invalid key // Username already exists
     axios
       .post("http://localhost:8000/register", user)
       .then((res) => {
@@ -65,6 +65,8 @@ const Auth = () => {
       .post("http://localhost:8000/signin", user)
       .then((res) => {
         if (res.data.message) {
+          handleActive(true);
+          setOpen(true);
           sessionStorage.setItem("user", JSON.stringify(res.data.user));
           console.log("user", res.data.user);
           navigate("/");
@@ -73,9 +75,12 @@ const Auth = () => {
       .catch((err) => {
         if (err.response && err.response.data.error) {
           console.log(err.response.data.error);
+
         } else {
           console.error(err);
         }
+        handleActive(false);
+        setOpen(true);
       });
   };
   console.log("user", username);
@@ -111,7 +116,7 @@ const Auth = () => {
                 <h2
                   className={`  w-auto text-start items-start text-2xl  font-bold text-black`}
                 >
-                  {active ? "Register successfully" : "Please check your information again."}
+                  {active ? (isLogin ? "Login successfully" : "Register successfully") : "Please check your information again."}
                 </h2>
 
               </div>
@@ -171,12 +176,14 @@ const Auth = () => {
               <input
                 className=" px-7 py-2 border rounded-2xl "
                 type="text"
+                required
                 placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
               />
               <input
                 className="px-7 py-2 border rounded-2xl"
                 type="password"
+                required
                 placeholder="Password"
 
                 onChange={(e) => setPassword(e.target.value)}
@@ -184,6 +191,7 @@ const Auth = () => {
               <input
                 className="px-7 py-2 border rounded-2xl"
                 type="key"
+                required
                 placeholder="Key"
 
                 onChange={(e) => setKey(e.target.value)}

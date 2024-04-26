@@ -6,29 +6,32 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class LightGraph extends Component {
 
-  render() {
-    const { realtimedata, toggleDarkMode } = this.props;
 
-    let lightMeasures;
+  render() {
+
+    const { realtimedata, toggleDarkMode } = this.props;
+    console.log("hhh", realtimedata);
+
+    let humidMeasures;
     if (realtimedata) {
       realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
 
-      lightMeasures = realtimedata.map(item => {
-        let date = new Date(item.Timestamp);
+      humidMeasures = realtimedata.map(item => {
+        let date = new Date(item.timestamp);
+        console.log("date", date);
 
         return {
           x: date,
-          y: item.Light_measure
+          y: parseFloat(item.value.toString().slice(0, -1))
         };
       });
     }
-
-    let light = graphdata.lightlevel;
+    let lightlevel = graphdata.lightlevel;
     const options = {
       animationEnabled: true,
       theme: !toggleDarkMode ? "light2" : "dark2",
       title: {
-        text: light.text
+        text: lightlevel.text
       },
       axisX: {
         valueFormatString: "DD MMM",
@@ -38,8 +41,8 @@ class LightGraph extends Component {
         }
       },
       axisY: {
-        title: light.title,
-        valueFormatString: light.format,
+        title: lightlevel.title,
+        valueFormatString: lightlevel.format,
         crosshair: {
           enabled: true,
           snapToDataPoint: true,
@@ -48,12 +51,13 @@ class LightGraph extends Component {
       data: [{
         type: "area",
         xValueFormatString: "DD MMM",
-        yValueFormatString: light.format,
-        dataPoints: lightMeasures,
+        yValueFormatString: lightlevel.format,
+        dataPoints: humidMeasures,
       }]
     }
 
     return (
+
       <div>
         <CanvasJSChart options={options} />
       </div>

@@ -57,9 +57,9 @@ const Analytics = () => {
         <Button variant={isLight ? "contained" : "outlined"} onClick={() => handleButtonClick("light")}>Light</Button>
         <Button variant={isHumid ? "contained" : "outlined"} onClick={() => handleButtonClick("humid")}>Humid</Button>
       </ButtonGroup>
-      {isTemp && <TempGraph realtimedata={tempData.result} toggleDarkMode={toggleDarkMode}/>}
-      {isLight && <LightGraph realtimedata={lightData.result} toggleDarkMode={toggleDarkMode}/>}
-      {isHumid && <HumidGraph realtimedata={humidityData.result} toggleDarkMode={toggleDarkMode}/>}
+      {isTemp && <TempGraph realtimedata={tempData} toggleDarkMode={toggleDarkMode}/>}
+      {isLight && <LightGraph realtimedata={lightData} toggleDarkMode={toggleDarkMode}/>}
+      {isHumid && <HumidGraph realtimedata={humidityData} toggleDarkMode={toggleDarkMode}/>}
       
     </div>
   );

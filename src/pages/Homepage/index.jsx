@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './homepage.css'
 import homestayphoto from '../../assets/icons/homestayphoto.png'
 import data from "../../components/Constant";
@@ -15,11 +15,6 @@ import { useNavigate } from 'react-router-dom';
 
 const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-  });
-};
 const Homepage = () => {
   const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode } = useData();
   const [sensorData, setSensorData] = useState({
@@ -34,7 +29,7 @@ const Homepage = () => {
     if (!user) {
       navigate('/auth');
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     client.on("connect", () => {

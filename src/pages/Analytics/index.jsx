@@ -22,7 +22,7 @@ const Analytics = () => {
     if (!user) {
       navigate('/auth');
     }
-  }, []);
+  }, [navigate]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,14 +59,6 @@ const Analytics = () => {
       setIsHumid(true);
     }
   }
-
-  useEffect(() => {
-    const user = sessionStorage.getItem('user');
-    if (!user) {
-      navigate('/auth');
-    }
-  }, []);
-
   return (
     <div className='w-full h-[full]'>
       <ButtonGroup variant="outlined" aria-label="Basic button group" sx={{ mb: "30px" }}>

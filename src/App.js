@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Homepage";
@@ -9,14 +8,12 @@ import HumanDetection from "./pages/HumanDetection";
 import Modifier from "./pages/Modifier";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-import LeftContent from "./components/LeftContent";
 import Footer from "./components/Footer";
-import { Snackbar, Alert, CssBaseline, ThemeProvider, createTheme} from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme} from "@mui/material";
 import { useData } from "./components/DataProvider";
 import Auth from "./pages/Auth";
 function App() {
-  // DataProvider is a custom context provider that wraps the entire app (provide all data to all components)
-  // useData is the custom hook that allows us to access the data provided by the DataProvider  
+
     const {toggleDarkMode, setToggleDarkMode} = useData();
   
     const darkTheme = createTheme({

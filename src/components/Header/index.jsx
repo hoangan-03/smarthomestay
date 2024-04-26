@@ -4,7 +4,6 @@ import bellicon from '../../assets/icons/bellicon.png';
 import avataricon from '../../assets/icons/avataricon.png';
 import bellicon_dark from '../../assets/icons/bellicon_dark.png';
 import darkmode from '../../assets/icons/darkmode.png';
-import { useTheme } from '@mui/material/styles';
 import { useData } from '../DataProvider';
 const Header = ({setToggleDarkMode}) => {
     const {toggleDarkMode} = useData()

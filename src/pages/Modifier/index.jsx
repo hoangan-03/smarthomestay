@@ -7,7 +7,6 @@ import analyticiconlight from "../../assets/icons/analyticiconlight.png";
 import { Sketch } from "@uiw/react-color";
 import { Slider } from "@mui/material";
 import Button from '@mui/material/Button';
-import AlertDialog from "../../components/AlertDialog";
 import SendIcon from '@mui/icons-material/Send';
 import client from "../../mqtt/mqttclient";
 import { useData } from "../../components/DataProvider";
@@ -27,14 +26,7 @@ const Modifier = ({ variable }) => {
   const [openSetColor, setOpenSetColor] = useState(false);
   let holdColor = hex
   const [holdFan, setHoldFan] = useState(parseInt(fan));
-  const [openAlertDialog, setOpenAlertDialog] = useState(false);
-  const handleCloseDialog = () => {
-    setOpenAlertDialog(false)
-  }
-  const handleConfirmDialog = (handleChange) => {
-    handleChange()
-    handleClick("Sensor has been turned off successfully", "success")()
-  }
+
 
 
   useEffect(() => {
@@ -42,7 +34,7 @@ const Modifier = ({ variable }) => {
     if (!user) {
       navigate('/auth');
     }
-  }, []);
+  }, [navigate]);
 
   const handleSetColor = () => {
     setHex(holdColor)
@@ -205,10 +197,10 @@ const Modifier = ({ variable }) => {
           <div className="w-[420px] h-[320px] itemContainer px-9 py-8">
             <div className="w-full relative h-full flex flex-col justify-start items-start gap-4 ">
               <div className="w-full h-[80px] text-center flex justify-center items-center bg-gray/20 rounded-3xl text-black text-2xl font-bold px-6 py-3">
-                <p>{variables == "temperature" ? "Fan Speed" : "Light Switch"}</p>
+                <p>{variables === "temperature" ? "Fan Speed" : "Light Switch"}</p>
               </div>
 
-              {variables == "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={autoMode} />}
+              {variables === "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={autoMode} />}
               <h1 className="text-black font-bold text-2xl ml-4">
 
                 {variables === "temperature"

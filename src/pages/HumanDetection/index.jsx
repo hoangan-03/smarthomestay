@@ -1,26 +1,19 @@
 import { React, useState, useEffect } from "react";
 import "./humandetection.css"
-import noficationdata from "../../components/NoficationData";
 import PowerSwitch from "../../components/PowerSwitch";
 import AlertDialog from "../../components/AlertDialog";
 import { useData } from "../../components/DataProvider";
 import { FormControlLabel } from "@mui/material";
-import bin_light from "../../assets/icons/bin_light.png";
-import bin_dark from "../../assets/icons/bin_dark.png";
 import { useNavigate } from "react-router-dom";
 import { getDetectionData } from "../../services/TableApi.service";
 
 const HumanDetection = () => {
-  const [rowsToDisplay, setRowsToDisplay] = useState(noficationdata);
-  const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [openDetection, setOpenDetection] = useState(false);
 
   const [stateDetection, setStateDetection] = useState(true);
 
   const [detectionData, setDetectionData] = useState(null);
-
-  const [deleteIndex, setDeleteIndex] = useState(null)
-  const { handleClick, toggleDarkMode, autoMode } = useData();
+  const { handleClick, autoMode } = useData();
 
   const handleDetectionChange = () => {
     if (stateDetection) {
@@ -41,24 +34,6 @@ const HumanDetection = () => {
   const handleCloseDetection = () => {
     setOpenDetection(false)
   }
-
-  const handleDelete = (index) => {
-    setDeleteIndex(index)
-    setOpenAlertDialog(true)
-  };
-  const handleConfirmDelete = () => {
-    if (deleteIndex !== null) {
-      const updatedRows = rowsToDisplay.filter((_, i) => i !== deleteIndex);
-      setRowsToDisplay(updatedRows);
-    }
-    setOpenAlertDialog(false);
-    setDeleteIndex(null);
-    handleClick("Notification has been removed successfully", "success")()
-  }
-  const handleCancelDelete = () => {
-    setOpenAlertDialog(false);
-    setDeleteIndex(null);
-  }
   const navigate = useNavigate();
 
 
@@ -67,7 +42,7 @@ const HumanDetection = () => {
     if (!user) {
       navigate('/auth');
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const fetchData = async () => {

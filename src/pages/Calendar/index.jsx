@@ -32,6 +32,7 @@ class Calendar extends Component {
   }
 
   addMessage(message) {
+<<<<<<< HEAD
       console.log("ADD MESSAGE")
       const maxLogLength = 5;
       const newMessage = { message };
@@ -41,6 +42,18 @@ class Calendar extends Component {
       ];
       console.log("MEssage", messages)
 
+=======
+
+      console.log("ADD MESSAGE")
+      const maxLogLength = 5;
+      const newMessage = { message };
+      const messages = [
+          newMessage,
+          ...this.state.messages
+      ];
+      console.log("MEssage", messages)
+
+>>>>>>> 27aeb645cd568884be62062d0ca2fa60007e76b0
       if (messages.length > maxLogLength) {
           messages.length = maxLogLength;
       }

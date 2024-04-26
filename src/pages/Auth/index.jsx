@@ -7,6 +7,7 @@ const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [key, setKey] = useState("");
   const navigate = useNavigate();
   const switchMode = () => {
     setIsLogin((prevIsLogin) => !prevIsLogin);
@@ -17,6 +18,7 @@ const Auth = () => {
       username,
       password,
       acc_id: Math.floor(Math.random() * (40000 - 400 + 1)) + 400,
+      key
     };
 
     axios
@@ -47,8 +49,8 @@ const Auth = () => {
       .post("http://localhost:8000/signin", user)
       .then((res) => {
         if (res.data.message) {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          console.log(res.data.message);
+          sessionStorage.setItem("user", JSON.stringify(res.data.user));
+          console.log("user",res.data.user);
           navigate("/");
         }
       })
@@ -117,6 +119,13 @@ const Auth = () => {
                 placeholder="Password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
+              />
+              <input
+                className="px-7 py-2 border rounded-2xl"
+                type="key"
+                placeholder="Key"
+                required
+                onChange={(e) => setKey(e.target.value)}
               />
               <button
                 className="px-3 py-3 bg-sky-800 text-white text-sm lg:text-base rounded-3xl"

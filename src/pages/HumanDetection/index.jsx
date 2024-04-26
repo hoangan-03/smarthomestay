@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import {React, useState,useEffect } from "react";
 import "./humandetection.css"
 import noficationdata from "../../components/NoficationData";
 import PowerSwitch from "../../components/PowerSwitch";
@@ -8,6 +7,7 @@ import { useData } from "../../components/DataProvider";
 import { FormControlLabel } from "@mui/material";
 import bin_light from "../../assets/icons/bin_light.png";
 import bin_dark from "../../assets/icons/bin_dark.png";
+import { useNavigate } from "react-router-dom";
 // import handle from "mqtt/lib/handlers/index";
 // import handle from "mqtt/lib/handlers/index";
 const HumanDetection = () => {
@@ -59,7 +59,15 @@ const HumanDetection = () => {
     setOpenAlertDialog(false); // Close the AlertDialog
     setDeleteIndex(null); // Reset the deleteIndex state
   }
+  const navigate = useNavigate();
 
+
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+      navigate('/auth');
+    }
+  }, []);
 
   return (
     <div className="w-full h-auto flex flex-col gap-6">

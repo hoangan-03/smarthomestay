@@ -14,10 +14,11 @@ import lightbulb_dark from "../../assets/icons/lightbulb_dark.png";
 import humid_dark from "../../assets/icons/humid_dark.png";
 import temperature_dark from "../../assets/icons/temperature_dark.png";
 import "./Modifier.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const AIO_USERNAME = "quoc_huy";
 
 const Modifier = ({variable}) => {
+  const navigate = useNavigate();
   const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode} = useData()
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
@@ -25,6 +26,14 @@ const Modifier = ({variable}) => {
   const [openSetColor, setOpenSetColor] = useState(false);  
   let holdColor = hex
   const [holdFan, setHoldFan] = useState(parseInt(fan));
+
+  
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+      navigate('/auth');
+    }
+  }, []);
 
   const handleSetColor = () => {
     setHex(holdColor)

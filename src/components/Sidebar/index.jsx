@@ -15,6 +15,9 @@ import analyticiconlight from "../../assets/icons/analyticiconlight.png"
 import light_bulb_white from "../../assets/icons/light_bulb_white.png"
 import temperatureicon_white from "../../assets/icons/temperatureicon_white.png"
 import detectionicon_white from "../../assets/icons/detectionicon_white.png"
+import logout from "../../assets/icons/logout.png"
+import logoutwhite from "../../assets/icons/logoutwhite.png"
+import { useNavigate } from 'react-router-dom';
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,
@@ -24,6 +27,12 @@ const scrollToTop = () => {
 
 const Sidebar = ({toggleDarkMode}) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate('/auth');
+    sessionStorage.removeItem('user');
+    
+  };
   return (
     <div className='sidebar'>
     
@@ -108,6 +117,12 @@ const Sidebar = ({toggleDarkMode}) => {
             <h1 className='sidebar-hug-item' style={{ color: location.pathname === "/HumanDetection" ? "#43474E" : "" }}>Human Detection</h1>
           </div>
       </Link>
+      <button onClick={handleLogout}>
+          <div className='sidebar-item hover:bg-lightblue rounded-[10px] '>
+          {toggleDarkMode && location.pathname !== "/HumanDetection" ? <img src={logoutwhite} alt="detect" className='sidebar-logo'/> : <img src={logout} alt="detect" className='sidebar-logo'/>}
+            <h1 className='sidebar-hug-item'>Log out</h1>
+          </div>
+      </button>
     </div>
   )
 }

@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
 const Homepage = () => {
-  const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode } = useData();
+  const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode, getCookie } = useData();
   const [sensorData, setSensorData] = useState({
     temperature: "OFF",
     humidity: "OFF",
@@ -25,11 +25,12 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = sessionStorage.getItem('user');
+    const user = getCookie('cookieUser')
+    console.log("User: ", user)
     if (!user) {
       navigate('/auth');
     }
-  }, [navigate]);
+  }, [navigate,getCookie]);
 
   useEffect(() => {
     client.on("connect", () => {

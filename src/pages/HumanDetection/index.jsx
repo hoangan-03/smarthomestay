@@ -13,7 +13,7 @@ const HumanDetection = () => {
   const [stateDetection, setStateDetection] = useState(true);
 
   const [detectionData, setDetectionData] = useState(null);
-  const { handleClick, autoMode } = useData();
+  const { handleClick, autoMode, getCookie } = useData();
 
   const handleDetectionChange = () => {
     if (stateDetection) {
@@ -38,11 +38,11 @@ const HumanDetection = () => {
 
 
   useEffect(() => {
-    const user = sessionStorage.getItem('user');
+    const user = getCookie('cookieUser')
     if (!user) {
       navigate('/auth');
     }
-  }, [navigate]);
+  }, [navigate,getCookie]);
 
   useEffect(() => {
     const fetchData = async () => {

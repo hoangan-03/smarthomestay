@@ -18,6 +18,7 @@ import detectionicon_white from "../../assets/icons/detectionicon_white.png"
 import logout from "../../assets/icons/logout.png"
 import logoutwhite from "../../assets/icons/logoutwhite.png"
 import { useNavigate } from 'react-router-dom';
+import { useData } from '../DataProvider';
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,
@@ -26,14 +27,16 @@ const scrollToTop = () => {
 
 
 const Sidebar = ({toggleDarkMode}) => {
+  const {deleteCookie, getCookie, setUser} = useData();
   const location = useLocation();
   const navigate = useNavigate();
   const handleLogout = () => {
     navigate('/auth');
     sessionStorage.removeItem('user');
-    
+    deleteCookie('cookieUser');
+    setUser(null)
   };
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const user = getCookie('cookieUser');
   return (
     <div className='sidebar'>
     

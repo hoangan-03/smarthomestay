@@ -19,7 +19,7 @@ const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
 const Modifier = ({ variable }) => {
   const navigate = useNavigate();
-  const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode } = useData()
+  const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode, getCookie} = useData()
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchLightSenState, setLightSenState] = useState(true);
@@ -30,11 +30,11 @@ const Modifier = ({ variable }) => {
 
 
   useEffect(() => {
-    const user = sessionStorage.getItem('user');
+    const user = getCookie('cookieUser');
     if (!user) {
       navigate('/auth');
     }
-  }, [navigate]);
+  }, [navigate, getCookie]);
 
   const handleSetColor = () => {
     setHex(holdColor)

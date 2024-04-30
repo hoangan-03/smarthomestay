@@ -70,7 +70,6 @@ const HumanDetection = () => {
 
                   control={
                     <PowerSwitch
-                      defaultChecked
                       checked={stateDetection}
                       onClick={handleDetectionChange}
                       disabled={autoMode}

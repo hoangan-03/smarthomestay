@@ -13,15 +13,15 @@ import humid_dark from "../../assets/icons/humid_dark.png";
 import temperature_dark from "../../assets/icons/temperature_dark.png";
 import { useNavigate } from 'react-router-dom';
 
-const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
+// const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
 const Homepage = () => {
-  const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode, getCookie } = useData();
-  const [sensorData, setSensorData] = useState({
-    temperature: "OFF",
-    humidity: "OFF",
-    light: "OFF",
-  });
+  const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode, getCookie, sensorData } = useData();
+  // const [sensorData, setSensorData] = useState({
+  //   temperature: "OFF",
+  //   humidity: "OFF",
+  //   light: "OFF",
+  // });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,32 +32,32 @@ const Homepage = () => {
     }
   }, [navigate,getCookie]);
 
-  useEffect(() => {
-    client.on("connect", () => {
-      client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
-      client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
-      client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
-    });
+  // useEffect(() => {
+  //   client.on("connect", () => {
+  //     client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
+  //     client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
+  //     client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
+  //   });
 
-    client.on("message", (topic, message) => {
-      if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
-        setSensorData((prevState) => ({
-          ...prevState,
-          temperature: parseFloat(message.toString()),
-        }));
-      } else if (topic === `${AIO_USERNAME}/feeds/humility_sensor`) {
-        setSensorData((prevState) => ({
-          ...prevState,
-          humidity: parseFloat(message.toString()),
-        }));
-      } else if (topic === `${AIO_USERNAME}/feeds/light_sensor`) {
-        setSensorData((prevState) => ({
-          ...prevState,
-          light: parseFloat(message.toString()),
-        }));
-      }
-    });
-  }, []);
+  //   client.on("message", (topic, message) => {
+  //     if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
+  //       setSensorData((prevState) => ({
+  //         ...prevState,
+  //         temperature: parseFloat(message.toString()),
+  //       }));
+  //     } else if (topic === `${AIO_USERNAME}/feeds/humility_sensor`) {
+  //       setSensorData((prevState) => ({
+  //         ...prevState,
+  //         humidity: parseFloat(message.toString()),
+  //       }));
+  //     } else if (topic === `${AIO_USERNAME}/feeds/light_sensor`) {
+  //       setSensorData((prevState) => ({
+  //         ...prevState,
+  //         light: parseFloat(message.toString()),
+  //       }));
+  //     }
+  //   });
+  // }, []);
   const tempervar = {
     value: data.temperature
   };

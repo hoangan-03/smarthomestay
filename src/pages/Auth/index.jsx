@@ -163,9 +163,9 @@ const Auth = () => {
                 style={{ color: "black"}}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button className="text-[var(--text-normal)] text-sm text-end mb-6">
+              {/* <button className="text-[var(--text-normal)] text-sm text-end mb-6">
                 Forgot password?
-              </button>
+              </button> */}
               <button
                 className="px-3 py-3 bg-sky-800 text-white text-sm lg:text-base rounded-3xl"
                 type="submit"
@@ -205,7 +205,7 @@ const Auth = () => {
                 type="key"
                 style={{ color: "black"}}
                 required
-                placeholder="Key"
+                placeholder="API Key"
 
                 onChange={(e) => setKey(e.target.value)}
               />

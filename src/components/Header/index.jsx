@@ -6,10 +6,6 @@ import { useData } from '../DataProvider';
 import Notification from '../Notification';
 const Header = ({setToggleDarkMode}) => {
     const {toggleDarkMode, user} = useData()
-
-
-    
-
     return (
         <div className={`flex justify-end gap-8 h-20 pr-24 items-center w-full shadow-custom-shadow bg-[var(--bg-head-foot-item)]`}>
             

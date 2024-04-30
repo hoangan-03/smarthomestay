@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useData } from "../../components/DataProvider";
 import a1 from "../../assets/images/shs-back.jpg";
 import Modal from "@mui/material/Modal";
 import tick from "../../assets/icons/accept.png";
 import info from "../../assets/icons/info.png";
 import close from "../../assets/icons/close.png";
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  // const [isLogin, setIsLogin] = useState(true);
   const [active, setActive] = useState("");
+  const {setHasLogin, isLogin, setIsLogin, setCookie, getCookie, setUser} = useData();
   const handleActive = (boole) => {
     setActive(boole);
   };
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [key, setKey] = useState("");
@@ -67,8 +70,10 @@ const Auth = () => {
         if (res.data.message) {
           handleActive(true);
           setOpen(true);
-
-
+          console.log("RES DATA", res.data);
+          setCookie('cookieUser', res.data.user, 1);
+          console.log("Cookie id: ", getCookie('cookieUser'));
+          setUser(getCookie('cookieUser'))
           
           sessionStorage.setItem("user", JSON.stringify(res.data.user));
           console.log("user", res.data.user);
@@ -156,7 +161,7 @@ const Auth = () => {
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button className="text-black text-sm text-end mb-6">
+              <button className="text-[var(--text-normal)] text-sm text-end mb-6">
                 Forgot password?
               </button>
               <button
@@ -208,7 +213,7 @@ const Auth = () => {
             </form>
           </div>
         )}
-        <h2 className=" text-black text-center text-sm mt-2">
+        <h2 className=" text-[var(--text-normal)] text-center text-sm mt-2">
           {isLogin ? "Not a member? " : "Already had an account? "}
           <button className="text-sky-700" onClick={switchMode}>
             {isLogin ? "Register now" : "Login now"}

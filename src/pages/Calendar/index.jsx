@@ -125,7 +125,7 @@ class Calendar extends Component {
     })
       .catch(console.error);
 
-      const user = sessionStorage.getItem('user');
+      const user = this.props.getCookie('cookieUser')
       if (!user) {
         this.props.navigate('/auth');
       }

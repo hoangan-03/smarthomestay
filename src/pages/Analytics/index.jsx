@@ -13,16 +13,16 @@ const Analytics = () => {
   const [isTemp, setIsTemp] = useState(true);
   const [isLight, setIsLight] = useState(false);
   const [isHumid, setIsHumid] = useState(false);
-  const { toggleDarkMode } = useData();
+  const { toggleDarkMode, getCookie } = useData();
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    const user = sessionStorage.getItem('user');
+    const user = getCookie('cookieUser');
     if (!user) {
       navigate('/auth');
     }
-  }, [navigate]);
+  }, [navigate, getCookie]);
   useEffect(() => {
     const fetchData = async () => {
       try {

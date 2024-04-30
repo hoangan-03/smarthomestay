@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Homepage";
@@ -14,13 +14,15 @@ import { useData } from "./components/DataProvider";
 import Auth from "./pages/Auth";
 function App() {
 
-    const {toggleDarkMode, setToggleDarkMode} = useData();
+    const {toggleDarkMode, setToggleDarkMode, getCookie} = useData();
   
     const darkTheme = createTheme({
         palette: {
             mode: toggleDarkMode ? 'dark' : 'light',
         },
     });
+
+    
 
   return (
     <div className="App">
@@ -36,7 +38,7 @@ function App() {
                     <Route exact path="/" element={<HomePage />} />
                     <Route exact path="Auth" element={<Auth />} />
                     <Route path="/Home" element={<HomePage/>} />
-                    <Route path="/Calendar" element={<Calendar toggleDarkMode={toggleDarkMode} />} />
+                    <Route path="/Calendar" element={<Calendar toggleDarkMode={toggleDarkMode} getCookie={getCookie} />} />
                     <Route path="/Analytics" element={<Analytics />} />
                     <Route path="/HumanDetection" element={<HumanDetection/>} />
                     <Route

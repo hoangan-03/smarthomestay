@@ -142,16 +142,17 @@ const Auth = () => {
           </div>
         </div>
       </Modal>
-      <div className="flex flex-col h-[400px] items-start justify-center  pl-0 lg:pl-[200px] w-1/2 ">
+      <div className="flex flex-col h-[400px] items-center justify-center  pl-0  w-1/2 ">
         {isLogin ? (
           <div className="w-[300px] lg:w-[420px] flex flex-col gap-2 justify-center items-center">
-            <h2 className="text-xl lg:text-3xl font-bold mb-4">Welcome back</h2>
+            <h2 className="text-3xl font-bold mb-4">Welcome back</h2>
             <form className="flex flex-col w-full gap-3" onSubmit={handleLogin}>
               <input
                 className=" px-7 py-2 border rounded-2xl "
                 type="username"
                 placeholder="Username"
                 required
+                style={{ color: "black"}}
                 onChange={(e) => setUsername(e.target.value)}
               />
               <input
@@ -159,6 +160,7 @@ const Auth = () => {
                 type="password"
                 placeholder="Password"
                 required
+                style={{ color: "black"}}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button className="text-[var(--text-normal)] text-sm text-end mb-6">
@@ -184,6 +186,7 @@ const Auth = () => {
               <input
                 className=" px-7 py-2 border rounded-2xl "
                 type="text"
+                style={{ color: "black"}}
                 required
                 placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
@@ -191,6 +194,7 @@ const Auth = () => {
               <input
                 className="px-7 py-2 border rounded-2xl"
                 type="password"
+                style={{ color: "black"}}
                 required
                 placeholder="Password"
 
@@ -199,6 +203,7 @@ const Auth = () => {
               <input
                 className="px-7 py-2 border rounded-2xl"
                 type="key"
+                style={{ color: "black"}}
                 required
                 placeholder="Key"
 
@@ -213,7 +218,7 @@ const Auth = () => {
             </form>
           </div>
         )}
-        <h2 className=" text-[var(--text-normal)] text-center text-sm mt-2">
+        <h2 className=" text-[var(--text-normal)] text-sm mt-2">
           {isLogin ? "Not a member? " : "Already had an account? "}
           <button className="text-sky-700" onClick={switchMode}>
             {isLogin ? "Register now" : "Login now"}

@@ -200,7 +200,7 @@ const Auth = () => {
                 className="px-7 py-2 border rounded-2xl"
                 type="key"
                 required
-                placeholder="Key"
+                placeholder="API Key"
 
                 onChange={(e) => setKey(e.target.value)}
               />

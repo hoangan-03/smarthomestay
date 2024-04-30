@@ -1,18 +1,14 @@
 import { Divider } from '@mui/material'
 import React, {useState, useEffect } from 'react'
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import {Menu, Box, IconButton, Link,ListItemIcon, MenuItem} from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import {Menu, Box, ListItemIcon, MenuItem} from '@mui/material';
 import { Badge } from '@mui/material';
 import { useData } from '../DataProvider';
 import bellicon from '../../assets/icons/bellicon.png';
 import bellicon_dark from '../../assets/icons/bellicon_dark.png';
 import { styled } from '@mui/system';
 
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+const StyledMenuItem = styled(MenuItem)(() => ({
   whiteSpace: "unset",
   wordBreak: "break-all"
 }));

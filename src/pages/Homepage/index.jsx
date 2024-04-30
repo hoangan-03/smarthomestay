@@ -140,7 +140,6 @@ const Homepage = () => {
           </div>
         </div>
 
-        {/* Lower code */}
         <div className={`home-lower-container w-fit h-fit flex gap-10 flex-col`}>
           <div className='w-[400px] h-[200px] itemContainer flex flex-col items-center'>
             <p className='mt-5 bg-[var(--bg-gray)] w-[320px] h-[80px] flex justify-center items-center rounded-[30px] text-2xl font-semibold '>Fan speed</p>
@@ -154,8 +153,6 @@ const Homepage = () => {
 
 
       </div>
-      {/* <Images /> */}
-      {/* <LargeImages/> */}
       <ButtonGroup size='large' variant="outlined" aria-label="Basic button group" sx={{ mb: "30px" }}>
         <Button variant={autoMode ? "outlined" : "contained"} onClick={handleTurnOff} >AUTOMODE OFF</Button>
         <Button variant={autoMode ? "contained" : "outlined"} onClick={handleTurnOn}>AUTOMODE ON</Button>

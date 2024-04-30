@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardFooter, Container, Row, Col } from "reactstrap";
+import React from "react";
 import { Component } from 'react';
 import { useNavigate } from "react-router-dom";
-// import NotesHeader from "components/Headers/NotesHeader.js";
 import Scheduler from '../../components/Scheduler';
 import "./Calendar.css";
 import 'dhtmlx-scheduler';
 import 'dhtmlx-scheduler/codebase/dhtmlxscheduler.css';
 
 const scheduler = window.scheduler;
-
-const haha = [
-  { start_date: '2023-11-25 6:00', end_date: '2023-11-25 9:00', text: 'Event 1', id: 1 },
-  { start_date: '2023-11-22 10:00', end_date: '2023-11-22 18:00', text: 'Event 2', id: 2 },
-  //{start_date: 'Tue Nov 21 2023 02:10:00 ', end_date: 'Tue Nov 21 2023 07:15:00 ', text: 'fs', id: 1704085403824,},
-];
 
 function CalendarWrapper(props) {
   const navigate = useNavigate();
@@ -67,7 +59,7 @@ class Calendar extends Component {
       addedEvent.id = ev.id
       addedEvent.room = ev.room
       
-      if(action == 'create')
+      if(action === 'create')
       {
         console.log("Create")
         console.log("Body", JSON.stringify(addedEvent))
@@ -83,7 +75,7 @@ class Calendar extends Component {
           
         })
     }
-    else if (action == 'delete') {
+    else if (action === 'delete') {
       console.log("Delete")
       fetch('https://savig-project.vercel.app/api/delete',
         {
@@ -94,7 +86,7 @@ class Calendar extends Component {
           body: JSON.stringify({ id: ev.id }),
         })
     }
-    else if (action == 'update') {
+    else if (action === 'update') {
       console.log("Update")
       fetch('https://savig-project.vercel.app/api/update',
         {
@@ -132,7 +124,7 @@ class Calendar extends Component {
 
   }
   render() {
-    var { currentTimeFormatState, messages, data } = this.state;
+    var { currentTimeFormatState } = this.state;
     const { toggleDarkMode } = this.props;
 
     return (

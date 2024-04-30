@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../../components/DataProvider";
@@ -10,7 +10,7 @@ import close from "../../assets/icons/close.png";
 const Auth = () => {
   // const [isLogin, setIsLogin] = useState(true);
   const [active, setActive] = useState("");
-  const {setHasLogin, isLogin, setIsLogin, setCookie, getCookie, setUser} = useData();
+  const {isLogin, setIsLogin, setCookie, getCookie, setUser} = useData();
   const handleActive = (boole) => {
     setActive(boole);
   };

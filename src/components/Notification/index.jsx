@@ -9,6 +9,7 @@ import bellicon_dark from '../../assets/icons/bellicon_dark.png';
 import { styled } from '@mui/system';
 import { formatDistanceToNow } from 'date-fns';
 import axios from 'axios';
+
 const StyledMenuItem = styled(MenuItem)(() => ({
     whiteSpace: "unset",
     wordBreak: "break-all"
@@ -16,27 +17,40 @@ const StyledMenuItem = styled(MenuItem)(() => ({
 
 const Notification = (props) => {
     const [data, setData] = useState([]);
+    const [notiCount, setNotiCount] = useState(0);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const { toggleDarkMode } = useData();
+    const open = Boolean(anchorEl);
 
     useEffect(() => {
         axios
             .get("http://localhost:8000/get_nofications")
             .then((res) => {
                 setData(res.data.data);
+                setNotiCount(res.data.data.filter(item => item.isviewed === false).length);
             })
             .catch((err) => {
                 console.error(err);
             });
     }, []);
-    const filteredData = data.filter(item => item.isviewed === false);
-    const [notiCount, setNotiCount] = useState(data.filter(item => item.isviewed === false).length);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const { toggleDarkMode } = useData();
-    const open = Boolean(anchorEl);
 
     const handleSetView = (event, idx) => {
-        // event.preventDefault();
         event.stopPropagation();
 
+        axios.put(`http://localhost:8000/update_isviewed/${idx}`)
+            .then(response => {
+                console.log(response.data);
+                const newData = [...data];
+                const itemIndex = newData.findIndex(item => item.ctrl_id === idx);
+                if (itemIndex !== -1) {
+                    newData[itemIndex].isviewed = true;
+                    setData(newData);
+                    setNotiCount(newData.filter(item => item.isviewed === false).length);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     const handleClick = (event) => {
@@ -47,11 +61,7 @@ const Notification = (props) => {
         setAnchorEl(null);
     };
 
-    useEffect(() => {
-        setNotiCount(filteredData.length);
-    }, [filteredData]);
     return (
-
         <div>
             <Badge badgeContent={notiCount} color="primary">
                 <img className='cursor-pointer' src={!toggleDarkMode ? bellicon : bellicon_dark} alt="bell" width={18} height={18} onClick={handleClick} />
@@ -95,7 +105,7 @@ const Notification = (props) => {
                     <p className='text-[var(--text-data)] text-xl pl-5 pb-1 font-bold'>All Notifications</p>
                     <Divider />
                     {data.map((item, index) => (
-                        <StyledMenuItem key={index} className="flex py-2" style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.15)" }} onClick={(event) => handleSetView(event, index)}>
+                        <StyledMenuItem key={index} className="flex py-2" style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.15)" }} onClick={(event) => handleSetView(event, item.ctrl_id)}>
                             <ListItemIcon className='flex justify-center items-center'>
                                 <NotificationsIcon fontSize="small" />
                             </ListItemIcon>
@@ -114,6 +124,5 @@ const Notification = (props) => {
         </div>
     );
 }
-
 
 export default Notification

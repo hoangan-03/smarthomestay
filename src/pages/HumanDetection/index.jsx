@@ -6,7 +6,7 @@ import { useData } from "../../components/DataProvider";
 import { FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getDetectionData } from "../../services/TableApi.service";
-
+import axios from "axios";
 const HumanDetection = () => {
   const [openDetection, setOpenDetection] = useState(false);
 
@@ -22,6 +22,30 @@ const HumanDetection = () => {
     else {
       setStateDetection((prev) => !prev)
       handleClick("Detection has been turned on successfully", "success")()
+      const control = {
+        Dev_id: "humandetect_device_1",
+        Room_id: 1,
+        Action: "Detection has been turned on successfully",
+        Ctrl_mode: "Manual",
+        Timestamp: new Date().toISOString(),
+        Isviewed: false,
+      };
+      axios
+        .post("http://localhost:8000/controlling", control)
+        .then((res) => {
+          console.log("Log added successfully");
+        })
+        .catch((err) => {
+          if (err.response) {
+            if (err.response.status === 400) {
+              console.log(err.response.data.error);
+            } else if (err.response.status === 500) {
+              console.error("Internal Server Response");
+            }
+          } else {
+            console.error(err);
+          }
+        });
     }
   }
 
@@ -29,6 +53,31 @@ const HumanDetection = () => {
     setStateDetection((prev) => !prev)
     setOpenDetection(false)
     handleClick("Detection has been turned off successfully", "success")()
+    const control = {
+      Dev_id: "humandetect_device_1",
+      Room_id: 1,
+      Action: "Detection has been turned off successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
+
   }
 
   const handleCloseDetection = () => {
@@ -42,7 +91,7 @@ const HumanDetection = () => {
     if (!user) {
       navigate('/auth');
     }
-  }, [navigate,getCookie]);
+  }, [navigate, getCookie]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +105,7 @@ const HumanDetection = () => {
 
     fetchData();
   }, []);
-  
+
 
   return (
     <div className="w-full h-auto flex flex-col gap-6">
@@ -68,16 +117,16 @@ const HumanDetection = () => {
               <p>Set Detection</p>
               <FormControlLabel
 
-                  control={
-                    <PowerSwitch
-                      defaultChecked
-                      checked={stateDetection}
-                      onClick={handleDetectionChange}
-                      disabled={autoMode}
-                      // onChange={handleDetectionChange}
-                    />
-                  }
-                />
+                control={
+                  <PowerSwitch
+                    defaultChecked
+                    checked={stateDetection}
+                    onClick={handleDetectionChange}
+                    disabled={autoMode}
+                  // onChange={handleDetectionChange}
+                  />
+                }
+              />
 
             </div>
           </div>

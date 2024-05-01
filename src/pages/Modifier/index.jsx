@@ -40,6 +40,30 @@ const Modifier = ({ variable }) => {
   const handleSetColor = () => {
     setHex(holdColor)
     handleClick("Set LED color successfully", "success")()
+    const control = {
+      Dev_id: "color_set_device_1",
+      Room_id: 1,
+      Action: "Set LED color successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   }
 
   useEffect(() => {

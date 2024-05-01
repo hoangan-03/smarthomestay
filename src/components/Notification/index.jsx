@@ -27,12 +27,8 @@ const Notification = (props) => {
                 console.error(err);
             });
     }, []);
-    console.log("this is data,", data);
-
-    // Use 'data' instead of 'mockData' in your component
-    const [mockData, setMockData] = useState([{ description: 'You have a new nweaf newfaf adsadsad asdsa das enwas notification', time: '2 minutes', hasViewed: true }, { description: 'You have a new notification', time: '3 hours', hasViewed: false }, { description: 'You have a new notification', time: '2 hours 20 minutes', hasViewed: false }]);
-    const filteredData = mockData.filter(item => !item.hasViewed);
-    const [notiCount, setNotiCount] = useState(null);
+    const filteredData = data.filter(item => item.isviewed === false);
+    const [notiCount, setNotiCount] = useState(data.filter(item => item.isviewed === false).length);
     const [anchorEl, setAnchorEl] = useState(null);
     const { toggleDarkMode } = useData();
     const open = Boolean(anchorEl);
@@ -41,15 +37,9 @@ const Notification = (props) => {
         // event.preventDefault();
         event.stopPropagation();
 
-        // Set notification to viewed when clicked
-        const newMockData = [...mockData];
-        newMockData[idx].hasViewed = true;
-        setMockData(newMockData);
     };
 
     const handleClick = (event) => {
-        // Reset notification count to 0 when clicking on the badge icon
-        setNotiCount(0);
         setAnchorEl(event.currentTarget);
     };
 

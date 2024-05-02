@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import ConsecutiveSnackbars from '../ConsecutiveSnackbars';
+import client from '../../mqtt/mqttclient';
+const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 const DataContext = createContext();
 export const useData = () => useContext(DataContext);
 export const DataProvider = ({ children }) => {
@@ -20,6 +22,11 @@ export const DataProvider = ({ children }) => {
     const [toggleDarkMode, setToggleDarkMode] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
     const [user, setUser] = useState(getCookie('cookieUser'))
+    const [sensorData, setSensorData] = useState({
+      temperature: "OFF",
+      humidity: "OFF",
+      light: "OFF",
+    });
 
     function setCookie(name, value, days) {
         const expirationDate = new Date();
@@ -58,7 +65,38 @@ export const DataProvider = ({ children }) => {
         document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }
 
-    
+    useEffect(() => {
+      client.on("connect", () => {
+        client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
+        client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
+        client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
+        client.subscribe(`${AIO_USERNAME}/feeds/FAN`);
+        client.subscribe(`${AIO_USERNAME}/feeds/led_color`);
+      });
+  
+      client.on("message", (topic, message) => {
+        if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
+          setSensorData((prevState) => ({
+            ...prevState,
+            temperature: parseFloat(message.toString()),
+          }));
+        } else if (topic === `${AIO_USERNAME}/feeds/humility_sensor`) {
+          setSensorData((prevState) => ({
+            ...prevState,
+            humidity: parseFloat(message.toString()),
+          }));
+        } else if (topic === `${AIO_USERNAME}/feeds/light_sensor`) {
+          setSensorData((prevState) => ({
+            ...prevState,
+            light: parseFloat(message.toString()),
+          }));
+        } else if (topic === `${AIO_USERNAME}/feeds/FAN`) {
+          setFan(message.toString());
+        } else if (topic === `${AIO_USERNAME}/feeds/led_color`) {
+          setHex(message.toString());
+        }
+      });
+    }, []);
 
     useEffect(() => {
         if (toggleDarkMode) {
@@ -78,7 +116,7 @@ export const DataProvider = ({ children }) => {
 
 
     return (
-        <DataContext.Provider value={{hex, setHex, fan, setFan, autoMode, setAutoMode, toggleDarkMode, setToggleDarkMode, handleClick, deleteCookie, getCookie, setCookie, isLogin, setIsLogin, user, setUser}}>
+        <DataContext.Provider value={{hex, setHex, fan, setFan, autoMode, setAutoMode, toggleDarkMode, setToggleDarkMode, handleClick, deleteCookie, getCookie, setCookie, isLogin, setIsLogin, user, setUser, sensorData}}>
             {children}
             <ConsecutiveSnackbars snackPack={snackPack} setSnackPack={setSnackPack} messageInfo={messageInfo} setMessageInfo={setMessageInfo} handleClick={handleClick}/>
         </DataContext.Provider>

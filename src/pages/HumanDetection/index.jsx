@@ -117,16 +117,15 @@ const HumanDetection = () => {
               <p>Set Detection</p>
               <FormControlLabel
 
-                control={
-                  <PowerSwitch
-                    defaultChecked
-                    checked={stateDetection}
-                    onClick={handleDetectionChange}
-                    disabled={autoMode}
-                  // onChange={handleDetectionChange}
-                  />
-                }
-              />
+                  control={
+                    <PowerSwitch
+                      checked={stateDetection}
+                      onClick={handleDetectionChange}
+                      disabled={autoMode}
+                      // onChange={handleDetectionChange}
+                    />
+                  }
+                />
 
             </div>
           </div>

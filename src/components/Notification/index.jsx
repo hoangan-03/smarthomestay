@@ -101,7 +101,7 @@ const Notification = (props) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <div className='w-[400px]'>
+                <div className='w-[400px] max-h-[calc(100vh-136px)] h-[400px] overflow-y-scroll'>
                     <p className='text-[var(--text-data)] text-xl pl-5 pb-1 font-bold'>All Notifications</p>
                     <Divider />
                     {data.map((item, index) => (

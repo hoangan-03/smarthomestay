@@ -20,7 +20,7 @@ const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
 const Modifier = ({ variable }) => {
   const navigate = useNavigate();
-  const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode, getCookie } = useData()
+  const { hex, setHex, fan, setFan, autoMode, handleClick, toggleDarkMode, getCookie, sensorData} = useData()
   const [switchLightState, setSwitchLightState] = useState(false);
   const [switchTempandHumState, setSwitchTempandHumState] = useState(true);
   const [switchLightSenState, setLightSenState] = useState(true);
@@ -233,39 +233,48 @@ const Modifier = ({ variable }) => {
     setHoldFan(newValue);
   };
 
-  const [sensorData, setSensorData] = useState({
-    temperature: "OFF",
-    humidity: "OFF",
-    light: "OFF",
-  });
+  // const [sensorData, setSensorData] = useState({
+  //   temperature: "OFF",
+  //   humidity: "OFF",
+  //   light: "OFF",
+  // });
 
-  useEffect(() => {
-    client.on("connect", () => {
-      console.log("Connected to Adafruit MQTT");
-      client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
-      client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
-      client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
-    });
+  // useEffect(() => {
+  //   client.on("connect", () => {
+  //     console.log("Connected to Adafruit MQTT");
+  //     client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
+  //     client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
+  //     client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
 
-    client.on("message", (topic, message) => {
-      if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
-        setSensorData((prevState) => ({
-          ...prevState,
-          temperature: parseFloat(message.toString()),
-        }));
-      } else if (topic === `${AIO_USERNAME}/feeds/humility_sensor`) {
-        setSensorData((prevState) => ({
-          ...prevState,
-          humidity: parseFloat(message.toString()),
-        }));
-      } else if (topic === `${AIO_USERNAME}/feeds/light_sensor`) {
-        setSensorData((prevState) => ({
-          ...prevState,
-          light: parseFloat(message.toString()),
-        }));
-      }
-    });
-  }, []);
+  //     // const publishInterval = setInterval(() => {
+  //     //   client.publish(`${AIO_USERNAME}/feeds/temperature_sensor`, "69");
+  //     //   client.publish(`${AIO_USERNAME}/feeds/humility_sensor`, "30");
+  //     //   client.publish(`${AIO_USERNAME}/feeds/light_sensor`, "20");
+  //     // }, 4000);
+  //     // return () => {
+  //     //   clearInterval(publishInterval);
+  //     // };
+  //   });
+
+  //   client.on("message", (topic, message) => {
+  //     if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
+  //       setSensorData((prevState) => ({
+  //         ...prevState,
+  //         temperature: parseFloat(message.toString()),
+  //       }));
+  //     } else if (topic === `${AIO_USERNAME}/feeds/humility_sensor`) {
+  //       setSensorData((prevState) => ({
+  //         ...prevState,
+  //         humidity: parseFloat(message.toString()),
+  //       }));
+  //     } else if (topic === `${AIO_USERNAME}/feeds/light_sensor`) {
+  //       setSensorData((prevState) => ({
+  //         ...prevState,
+  //         light: parseFloat(message.toString()),
+  //       }));
+  //     }
+  //   });
+  // }, []);
   const variables = variable;
   const temporlightvar = {
     value: variables === "temperature" ? data.temperature : data.lightlevel,
@@ -338,7 +347,7 @@ const Modifier = ({ variable }) => {
                 <p>{variables === "temperature" ? "Fan Speed" : "Light Switch"}</p>
               </div>
 
-              {variables === "temperature" && <Slider defaultValue={fan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={autoMode} />}
+              {variables === "temperature" && <Slider defaultValue={holdFan} value={holdFan} onChange={handleSliderChange} aria-label="Default" valueLabelDisplay="auto" disabled={autoMode} />}
               <h1 className="text-black font-bold text-2xl ml-4">
 
                 {variables === "temperature"
@@ -353,7 +362,6 @@ const Modifier = ({ variable }) => {
                   control={
                     <PowerSwitch
                       sx={{ m: 1 }}
-                      defaultChecked
                       checked={switchLightState}
                       onChange={() => handleSwitchLightChange()}
                       disabled={autoMode}
@@ -394,7 +402,6 @@ const Modifier = ({ variable }) => {
                   control={
                     <PowerSwitch
                       sx={{ m: 1 }}
-                      defaultChecked
                       checked={switchLightSenState}
                       onChange={() => handleLightSenChange()}
                       disabled={autoMode}
@@ -410,7 +417,6 @@ const Modifier = ({ variable }) => {
                   control={
                     <PowerSwitch
                       sx={{ m: 1 }}
-                      defaultChecked
                       checked={switchTempandHumState}
                       onChange={() => handleTempandHumChange()}
                       disabled={autoMode}

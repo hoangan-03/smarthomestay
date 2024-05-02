@@ -14,6 +14,7 @@ import temperature_dark from "../../assets/icons/temperature_dark.png";
 import { useNavigate } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
 import SettingsIcon from '@mui/icons-material/Settings';
+import axios from 'axios';
 const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
 const style = {
@@ -68,6 +69,30 @@ function BasicModal({handleClose, handleSetting, open, autoMode, handleClick}) {
     client.publish(`${AIO_USERNAME}/feeds/minTemp`, minTemp);
     handleClose();
     handleClick("Setting is saved successfully", "success")()
+    const control = {
+      Dev_id: "setting_set_device_1",
+      Room_id: 1,
+      Action: "Setting is saved successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   };
 
   const handleCancel = () => {
@@ -177,12 +202,60 @@ const Homepage = () => {
       return
     setAutoMode(true)
     handleClick("Auto mode is turned on successfully", "success")()
+    const control = {
+      Dev_id: "mode_set_device_1",
+      Room_id: 1,
+      Action: "Auto mode is turned on successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   }
 
   const handleTurnOff = () => {
     if (!autoMode) return
     setAutoMode(false)
     handleClick("Auto mode is turned off successfully", "success")()
+    const control = {
+      Dev_id: "mode_set_device_1",
+      Room_id: 1,
+      Action: "Auto mode is turned off successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   }
   
   const handleSetting = () => {

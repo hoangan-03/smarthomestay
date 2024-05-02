@@ -49,17 +49,16 @@ class Calendar extends Component {
     //console.log(Scheduler.getEvent(id).start_date);
     // var formatFunc = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
     var start_datee = ev.start_date;
-    var end_datee = ev.end_date;
     var remind_time = new Date(start_datee);
     remind_time.setHours(remind_time.getHours() - 1);
     console.log(remind_time);
     let addedEvent = {};
-    addedEvent.start_date = start_datee
-    addedEvent.end_date = end_datee
-    addedEvent.text = ev.text
-    addedEvent.id = ev.id
-    addedEvent.room = ev.room
-    addedEvent.remind_time = remind_time
+    addedEvent.book_id = ev.id;
+    addedEvent.room_id = ev.room;
+    addedEvent.start_time = ev.start_date;
+    addedEvent.end_time = ev.end_date;
+    addedEvent.notes = ev.text;
+    addedEvent.remind_time = remind_time;
 
 
     if (action === 'create') {

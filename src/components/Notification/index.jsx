@@ -31,6 +31,9 @@ const Notification = (props) => {
                     const sortedData = [...res.data.data].sort((a, b) => {
                         if (a.isviewed && !b.isviewed) return 1;
                         if (!a.isviewed && b.isviewed) return -1;
+                        if (a.isviewed === b.isviewed) {
+                            return new Date(b.timestamp) - new Date(a.timestamp);
+                        }
                         return 0;
                     });
                     setData(sortedData);

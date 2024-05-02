@@ -23,15 +23,23 @@ const Notification = (props) => {
     const open = Boolean(anchorEl);
 
     useEffect(() => {
-        axios
-            .get("http://localhost:8000/get_nofications")
-            .then((res) => {
-                setData(res.data.data);
-                setNotiCount(res.data.data.filter(item => item.isviewed === false).length);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        const fetchNotifications = () => {
+            axios
+                .get("http://localhost:8000/get_nofications")
+                .then((res) => {
+                    setData(res.data.data);
+                    setNotiCount(res.data.data.filter(item => item.isviewed === false).length);
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        };
+
+        fetchNotifications(); 
+
+        const intervalId = setInterval(fetchNotifications, 1000); 
+
+        return () => clearInterval(intervalId); 
     }, []);
 
     const handleSetView = (event, idx) => {

@@ -6,7 +6,6 @@ import "./Calendar.css";
 import 'dhtmlx-scheduler';
 import 'dhtmlx-scheduler/codebase/dhtmlxscheduler.css';
 
-const scheduler = window.scheduler;
 
 function CalendarWrapper(props) {
   const navigate = useNavigate();

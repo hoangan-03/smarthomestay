@@ -14,6 +14,7 @@ import lightbulb_dark from "../../assets/icons/lightbulb_dark.png";
 import humid_dark from "../../assets/icons/humid_dark.png";
 import temperature_dark from "../../assets/icons/temperature_dark.png";
 import "./Modifier.css";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
@@ -39,6 +40,30 @@ const Modifier = ({ variable }) => {
   const handleSetColor = () => {
     setHex(holdColor)
     handleClick("Set LED color successfully", "success")()
+    const control = {
+      Dev_id: "color_set_device_1",
+      Room_id: 1,
+      Action: "Set LED color successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   }
 
   useEffect(() => {
@@ -46,13 +71,40 @@ const Modifier = ({ variable }) => {
   }, [hex])
 
   const handleSwitchLightChange = () => {
+    const action = switchLightState ? "off" : "on";
+
     if (switchLightState) {
       client.publish(`${AIO_USERNAME}/feeds/light_switch`, "0");
     } else {
       client.publish(`${AIO_USERNAME}/feeds/light_switch`, "1");
     }
-    handleClick("Light switch is turned " + (switchLightState ? "off" : "on") + " successfully", "success")()
+
+    handleClick("Light switch is turned " + action + " successfully", "success")();
     setSwitchLightState(!switchLightState);
+    const control = {
+      Dev_id: "light_switch_device_1",
+      Room_id: 1,
+      Action: "Light switch is turned " + action + " successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   };
   const handleTempandHumChange = () => {
     if (switchTempandHumState) {
@@ -60,8 +112,58 @@ const Modifier = ({ variable }) => {
     } else {
       client.publish(`${AIO_USERNAME}/feeds/humidity_tem`, "1");
     }
-    handleClick("Temperature and Humidity sensor is turned " + (switchTempandHumState ? "off" : "on") + " successfully", "success")()
+    const action = switchTempandHumState ? "off" : "on";
+
+    handleClick("Temperature and Humidity sensor is turned " + action + " successfully", "success")()
     setSwitchTempandHumState(!switchTempandHumState);
+    const control1 = {
+      Dev_id: "humidity_device_1",
+      Room_id: 1,
+      Action: "Humidity sensor is turned " + action + " successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control1)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
+    const control2 = {
+      Dev_id: "temperature_device_1",
+      Room_id: 1,
+      Action: "Temperature sensor is turned " + action + " successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control2)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   };
   const handleLightSenChange = () => {
     if (switchLightSenState) {
@@ -69,18 +171,63 @@ const Modifier = ({ variable }) => {
     } else {
       client.publish(`${AIO_USERNAME}/feeds/control_lux`, "1");
     }
-    handleClick("Light sensor is turned " + (switchLightSenState ? "off" : "on") + " successfully", "success")()
+    const action = switchLightSenState ? "off" : "on";
+    handleClick("Light sensor is turned " + action + " successfully", "success")()
     setLightSenState(!switchLightSenState);
+    const control = {
+      Dev_id: "light_device_1",
+      Room_id: 1,
+      Action: "Light sensor is turned " + action + " successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   };
   const handleSetFanChange = () => {
-    console.log("FAN", fan, "HoldFan", holdFan.toString())
     setFan(holdFan.toString());
     handleClick("Fan speed is set to " + holdFan.toString() + " successfully", "success")()
+    const control = {
+      Dev_id: "fan_device_1",
+      Room_id: 1,
+      Action: "Fan speed is set to " + holdFan.toString() + " successfully",
+      Ctrl_mode: "Manual",
+      Timestamp: new Date().toISOString(),
+      Isviewed: false,
+    };
+    axios
+      .post("http://localhost:8000/controlling", control)
+      .then((res) => {
+        console.log("Log added successfully");
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 400) {
+            console.log(err.response.data.error);
+          } else if (err.response.status === 500) {
+            console.error("Internal Server Response");
+          }
+        } else {
+          console.error(err);
+        }
+      });
   };
-  useEffect(() => {
-    client.publish(`${AIO_USERNAME}/feeds/FAN`, fan);
-    console.log("FAN", fan)
-  }, [fan])
+
 
   const handleSliderChange = (event, newValue) => {
     setHoldFan(newValue);

@@ -6,7 +6,6 @@ import "./Calendar.css";
 import 'dhtmlx-scheduler';
 import 'dhtmlx-scheduler/codebase/dhtmlxscheduler.css';
 
-const scheduler = window.scheduler;
 
 function CalendarWrapper(props) {
   const navigate = useNavigate();
@@ -48,16 +47,20 @@ class Calendar extends Component {
       const message = `event ${action}: ${id} ${text}`;
       this.addMessage(message);
       //console.log(Scheduler.getEvent(id).start_date);
-      var formatFunc = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
-      var start_datee = formatFunc(ev.start_date);
-      var end_datee = formatFunc(ev.end_date);
-      
+      // var formatFunc = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
+      var start_datee = ev.start_date;
+      var end_datee = ev.end_date;
+      var remind_time = new Date(start_datee);
+      remind_time.setHours(remind_time.getHours() - 1);
+      console.log(remind_time);
       let addedEvent = {};
       addedEvent.start_date = start_datee
       addedEvent.end_date = end_datee
       addedEvent.text = ev.text
       addedEvent.id = ev.id
       addedEvent.room = ev.room
+      addedEvent.remind_time = remind_time
+      
       
       if(action === 'create')
       {

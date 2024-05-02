@@ -3,7 +3,7 @@ import './homepage.css'
 import homestayphoto from '../../assets/icons/homestayphoto.png'
 import data from "../../components/Constant";
 import client from "../../mqtt/mqttclient";
-import { Button, ButtonGroup } from '@mui/material'
+import { Button, ButtonGroup, IconButton, Box, Slider} from '@mui/material'
 import { useData } from '../../components/DataProvider'
 import tempicon from "../../assets/icons/Temperature icon.png";
 import lightbulp from "../../assets/icons/lightbulp.png";
@@ -12,11 +12,110 @@ import lightbulb_dark from "../../assets/icons/lightbulb_dark.png";
 import humid_dark from "../../assets/icons/humid_dark.png";
 import temperature_dark from "../../assets/icons/temperature_dark.png";
 import { useNavigate } from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+import SettingsIcon from '@mui/icons-material/Settings';
+const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 
-// const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: '1px solid #000',
+  borderRadius: 5,
+  boxShadow: 24,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 3,
+  p: 4,
+};
+
+function BasicModal({handleClose, handleSetting, open, autoMode, handleClick}) {
+  
+  const [minTemp, setMinTemp] = useState(50);
+  const [maxTemp, setMaxTemp] = useState(50);
+  const [minLight, setMinLight] = useState(50);
+  const [maxLight, setMaxLight] = useState(50);
+  useEffect(() => {
+    client.on("connect", () => {
+      client.subscribe(`${AIO_USERNAME}/feeds/maxLight`);
+      client.subscribe(`${AIO_USERNAME}/feeds/maxTemp`);
+      client.subscribe(`${AIO_USERNAME}/feeds/minLight`);
+      client.subscribe(`${AIO_USERNAME}/feeds/minTemp`);
+    });
+
+    client.on("message", (topic, message) => {
+      console.log("topic", topic)
+      if (topic === `${AIO_USERNAME}/feeds/maxLight`) {
+        setMaxLight(parseInt(message.toString()));
+      } else if (topic === `${AIO_USERNAME}/feeds/maxTemp`) {
+        setMaxTemp(parseInt(message.toString()));
+      } else if (topic === `${AIO_USERNAME}/feeds/minTemp`) {
+        setMinLight(parseInt(message.toString()));
+      } else if (topic === `${AIO_USERNAME}/feeds/minTemp`) {
+        setMinTemp(parseInt(message.toString()));
+      }
+    });
+  }, []);
+
+  const handleSubmit = () => {
+    // Handle submit button click
+    client.publish(`${AIO_USERNAME}/feeds/maxLight`, maxLight);
+    client.publish(`${AIO_USERNAME}/feeds/maxTemp`, maxTemp);
+    client.publish(`${AIO_USERNAME}/feeds/minLight`, minLight);
+    client.publish(`${AIO_USERNAME}/feeds/minTemp`, minTemp);
+    handleClose();
+    handleClick("Setting is saved successfully", "success")()
+  };
+
+  const handleCancel = () => {
+    // Handle cancel button click
+    handleClose();
+  };
+
+  return (
+    <div>
+      <IconButton size='large' onClick={handleSetting} disabled={autoMode ? false : true}><SettingsIcon/></IconButton>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <h1 className='text-center text-3xl font-bold'>SETTING</h1>
+          <div className='flex'>
+            <p className='w-[220px] text-lg'>Min temperature</p>
+            <Slider value={minTemp} onChange={(event, newValue) => setMinTemp(newValue)} aria-label="Min temperature" valueLabelDisplay="auto" />
+          </div>
+          <div className='flex'>
+            <p className='w-[220px] text-lg'>Max temperature</p>
+            <Slider value={maxTemp} onChange={(event, newValue) => setMaxTemp(newValue)} aria-label="Max temperature" valueLabelDisplay="auto"  />
+          </div>
+          <div className='flex'>
+            <p className='w-[220px] text-lg'>Min lightlevel</p>
+            <Slider value={minLight} onChange={(event, newValue) => setMinLight(newValue)} aria-label="Min lightlevel" valueLabelDisplay="auto" />
+          </div>
+          <div className='flex'>
+            <p className='w-[220px] text-lg'>Max lightlevel</p>
+            <Slider value={maxLight} onChange={(event, newValue) => setMaxLight(newValue)} aria-label="Max lightlevel" valueLabelDisplay="auto" />
+          </div>
+          <div className='flex gap-4 justify-center'>
+            <Button onClick={handleSubmit} variant="contained">Save</Button>
+            <Button onClick={handleCancel} variant="outlined">Cancel</Button>
+            
+          </div>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
 
 const Homepage = () => {
   const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode, getCookie, sensorData } = useData();
+  const [open, setOpen] = useState(false);
   // const [sensorData, setSensorData] = useState({
   //   temperature: "OFF",
   //   humidity: "OFF",
@@ -69,6 +168,9 @@ const Homepage = () => {
   const humidityvar = {
     value: data.humidity
   };
+  
+
+
 
   const handleTurnOn = () => {
     if (autoMode)
@@ -82,6 +184,13 @@ const Homepage = () => {
     setAutoMode(false)
     handleClick("Auto mode is turned off successfully", "success")()
   }
+  
+  const handleSetting = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => setOpen(false);
+
 
   return (
     <div className='flex flex-col gap-10 w-full relative items-center '>
@@ -153,11 +262,14 @@ const Homepage = () => {
 
 
       </div>
-      <ButtonGroup size='large' variant="outlined" aria-label="Basic button group" sx={{ mb: "30px" }}>
-        <Button variant={autoMode ? "outlined" : "contained"} onClick={handleTurnOff} >AUTOMODE OFF</Button>
-        <Button variant={autoMode ? "contained" : "outlined"} onClick={handleTurnOn}>AUTOMODE ON</Button>
-      </ButtonGroup>
-
+      <div className='flex'>
+        <ButtonGroup size='large' variant="outlined" aria-label="Basic button group">
+          <Button variant={autoMode ? "outlined" : "contained"} onClick={handleTurnOff} >AUTOMODE OFF</Button>
+          <Button sx={{mr: "20px"}} variant={autoMode ? "contained" : "outlined"} onClick={handleTurnOn}>AUTOMODE ON</Button>
+        </ButtonGroup>
+        <BasicModal {...{ autoMode, handleClose, handleSetting, open, handleClick }} />
+      </div>
+      
     </div>
   )
 }

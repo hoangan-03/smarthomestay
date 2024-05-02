@@ -14,7 +14,7 @@ const StyledMenuItem = styled(MenuItem)(() => ({
 }));
 
 const Notification = (props) => {
-    const [mockData, setMockData] = useState([{description: 'You have a new nweaf newfaf adsadsad asdsa das enwas notification', time: '2 minutes', hasViewed: true}, {description: 'You have a new notification', time: '3 hours', hasViewed: false}, {description: 'You have a new notification', time: '2 hours 20 minutes', hasViewed: false}]);
+    const [mockData, setMockData] = useState([{description: 'You have a new nweaf newfaf adsadsad asdsa das enwas notification', time: '2 minutes', hasViewed: true}, {description: 'You have a new notification', time: '3 hours', hasViewed: false}, {description: 'You have a new notification', time: '2 hours 20 minutes', hasViewed: false},{description: 'You have a new nweaf newfaf adsadsad asdsa das enwas notification', time: '2 minutes', hasViewed: true}, {description: 'You have a new notification', time: '3 hours', hasViewed: false}, {description: 'You have a new notification', time: '2 hours 20 minutes', hasViewed: false},{description: 'You have a new nweaf newfaf adsadsad asdsa das enwas notification', time: '2 minutes', hasViewed: true}, {description: 'You have a new notification', time: '3 hours', hasViewed: false}, {description: 'You have a new notification', time: '2 hours 20 minutes', hasViewed: false},{description: 'You have a new nweaf newfaf adsadsad asdsa das enwas notification', time: '2 minutes', hasViewed: true}, {description: 'You have a new notification', time: '3 hours', hasViewed: false}, {description: 'You have a new notification', time: '2 hours 20 minutes', hasViewed: false},{description: 'You have a new nweaf newfaf adsadsad asdsa das enwas notification', time: '2 minutes', hasViewed: true}, {description: 'You have a new notification', time: '3 hours', hasViewed: false}, {description: 'You have a new notification', time: '2 hours 20 minutes', hasViewed: false}]);
     const filteredData = mockData.filter(item => !item.hasViewed);
     const [notiCount, setNotiCount] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -56,7 +56,7 @@ const Notification = (props) => {
               open={open}
               onClose={handleClose}
               onClick={handleClose}
-              sx={{ ml: 1 }}
+              sx={{ ml: 1}}
               PaperProps={{
                   elevation: 0,
                   sx: {
@@ -85,7 +85,7 @@ const Notification = (props) => {
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-              <div className='w-[400px]'>
+              <div className='w-[400px] max-h-[calc(100vh-136px)] h-[400px] overflow-y-scroll'>
                   <p className='text-[var(--text-data)] text-xl pl-5 pb-1 font-bold'>All Notifications</p>
                   <Divider />
                   {mockData.map((item, index) => (

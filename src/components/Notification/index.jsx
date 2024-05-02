@@ -27,7 +27,13 @@ const Notification = (props) => {
             axios
                 .get("http://localhost:8000/get_nofications")
                 .then((res) => {
-                    setData(res.data.data);
+
+                    const sortedData = [...res.data.data].sort((a, b) => {
+                        if (a.isviewed && !b.isviewed) return 1;
+                        if (!a.isviewed && b.isviewed) return -1;
+                        return 0;
+                    });
+                    setData(sortedData);
                     setNotiCount(res.data.data.filter(item => item.isviewed === false).length);
                 })
                 .catch((err) => {

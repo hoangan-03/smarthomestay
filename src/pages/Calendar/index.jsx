@@ -51,6 +51,7 @@ class Calendar extends Component {
       var formatFunc = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
       var start_datee = formatFunc(ev.start_date);
       var end_datee = formatFunc(ev.end_date);
+      console.log("this is event",ev);
       
       let addedEvent = {};
       addedEvent.start_date = start_datee
@@ -58,6 +59,7 @@ class Calendar extends Component {
       addedEvent.text = ev.text
       addedEvent.id = ev.id
       addedEvent.room = ev.room
+
       
       if(action === 'create')
       {

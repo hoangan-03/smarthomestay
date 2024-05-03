@@ -21,10 +21,6 @@ export const DataProvider = ({ children }) => {
         minLight: 30,
         maxLight: 60,
     });
-    const [minTemp, setMinTemp] = useState(25);
-    const [maxTemp, setMaxTemp] = useState(35);
-    const [minLight, setMinLight] = useState(30);
-    const [maxLight, setMaxLight] = useState(60);
     const [autoMode, setAutoMode] = useState(false);
     const [snackPack, setSnackPack] = React.useState([]);
     const [messageInfo, setMessageInfo] = React.useState(undefined);

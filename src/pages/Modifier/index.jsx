@@ -317,7 +317,7 @@ const Modifier = ({ variable }) => {
                 {variables === "temperature"
                   ? sensorData.temperature
                   : sensorData.light}{" "}
-                {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "%")}
+                {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "LUX")}
               </h2>
             </div>
             <img

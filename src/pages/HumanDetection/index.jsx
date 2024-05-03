@@ -18,7 +18,7 @@ const HumanDetection = () => {
   const { handleClick, autoMode, getCookie } = useData();
 
   useEffect(() => {
-    client.publish(`${AIO_USERNAME}/feeds/detector`, stateDetection ? '1' : '0');
+    client.publish(`${AIO_USERNAME}/feeds/detectorBtn`, stateDetection ? '1' : '0');
   }, [stateDetection]);
   const handleDetectionChange = () => {
     if (stateDetection) {

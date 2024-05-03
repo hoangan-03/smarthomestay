@@ -79,6 +79,7 @@ export const DataProvider = ({ children }) => {
         client.subscribe(`${AIO_USERNAME}/feeds/FAN`);
         client.subscribe(`${AIO_USERNAME}/feeds/led_color`);
         client.subscribe(`${AIO_USERNAME}/feeds/auto_mode`);
+        client.subscribe(`${AIO_USERNAME}/feeds/detector`);
       });
   
       client.on("message", (topic, message) => {
@@ -105,6 +106,8 @@ export const DataProvider = ({ children }) => {
           setHex(message.toString());
         } else if (topic === `${AIO_USERNAME}/feeds/auto_mode`) {
           setAutoMode(message.toString() === '0' ? false : true);
+        } else if (topic === `${AIO_USERNAME}/feeds/detector`) {
+          console.log("DETECTOR", message.toString());
         }
       });
     }, []);

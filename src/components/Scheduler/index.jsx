@@ -92,6 +92,7 @@ export default class Scheduler extends Component {
     
 
     componentWillReceiveProps(nextProps) {
+        console.log("C will rec Props", this.state.events)
         if(this.state.events === nextProps.events) {
             if (this.state.toggleDarkMode === nextProps.toggleDarkMode) {
                 return;

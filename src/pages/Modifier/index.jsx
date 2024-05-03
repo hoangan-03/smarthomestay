@@ -126,6 +126,7 @@ const Modifier = ({ variable }) => {
       });
   };
   const handleTempandHumChange = () => {
+    console.log("CHECK 1")
     if (switchTempandHumState) {
       client.publish(`${AIO_USERNAME}/feeds/humidity_tem`, "0");
     } else {
@@ -135,6 +136,8 @@ const Modifier = ({ variable }) => {
 
     handleClick("Temperature and Humidity sensor is turned " + action + " successfully", "success")()
     setSwitchTempandHumState(!switchTempandHumState);
+    console.log("STATE, ", switchTempandHumState)
+    console.log("CHECK 2")
     const control1 = {
       Dev_id: "humidity_device_1",
       Room_id: 1,
@@ -314,10 +317,16 @@ const Modifier = ({ variable }) => {
             <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
               <h1 className="text-4xl">{temporlightvar.value.text}</h1>
               <h2 className="text-5xl font-bold" style={{ color: 'var(--text-data)' }}>
-                {variables === "temperature"
-                  ? sensorData.temperature
-                  : sensorData.light}{" "}
-                {(sensorData.temperature === "OFF" || sensorData.temperature === "NaN") ? "" : (variables === "temperature" ? "oC" : "%")}
+              {variables === "temperature" 
+                  ? (!switchTempandHumState
+                      ? "OFF" 
+                      : sensorData.temperature) 
+                  : (!switchLightSenState 
+                          ? "OFF" 
+                          : sensorData.light)
+              }{" "}
+                {(sensorData.temperature === "OFF" || 
+                (variables === "temperature" ? (!switchTempandHumState ? "" : "oC") : (!switchLightSenState ? "" : "LUX")))}
               </h2>
             </div>
             <img
@@ -333,8 +342,9 @@ const Modifier = ({ variable }) => {
             <div className="w-auto h-full flex flex-col justify-center items-start gap-3">
               <h1 className="text-[var(--text-title)] text-4xl">{humidityvar.value.text}</h1>
               <h2 className="text-5xl font-bold" style={{ color: 'var(--text-data)' }}>
-                {sensorData.humidity}
-                {sensorData.temperature === "OFF" || sensorData.temperature === "NaN" ? "" : "%"}
+                {!switchTempandHumState ? "OFF" : sensorData.humidity}{" "}
+                {(sensorData.temperature === "OFF" ||                (!switchTempandHumState) ? "" : "%") }
+                
               </h2>
             </div>
             <img

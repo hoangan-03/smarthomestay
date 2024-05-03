@@ -16,10 +16,12 @@ export default class Scheduler extends Component {
           onDataUpdated : props.onDataUpdated,
             toggleDarkMode: props.toggleDarkMode,
         };
+        console.log("Constructor", this.state.events)
     }
 
 
     initSchedulerEvents() {
+        console.log("Init Scheduler Events", this.state.events)
         scheduler.attachEvent('onEventAdded', (id, ev) => {
 
             if (this.state.onDataUpdated) {
@@ -45,6 +47,7 @@ export default class Scheduler extends Component {
     }
 
     componentDidMount() {
+        console.log("Component Did Mount", this.state.events)
         scheduler.skin = !this.state.toggleDarkMode ? 'material' : 'dark';
         scheduler.config.header = [
             'day',
@@ -60,7 +63,7 @@ export default class Scheduler extends Component {
         scheduler.config.lightbox.sections=[
             {name:"Note", map_to:"text", type:"textarea" , focus:true},
             {name:"time", height:72, type:"time", map_to:"auto"},
-            {name:"Room ID", height:21, type:"textarea", map_to:"room"}
+            {name:"Room ID", height:21, type:"textarea", map_to:"room_id"}
         ];
         scheduler.xy.scale_width = 70;
         
@@ -92,7 +95,7 @@ export default class Scheduler extends Component {
     
 
     componentWillReceiveProps(nextProps) {
-        console.log("C will rec Props", this.state.events)
+        console.log("C will rec Props", this.state.events, nextProps.events)
         if(this.state.events === nextProps.events) {
             if (this.state.toggleDarkMode === nextProps.toggleDarkMode) {
                 return;

@@ -49,17 +49,17 @@ class Calendar extends Component {
     var start_datee = ev.start_date;
     var remind_time = new Date(start_datee);
     remind_time.setHours(remind_time.getHours() - 1);
-    console.log("Event id", ev.id)
-
+    
     if (action === 'create') {
       const book = {
-        Book_id: ev.id,
-        Room_id: parseInt(ev.room),
-        Start_time: new Date(ev.start_date).toISOString(),
-        Notes: ev.text,
+        Id: ev.id,
+        Room_id: parseInt(ev.room_id),
+        Start_date: new Date(ev.start_date).toISOString(),
+        Text: ev.text,
         Remind_time: remind_time,
-        End_time: new Date(ev.end_date).toISOString(),
+        End_date: new Date(ev.end_date).toISOString(),
       };
+      console.log("Book", book)
       axios
         .post("http://localhost:8000/add_booking", book)
         .then((res) => {
@@ -88,10 +88,10 @@ class Calendar extends Component {
     }
     else if (action === 'update') {
       const book = {
-        Book_id: ev.id,
-        Room_id: parseInt(ev.room),
+        Id: ev.id,
+        Room_id: parseInt(ev.room_id),
         Start_time: new Date(ev.start_date).toISOString(),
-        Notes: ev.text,
+        Text: ev.text,
         Remind_time: remind_time,
         End_time: new Date(ev.end_date).toISOString(),
       };
@@ -115,12 +115,12 @@ class Calendar extends Component {
 
     axios.get('http://localhost:8000/get_bookings')
   .then(response => {
-    console.log("Response", response.data.bookings)
+    console.log("Response", response.data)
     const data = response.data.bookings.map(event => ({
       ...event,
       start_date: new Date(event.start_date),
       end_date: new Date(event.end_date),
-      text: event.Notes,
+      text: event.text,
       remind_time: new Date(event.Remind_time),
     }));
     this.setState({ data });

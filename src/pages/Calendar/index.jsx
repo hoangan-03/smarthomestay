@@ -5,7 +5,7 @@ import Scheduler from '../../components/Scheduler';
 import "./Calendar.css";
 import 'dhtmlx-scheduler';
 import 'dhtmlx-scheduler/codebase/dhtmlxscheduler.css';
-
+import axios from "axios";
 
 function CalendarWrapper(props) {
   const navigate = useNavigate();
@@ -51,52 +51,63 @@ class Calendar extends Component {
     var start_datee = ev.start_date;
     var remind_time = new Date(start_datee);
     remind_time.setHours(remind_time.getHours() - 1);
-    console.log(remind_time);
-    let addedEvent = {};
-    addedEvent.book_id = ev.id;
-    addedEvent.room_id = ev.room;
-    addedEvent.start_time = ev.start_date;
-    addedEvent.end_time = ev.end_date;
-    addedEvent.notes = ev.text;
-    addedEvent.remind_time = remind_time;
 
 
     if (action === 'create') {
       console.log("Create")
-      console.log("Body", JSON.stringify(addedEvent))
-      fetch('https://savig-project.vercel.app/api/create',
-
-
-        {
-          method: 'post',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(addedEvent),
-
+      const book = {
+        Book_id: ev.id,
+        Room_id: parseInt(ev.room),
+        Start_time: new Date(ev.start_date).toISOString(),
+        Notes: ev.text,
+        Remind_time: remind_time,
+        End_time: new Date(ev.end_date).toISOString(),
+      };
+      console.log(book);
+      axios
+        .post("http://localhost:8000/add_booking", book)
+        .then((res) => {
+          console.log("Log added successfully");
         })
+        .catch((err) => {
+          if (err.response) {
+            if (err.response.status === 400) {
+              console.log(err.response.data.error);
+            } else if (err.response.status === 500) {
+              console.error("Internal Server Response");
+            }
+          } else {
+            console.error(err);
+          }
+        });
     }
     else if (action === 'delete') {
       console.log("Delete")
-      fetch('https://savig-project.vercel.app/api/delete',
-        {
-          method: 'post',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: ev.id }),
+      axios.post('http://localhost:8000/delete_booking', ev.id)
+        .then(response => {
+          console.log(response);
         })
+        .catch(error => {
+          console.error(error);
+        });
     }
     else if (action === 'update') {
       console.log("Update")
-      fetch('https://savig-project.vercel.app/api/update',
-        {
-          method: 'post',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(addedEvent),
+      const book = {
+        Book_id: ev.id,
+        Room_id: parseInt(ev.room),
+        Start_time: new Date(ev.start_date).toISOString(),
+        Notes: ev.text,
+        Remind_time: remind_time,
+        End_time: new Date(ev.end_date).toISOString(),
+      };
+      axios.post('http://localhost:8000/update_booking', book)
+        .then(response => {
+          console.log(response);
         })
+        .catch(error => {
+          console.error(error);
+        });
     }
 
   }

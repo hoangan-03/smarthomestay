@@ -70,6 +70,10 @@ const Modifier = ({ variable }) => {
     client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
   }, [hex])
 
+  useEffect(() => {
+    client.publish(`${AIO_USERNAME}/feeds/FAN`, fan);
+  }, [fan])
+
   const handleSwitchLightChange = () => {
     const action = switchLightState ? "off" : "on";
 

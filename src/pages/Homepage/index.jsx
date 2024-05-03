@@ -63,10 +63,10 @@ function BasicModal({handleClose, handleSetting, open, autoMode, handleClick}) {
 
   const handleSubmit = () => {
     // Handle submit button click
-    client.publish(`${AIO_USERNAME}/feeds/maxLight`, maxLight);
-    client.publish(`${AIO_USERNAME}/feeds/maxTemp`, maxTemp);
-    client.publish(`${AIO_USERNAME}/feeds/minLight`, minLight);
-    client.publish(`${AIO_USERNAME}/feeds/minTemp`, minTemp);
+    client.publish(`${AIO_USERNAME}/feeds/maxLight`, maxLight.toString());
+    client.publish(`${AIO_USERNAME}/feeds/maxTemp`, maxTemp.toString());
+    client.publish(`${AIO_USERNAME}/feeds/minLight`, minLight.toString());
+    client.publish(`${AIO_USERNAME}/feeds/minTemp`, minTemp.toString());
     handleClose();
     handleClick("Setting is saved successfully", "success")()
     const control = {
@@ -156,14 +156,23 @@ const Homepage = () => {
     }
   }, [navigate,getCookie]);
 
+  
+
+  useEffect(() => {
+    client.publish(`${AIO_USERNAME}/feeds/auto_mode`, autoMode ? "0" : "1");
+  }, [autoMode])
+
   // useEffect(() => {
   //   client.on("connect", () => {
   //     client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
   //     client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
   //     client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
+  //     client.subscribe(`${AIO_USERNAME}/feeds/FAN`);
+  //     client.subscribe(`${AIO_USERNAME}/feeds/led_color`);
   //   });
 
   //   client.on("message", (topic, message) => {
+  //     console.log("Received message from topic: ", topic);
   //     if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
   //       setSensorData((prevState) => ({
   //         ...prevState,
@@ -179,6 +188,13 @@ const Homepage = () => {
   //         ...prevState,
   //         light: parseFloat(message.toString()),
   //       }));
+  //     } 
+  //     if (topic === `${AIO_USERNAME}/feeds/FAN`) {
+  //       console.log("HERE FAN", message.toString());
+  //       setFan(message.toString());
+  //     }
+  //     if (topic === `${AIO_USERNAME}/feeds/led_color`) {
+  //       setHex(message.toString());
   //     }
   //   });
   // }, []);

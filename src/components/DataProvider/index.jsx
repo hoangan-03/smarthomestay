@@ -13,7 +13,7 @@ export const DataProvider = ({ children }) => {
     // getCookie('cookieUser') to get the user cookie
     // getCookie return Object: {acc_id: 30910, key: "randomkey", password:"", username:"Peter"}
 
-    const [hex, setHex] = useState("#ffffff");
+    const [hex, setHex] = useState('#FFFFFF');
 
     const [fan, setFan] = useState('0');
     const [autoMode, setAutoMode] = useState(false);
@@ -75,6 +75,7 @@ export const DataProvider = ({ children }) => {
       });
   
       client.on("message", (topic, message) => {
+        console.log("Received message from topic: ", topic);
         if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
           setSensorData((prevState) => ({
             ...prevState,
@@ -91,6 +92,7 @@ export const DataProvider = ({ children }) => {
             light: parseFloat(message.toString()),
           }));
         } else if (topic === `${AIO_USERNAME}/feeds/FAN`) {
+          console.log("HERE FAN", message.toString());
           setFan(message.toString());
         } else if (topic === `${AIO_USERNAME}/feeds/led_color`) {
           setHex(message.toString());

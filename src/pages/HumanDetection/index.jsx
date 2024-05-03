@@ -7,6 +7,8 @@ import { FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getDetectionData } from "../../services/TableApi.service";
 import axios from "axios";
+import client from "../../mqtt/mqttclient";
+const AIO_USERNAME = process.env.REACT_APP_AIO_USERNAME;
 const HumanDetection = () => {
   const [openDetection, setOpenDetection] = useState(false);
 
@@ -15,6 +17,9 @@ const HumanDetection = () => {
   const [detectionData, setDetectionData] = useState(null);
   const { handleClick, autoMode, getCookie } = useData();
 
+  useEffect(() => {
+    client.publish(`${AIO_USERNAME}/feeds/detector`, stateDetection ? '1' : '0');
+  }, [stateDetection]);
   const handleDetectionChange = () => {
     if (stateDetection) {
       setOpenDetection(true)

@@ -46,15 +46,12 @@ class Calendar extends Component {
     const text = ev && ev.text ? ` (${ev.text})` : '';
     const message = `event ${action}: ${id} ${text}`;
     this.addMessage(message);
-    //console.log(Scheduler.getEvent(id).start_date);
-    // var formatFunc = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
     var start_datee = ev.start_date;
     var remind_time = new Date(start_datee);
     remind_time.setHours(remind_time.getHours() - 1);
 
 
     if (action === 'create') {
-      console.log("Create")
       const book = {
         Book_id: ev.id,
         Room_id: parseInt(ev.room),
@@ -63,7 +60,6 @@ class Calendar extends Component {
         Remind_time: remind_time,
         End_time: new Date(ev.end_date).toISOString(),
       };
-      console.log(book);
       axios
         .post("http://localhost:8000/add_booking", book)
         .then((res) => {
@@ -82,8 +78,7 @@ class Calendar extends Component {
         });
     }
     else if (action === 'delete') {
-      console.log("Delete")
-      axios.post('http://localhost:8000/delete_booking', ev.id)
+      axios.delete(`http://localhost:8000/delete_booking/${ev.id}`)
         .then(response => {
           console.log(response);
         })
@@ -92,7 +87,6 @@ class Calendar extends Component {
         });
     }
     else if (action === 'update') {
-      console.log("Update")
       const book = {
         Book_id: ev.id,
         Room_id: parseInt(ev.room),
@@ -101,7 +95,7 @@ class Calendar extends Component {
         Remind_time: remind_time,
         End_time: new Date(ev.end_date).toISOString(),
       };
-      axios.post('http://localhost:8000/update_booking', book)
+      axios.put(`http://localhost:8000/modify_booking/${ev.id}`, book)
         .then(response => {
           console.log(response);
         })
@@ -109,9 +103,7 @@ class Calendar extends Component {
           console.error(error);
         });
     }
-
   }
-
   handleTimeFormatStateChange = (state) => {
     this.setState({
       currentTimeFormatState: state
@@ -119,21 +111,18 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
     const that = this;
 
-    fetch('https://savig-project.vercel.app/api').then((response) => { return response.json() }).then((dataa) => {
-      that.setState({ data: dataa, test: "yeah", });
-      console.log(that.state.data);
-      console.log(that.state.test);
-    })
+    axios.get('http://localhost:8000/get_bookings')
+      .then(response => {
+        that.setState({ data: response.data, test: "yeah" });
+      })
       .catch(console.error);
 
     const user = this.props.getCookie('cookieUser')
     if (!user) {
       this.props.navigate('/auth');
     }
-
   }
   render() {
     var { currentTimeFormatState } = this.state;

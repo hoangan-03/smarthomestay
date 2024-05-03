@@ -343,7 +343,7 @@ const Modifier = ({ variable }) => {
               <h1 className="text-[var(--text-title)] text-4xl">{humidityvar.value.text}</h1>
               <h2 className="text-5xl font-bold" style={{ color: 'var(--text-data)' }}>
                 {!switchTempandHumState ? "OFF" : sensorData.humidity}{" "}
-                {(sensorData.temperature === "OFF" ||                (!switchTempandHumState) ? "" : "%") }
+                {(sensorData.temperature === "OFF" || (!switchTempandHumState) ? "" : "%") }
                 
               </h2>
             </div>

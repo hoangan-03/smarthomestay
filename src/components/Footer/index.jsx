@@ -9,10 +9,10 @@ const Footer = () => {
             <Link sx={{textDecoration: "none", color: "black"}} href="https://github.com/hoangan-03/smarthomestay" target="_blank">
                 <p className='text-[1.2vw] no-underline font-medium text-[var(--text-normal)]'>Github</p>
             </Link>
-            <Link sx={{textDecoration: "none", color: "black"}} href="/">
+            <Link sx={{textDecoration: "none", color: "black"}} href="https://github.com/hoangan-03/smarthomestay">
             <p className='text-[1.2vw] no-underline font-medium text-[var(--text-normal)]'>Contact</p>
             </Link>
-            <Link sx={{textDecoration: "none", color: "black"}} href="/">
+            <Link sx={{textDecoration: "none", color: "black"}} href="https://github.com/hoangan-03/smarthomestay">
             <p className='text-[1.2vw] no-underline font-medium text-[var(--text-normal)]'>Report</p>
             </Link>
         </div>

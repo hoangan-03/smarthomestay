@@ -114,10 +114,17 @@ class Calendar extends Component {
     const that = this;
 
     axios.get('http://localhost:8000/get_bookings')
-      .then(response => {
-        that.setState({ data: response.data, test: "yeah" });
-      })
-      .catch(console.error);
+  .then(response => {
+    const data = response.data.map(event => ({
+      ...event,
+      start_date: new Date(event.start_date),
+      end_date: new Date(event.end_date),
+      text: event.Notes,
+      remind_time: new Date(event.Remind_time),
+    }));
+    this.setState({ data });
+  })
+  .catch(console.error);
 
     const user = this.props.getCookie('cookieUser')
     if (!user) {

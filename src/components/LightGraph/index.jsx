@@ -9,13 +9,11 @@ class LightGraph extends Component {
     let humidMeasures;
     if (realtimedata) {
       realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
-      humidMeasures = realtimedata.map(item => {
+      humidMeasures = realtimedata.slice(0, 10).map(item => {
         let date = new Date(item.timestamp);
-        console.log("date", date);
-
         return {
           x: date,
-          y: parseFloat(item.value.toString().slice(0, -1))
+          y: parseFloat(item.value.toString())
         };
       });
     }
@@ -27,7 +25,7 @@ class LightGraph extends Component {
         text: lightlevel.text
       },
       axisX: {
-        valueFormatString: "DD MMM",
+        valueFormatString: "HH:mm", 
         crosshair: {
           enabled: true,
           snapToDataPoint: true
@@ -43,7 +41,7 @@ class LightGraph extends Component {
       },
       data: [{
         type: "area",
-        xValueFormatString: "DD MMM",
+        xValueFormatString: "HH:mm", 
         yValueFormatString: lightlevel.format,
         dataPoints: humidMeasures,
       }]

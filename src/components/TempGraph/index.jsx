@@ -4,7 +4,7 @@ import graphdata from '../GraphData';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class TempGraph extends Component {
+class  TempGraph extends Component {
 
 
   render() {
@@ -14,14 +14,11 @@ class TempGraph extends Component {
     let humidMeasures;
     if (realtimedata) {
       realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
-
-      humidMeasures = realtimedata.map(item => {
+      humidMeasures = realtimedata.slice(0, 10).map(item => {
         let date = new Date(item.timestamp);
-        console.log("date", date);
-
         return {
           x: date,
-          y: parseFloat(item.value.toString().slice(0, -1))
+          y: parseFloat(item.value.toString())
         };
       });
     }
@@ -33,7 +30,7 @@ class TempGraph extends Component {
         text: temperature.text
       },
       axisX: {
-        valueFormatString: "DD MMM",
+        valueFormatString: "HH:mm",
         crosshair: {
           enabled: true,
           snapToDataPoint: true
@@ -49,7 +46,7 @@ class TempGraph extends Component {
       },
       data: [{
         type: "area",
-        xValueFormatString: "DD MMM",
+        xValueFormatString: "HH:mm",
         yValueFormatString: temperature.format,
         dataPoints: humidMeasures,
       }]

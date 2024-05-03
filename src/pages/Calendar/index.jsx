@@ -49,7 +49,7 @@ class Calendar extends Component {
     var start_datee = ev.start_date;
     var remind_time = new Date(start_datee);
     remind_time.setHours(remind_time.getHours() - 1);
-
+    console.log("Event id", ev.id)
 
     if (action === 'create') {
       const book = {
@@ -115,7 +115,8 @@ class Calendar extends Component {
 
     axios.get('http://localhost:8000/get_bookings')
   .then(response => {
-    const data = response.data.map(event => ({
+    console.log("Response", response.data.bookings)
+    const data = response.data.bookings.map(event => ({
       ...event,
       start_date: new Date(event.start_date),
       end_date: new Date(event.end_date),

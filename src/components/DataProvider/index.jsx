@@ -14,8 +14,17 @@ export const DataProvider = ({ children }) => {
     // getCookie return Object: {acc_id: 30910, key: "randomkey", password:"", username:"Peter"}
 
     const [hex, setHex] = useState('#FFFFFF');
-
     const [fan, setFan] = useState('0');
+    const [setting, setSetting] = useState({
+        minTemp: 25,
+        maxTemp: 35,
+        minLight: 30,
+        maxLight: 60,
+    });
+    const [minTemp, setMinTemp] = useState(25);
+    const [maxTemp, setMaxTemp] = useState(35);
+    const [minLight, setMinLight] = useState(30);
+    const [maxLight, setMaxLight] = useState(60);
     const [autoMode, setAutoMode] = useState(false);
     const [snackPack, setSnackPack] = React.useState([]);
     const [messageInfo, setMessageInfo] = React.useState(undefined);
@@ -67,15 +76,17 @@ export const DataProvider = ({ children }) => {
 
     useEffect(() => {
       client.on("connect", () => {
+        console.log("Connected to Adafruit MQTT DP")
         client.subscribe(`${AIO_USERNAME}/feeds/temperature_sensor`);
         client.subscribe(`${AIO_USERNAME}/feeds/humility_sensor`);
         client.subscribe(`${AIO_USERNAME}/feeds/light_sensor`);
         client.subscribe(`${AIO_USERNAME}/feeds/FAN`);
         client.subscribe(`${AIO_USERNAME}/feeds/led_color`);
+        client.subscribe(`${AIO_USERNAME}/feeds/auto_mode`);
       });
   
       client.on("message", (topic, message) => {
-        console.log("Received message from topic: ", topic);
+        console.log("Received message from topic DP: ", topic);
         if (topic === `${AIO_USERNAME}/feeds/temperature_sensor`) {
           setSensorData((prevState) => ({
             ...prevState,
@@ -96,6 +107,8 @@ export const DataProvider = ({ children }) => {
           setFan(message.toString());
         } else if (topic === `${AIO_USERNAME}/feeds/led_color`) {
           setHex(message.toString());
+        } else if (topic === `${AIO_USERNAME}/feeds/auto_mode`) {
+          setAutoMode(message.toString() === '0' ? false : true);
         }
       });
     }, []);
@@ -118,7 +131,7 @@ export const DataProvider = ({ children }) => {
 
 
     return (
-        <DataContext.Provider value={{hex, setHex, fan, setFan, autoMode, setAutoMode, toggleDarkMode, setToggleDarkMode, handleClick, deleteCookie, getCookie, setCookie, isLogin, setIsLogin, user, setUser, sensorData}}>
+        <DataContext.Provider value={{hex, setHex, fan, setFan, autoMode, setAutoMode, toggleDarkMode, setToggleDarkMode, handleClick, deleteCookie, getCookie, setCookie, isLogin, setIsLogin, user, setUser, sensorData, setting, setSetting}}>
             {children}
             <ConsecutiveSnackbars snackPack={snackPack} setSnackPack={setSnackPack} messageInfo={messageInfo} setMessageInfo={setMessageInfo} handleClick={handleClick}/>
         </DataContext.Provider>

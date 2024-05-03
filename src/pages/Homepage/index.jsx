@@ -33,40 +33,14 @@ const style = {
   p: 4,
 };
 
-function BasicModal({handleClose, handleSetting, open, autoMode, handleClick}) {
-  
-  const [minTemp, setMinTemp] = useState(50);
-  const [maxTemp, setMaxTemp] = useState(50);
-  const [minLight, setMinLight] = useState(50);
-  const [maxLight, setMaxLight] = useState(50);
-  useEffect(() => {
-    client.on("connect", () => {
-      client.subscribe(`${AIO_USERNAME}/feeds/maxLight`);
-      client.subscribe(`${AIO_USERNAME}/feeds/maxTemp`);
-      client.subscribe(`${AIO_USERNAME}/feeds/minLight`);
-      client.subscribe(`${AIO_USERNAME}/feeds/minTemp`);
-    });
-
-    client.on("message", (topic, message) => {
-      console.log("topic", topic)
-      if (topic === `${AIO_USERNAME}/feeds/maxLight`) {
-        setMaxLight(parseInt(message.toString()));
-      } else if (topic === `${AIO_USERNAME}/feeds/maxTemp`) {
-        setMaxTemp(parseInt(message.toString()));
-      } else if (topic === `${AIO_USERNAME}/feeds/minTemp`) {
-        setMinLight(parseInt(message.toString()));
-      } else if (topic === `${AIO_USERNAME}/feeds/minTemp`) {
-        setMinTemp(parseInt(message.toString()));
-      }
-    });
-  }, []);
+function BasicModal({handleClose, handleSetting, open, autoMode, handleClick, setting, setSetting}) {
 
   const handleSubmit = () => {
     // Handle submit button click
-    client.publish(`${AIO_USERNAME}/feeds/maxLight`, maxLight.toString());
-    client.publish(`${AIO_USERNAME}/feeds/maxTemp`, maxTemp.toString());
-    client.publish(`${AIO_USERNAME}/feeds/minLight`, minLight.toString());
-    client.publish(`${AIO_USERNAME}/feeds/minTemp`, minTemp.toString());
+    client.publish(`${AIO_USERNAME}/feeds/maxLight`, setting.maxLight.toString());
+    client.publish(`${AIO_USERNAME}/feeds/maxTemp`, setting.maxTemp.toString());
+    client.publish(`${AIO_USERNAME}/feeds/minLight`, setting.minLight.toString());
+    client.publish(`${AIO_USERNAME}/feeds/minTemp`, setting.minTemp.toString());
     handleClose();
     handleClick("Setting is saved successfully", "success")()
     const control = {
@@ -113,19 +87,19 @@ function BasicModal({handleClose, handleSetting, open, autoMode, handleClick}) {
           <h1 className='text-center text-3xl font-bold'>SETTING</h1>
           <div className='flex'>
             <p className='w-[220px] text-lg'>Min temperature</p>
-            <Slider value={minTemp} onChange={(event, newValue) => setMinTemp(newValue)} aria-label="Min temperature" valueLabelDisplay="auto" />
+            <Slider value={setting.minTemp} onChange={(event, newValue) => setSetting({...setting, minTemp: newValue})} aria-label="Min temperature" valueLabelDisplay="auto" />
           </div>
           <div className='flex'>
             <p className='w-[220px] text-lg'>Max temperature</p>
-            <Slider value={maxTemp} onChange={(event, newValue) => setMaxTemp(newValue)} aria-label="Max temperature" valueLabelDisplay="auto"  />
+            <Slider value={setting.maxTemp} onChange={(event, newValue) => setSetting({...setting, maxTemp: newValue})} aria-label="Max temperature" valueLabelDisplay="auto"  />
           </div>
           <div className='flex'>
             <p className='w-[220px] text-lg'>Min lightlevel</p>
-            <Slider value={minLight} onChange={(event, newValue) => setMinLight(newValue)} aria-label="Min lightlevel" valueLabelDisplay="auto" />
+            <Slider value={setting.minLight} onChange={(event, newValue) => setSetting({...setting, minLight: newValue})} aria-label="Min lightlevel" valueLabelDisplay="auto" />
           </div>
           <div className='flex'>
             <p className='w-[220px] text-lg'>Max lightlevel</p>
-            <Slider value={maxLight} onChange={(event, newValue) => setMaxLight(newValue)} aria-label="Max lightlevel" valueLabelDisplay="auto" />
+            <Slider value={setting.maxLight} onChange={(event, newValue) => setSetting({...setting, maxLight: newValue})} aria-label="Max lightlevel" valueLabelDisplay="auto" />
           </div>
           <div className='flex gap-4 justify-center'>
             <Button onClick={handleSubmit} variant="contained">Save</Button>
@@ -139,7 +113,7 @@ function BasicModal({handleClose, handleSetting, open, autoMode, handleClick}) {
 }
 
 const Homepage = () => {
-  const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode, getCookie, sensorData } = useData();
+  const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode, getCookie, sensorData, setting, setSetting } = useData();
   const [open, setOpen] = useState(false);
   // const [sensorData, setSensorData] = useState({
   //   temperature: "OFF",
@@ -159,7 +133,7 @@ const Homepage = () => {
   
 
   useEffect(() => {
-    client.publish(`${AIO_USERNAME}/feeds/auto_mode`, autoMode ? "0" : "1");
+    client.publish(`${AIO_USERNAME}/feeds/auto_mode`, autoMode ? "1" : "0");
   }, [autoMode])
 
   // useEffect(() => {
@@ -356,7 +330,7 @@ const Homepage = () => {
           <Button variant={autoMode ? "outlined" : "contained"} onClick={handleTurnOff} >AUTOMODE OFF</Button>
           <Button sx={{mr: "20px"}} variant={autoMode ? "contained" : "outlined"} onClick={handleTurnOn}>AUTOMODE ON</Button>
         </ButtonGroup>
-        <BasicModal {...{ autoMode, handleClose, handleSetting, open, handleClick }} />
+        <BasicModal {...{ autoMode, handleClose, handleSetting, open, handleClick, setting, setSetting }} />
       </div>
       
     </div>

@@ -28,8 +28,21 @@ const Modifier = ({ variable }) => {
   let holdColor = hex
   const [holdFan, setHoldFan] = useState(parseInt(fan));
 
-
-
+  useEffect(() => {
+    client.on("connect", () => {
+      client.subscribe(`${AIO_USERNAME}/feeds/humidity_tem`);
+    });
+    client.on("message", (topic, message) => {
+      if (topic === `${AIO_USERNAME}/feeds/humidity_tem`) {
+        console.log("HERE temp sensor", message.toString());
+        setSwitchTempandHumState(message.toString());
+      }
+      else if (topic === `${AIO_USERNAME}/feeds/light_switch`) {
+        console.log("HERE light switch", message.toString());
+        setLightSenState(message.toString());
+      }
+    }); 
+  }, [])
   useEffect(() => {
     const user = getCookie('cookieUser');
     if (!user) {
@@ -67,10 +80,12 @@ const Modifier = ({ variable }) => {
   }
 
   useEffect(() => {
+    console.log("Publish hex color")
     client.publish(`${AIO_USERNAME}/feeds/led_color`, hex);
   }, [hex])
 
   useEffect(() => {
+    console.log("Publish fan")
     client.publish(`${AIO_USERNAME}/feeds/FAN`, fan);
   }, [fan])
 

@@ -52,7 +52,7 @@ function BasicModal({handleClose, handleSetting, open, autoMode, handleClick, se
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })
@@ -115,11 +115,7 @@ function BasicModal({handleClose, handleSetting, open, autoMode, handleClick, se
 const Homepage = () => {
   const { hex, fan, autoMode, setAutoMode, handleClick, toggleDarkMode, getCookie, sensorData, setting, setSetting } = useData();
   const [open, setOpen] = useState(false);
-  // const [sensorData, setSensorData] = useState({
-  //   temperature: "OFF",
-  //   humidity: "OFF",
-  //   light: "OFF",
-  // });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -201,7 +197,7 @@ const Homepage = () => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })
@@ -231,7 +227,7 @@ const Homepage = () => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })

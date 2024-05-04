@@ -62,7 +62,7 @@ const Modifier = ({ variable }) => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })
@@ -109,7 +109,7 @@ const Modifier = ({ variable }) => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })
@@ -147,7 +147,7 @@ const Modifier = ({ variable }) => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control1)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control1)
       .then((res) => {
         console.log("Log added successfully");
       })
@@ -171,7 +171,7 @@ const Modifier = ({ variable }) => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control2)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control2)
       .then((res) => {
         console.log("Log added successfully");
       })
@@ -205,7 +205,7 @@ const Modifier = ({ variable }) => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })
@@ -233,7 +233,7 @@ const Modifier = ({ variable }) => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })

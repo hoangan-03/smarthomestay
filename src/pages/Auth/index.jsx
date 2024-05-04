@@ -33,7 +33,7 @@ const Auth = () => {
     };
     //Invalid key // Username already exists
     axios
-      .post("http://localhost:8000/register", user)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/register", user)
       .then((res) => {
         console.log("User created successfully");
         handleActive(true);
@@ -65,7 +65,7 @@ const Auth = () => {
     };
 
     axios
-      .post("http://localhost:8000/signin", user)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/signin", user)
       .then((res) => {
         if (res.data.message) {
           handleActive(true);

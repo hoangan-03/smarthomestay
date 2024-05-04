@@ -25,7 +25,7 @@ const Notification = (props) => {
     useEffect(() => {
         const fetchNotifications = () => {
             axios
-                .get("http://localhost:8000/get_nofications")
+                .get("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/get_nofications")
                 .then((res) => {
 
                     const sortedData = [...res.data.data].sort((a, b) => {
@@ -54,7 +54,7 @@ const Notification = (props) => {
     const handleSetView = (event, idx) => {
         event.stopPropagation();
 
-        axios.put(`http://localhost:8000/update_isviewed/${idx}`)
+        axios.put(`https://smart-homestay-backend-f109bac03e4d.herokuapp.com/update_isviewed/${idx}`)
             .then(response => {
                 console.log(response.data);
                 const newData = [...data];

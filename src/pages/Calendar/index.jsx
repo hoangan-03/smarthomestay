@@ -49,7 +49,7 @@ class Calendar extends Component {
     var start_datee = ev.start_date;
     var remind_time = new Date(start_datee);
     remind_time.setHours(remind_time.getHours() - 1);
-    
+
     if (action === 'create') {
       const book = {
         Id: ev.id,
@@ -61,7 +61,7 @@ class Calendar extends Component {
       };
       console.log("Book", book)
       axios
-        .post("http://localhost:8000/add_booking", book)
+        .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/add_booking", book)
         .then((res) => {
           console.log("Log added successfully");
         })
@@ -78,7 +78,7 @@ class Calendar extends Component {
         });
     }
     else if (action === 'delete') {
-      axios.delete(`http://localhost:8000/delete_booking/${ev.id}`)
+      axios.delete(`https://smart-homestay-backend-f109bac03e4d.herokuapp.com/delete_booking/${ev.id}`)
         .then(response => {
           console.log(response);
         })
@@ -95,7 +95,7 @@ class Calendar extends Component {
         Remind_time: remind_time,
         End_time: new Date(ev.end_date).toISOString(),
       };
-      axios.put(`http://localhost:8000/modify_booking/${ev.id}`, book)
+      axios.put(`https://smart-homestay-backend-f109bac03e4d.herokuapp.com/modify_booking/${ev.id}`, book)
         .then(response => {
           console.log(response);
         })
@@ -111,21 +111,21 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-    const that = this;
 
-    axios.get('http://localhost:8000/get_bookings')
-  .then(response => {
-    console.log("Response", response.data)
-    const data = response.data.bookings.map(event => ({
-      ...event,
-      start_date: new Date(event.start_date),
-      end_date: new Date(event.end_date),
-      text: event.text,
-      remind_time: new Date(event.Remind_time),
-    }));
-    this.setState({ data });
-  })
-  .catch(console.error);
+
+    axios.get('https://smart-homestay-backend-f109bac03e4d.herokuapp.com/get_bookings')
+      .then(response => {
+        console.log("Response", response.data)
+        const data = response.data.bookings.map(event => ({
+          ...event,
+          start_date: new Date(event.start_date),
+          end_date: new Date(event.end_date),
+          text: event.text,
+          remind_time: new Date(event.Remind_time),
+        }));
+        this.setState({ data });
+      })
+      .catch(console.error);
 
     const user = this.props.getCookie('cookieUser')
     if (!user) {

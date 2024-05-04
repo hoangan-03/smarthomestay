@@ -36,7 +36,7 @@ const HumanDetection = () => {
         Isviewed: false,
       };
       axios
-        .post("http://localhost:8000/controlling", control)
+        .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
         .then((res) => {
           console.log("Log added successfully");
         })
@@ -67,7 +67,7 @@ const HumanDetection = () => {
       Isviewed: false,
     };
     axios
-      .post("http://localhost:8000/controlling", control)
+      .post("https://smart-homestay-backend-f109bac03e4d.herokuapp.com/controlling", control)
       .then((res) => {
         console.log("Log added successfully");
       })

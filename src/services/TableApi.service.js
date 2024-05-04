@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const baseUrl = "http://localhost:8000";
+const baseUrl = "https://smart-homestay-backend-f109bac03e4d.herokuapp.com";
 
 
 export const getLightData = async () => {

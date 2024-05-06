@@ -13,14 +13,20 @@ class  TempGraph extends Component {
 
     let humidMeasures;
     if (realtimedata) {
-      realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
-      humidMeasures = realtimedata.slice(0, 10).map(item => {
-        let date = new Date(item.timestamp);
-        return {
-          x: date,
-          y: parseFloat(item.value.toString())
-        };
-      });
+      realtimedata.sort(
+        (a, b) => new Date(b.Timestamp) - new Date(a.Timestamp)
+      );
+      humidMeasures = realtimedata
+        .reverse()
+        .slice(0, 10)
+        .map((item) => {
+          let date = new Date(item.timestamp);
+          date.setHours(date.getHours() - 7);
+          return {
+            x: date,
+            y: parseFloat(item.value.toString()),
+          };
+        });
     }
     let temperature = graphdata.temperature;
     const options = {

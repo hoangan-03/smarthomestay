@@ -8,24 +8,29 @@ class HumidGraph extends Component {
 
 
   render() {
+    
 
     const { realtimedata, toggleDarkMode } = this.props;
     console.log("hhh", realtimedata);
 
     let humidMeasures;
     if (realtimedata) {
-      realtimedata.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
-      humidMeasures = realtimedata.slice(0, 10).map(item => {
-        let date = new Date(item.timestamp);
-        return {
-          x: date,
-          y: parseFloat(item.value.toString())
-        };
-      });
+      realtimedata.sort(
+        (a, b) => new Date(b.Timestamp) - new Date(a.Timestamp)
+      );
+      humidMeasures = realtimedata
+        .reverse()
+        .slice(0, 10)
+        .map((item) => {
+          let date = new Date(item.timestamp);
+          date.setHours(date.getHours() - 7);
+          return {
+            x: date,
+            y: parseFloat(item.value.toString()),
+          };
+        });
     }
-    let td = graphdata.temperature.dataPoints
     console.log("humid_measure", humidMeasures);
-    console.log("humid_measure_mock", td);
     let humid = graphdata.humidity;
     const options = {
       animationEnabled: true,
@@ -34,7 +39,7 @@ class HumidGraph extends Component {
         text: humid.text
       },
       axisX: {
-        valueFormatString: "DD MMM",
+        valueFormatString: "HH:mm",
         crosshair: {
           enabled: true,
           snapToDataPoint: true
@@ -50,7 +55,7 @@ class HumidGraph extends Component {
       },
       data: [{
         type: "area",
-        xValueFormatString: "DD MMM",
+        xValueFormatString: "HH:mm",
         yValueFormatString: humid.format,
         dataPoints: humidMeasures,
       }]

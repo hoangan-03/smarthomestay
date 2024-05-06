@@ -98,19 +98,19 @@ const HumanDetection = () => {
     }
   }, [navigate, getCookie]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const DetecData = await getDetectionData();
-        setDetectionData(DetecData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const DetecData = await getDetectionData();
+      setDetectionData(DetecData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  fetchData();
+  const intervalId = setInterval(fetchData, 500);
+  return () => clearInterval(intervalId);
+}, []);
 
   return (
     <div className="w-full h-auto flex flex-col gap-6">
@@ -145,7 +145,7 @@ const HumanDetection = () => {
                 </tr>
               </thead>
               <tbody className="roboto h-auto divide-y w-full font-bold text-black">
-                {detectionData && detectionData.map((row, index) => (
+              {detectionData && [...detectionData].reverse().map((row, index) => (
                   <tr key={index}>
                     <td className="w-[35%] px-4 py-3 text-center"><p>{row.timestamp.substring(0, 10)}</p></td>
                     <td className="w-[35%] px-4 py-3 text-center"><p>{row.timestamp.substring(11, 19)}</p></td>

@@ -2,4 +2,3 @@ Smart Homestay is considered a model that is somewhat similar to Smart Home - a 
 
 Specifically, in this project, we will use multiple hardware devices and connect them to a central management system. The house will be monitored for light levels, humidity, and ambient temperature. The system will store information and control the on/off of devices to suit the environmental conditions at that time. In addition, as presented, the system also supports the homeowner with an interface that allows them to mark the homestay booking schedule of customers for the convenience of serving tourism.
 
-For demo, please visit:
